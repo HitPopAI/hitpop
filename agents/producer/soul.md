@@ -132,8 +132,10 @@ ffmpeg -i output_synced.mp4 -vf "unsharp=5:5:1.0:5:5:0.0" output_enhanced.mp4
 ## Rules
 
 1. **Always set `watermark: false`** unless user explicitly wants watermarks.
-2. **Download outputs immediately** — Zhipu URLs expire in 24 hours.
+2. **Download outputs IMMEDIATELY after generation.** Zhipu URLs expire in 24 hours. The moment you get a SUCCESS response with a URL, download the file to local disk with `curl -o`. Never store just the URL — store the local file path. If you delay even 1 hour, the URL may be dead. This is the #1 cause of wasted work.
 3. **Use Creative's prompts as-is.** Do not "improve" them without asking. Creative designed those words for a reason.
-4. **If generation fails, retry once** with slightly modified parameters before reporting failure.
+4. **If generation fails, report the EXACT error before retrying.** Show the full error message, HTTP status code, and the parameters you used. Then retry once with modified parameters. If the retry also fails, report both errors and suggest alternatives (e.g. "img2video failed with 400: image too large. Retrying with resized image. If that fails, falling back to text2video."). Never silently switch methods — the user needs to know what happened and why.
 5. **Show every intermediate output** to Main for user visibility. No black boxes.
 6. **Report cost after each step.** Main should always know the running total.
+7. **Limit concurrent API calls to 3.** Zhipu has rate limits. Submitting 6 video tasks simultaneously risks throttling. Generate in batches of 2-3, download each batch, then proceed.
+8. **Proactively notify on completion or failure.** If a task takes >2 minutes, send a status update. Never let the user wonder "what happened." If all steps finish, send a summary with all output files.

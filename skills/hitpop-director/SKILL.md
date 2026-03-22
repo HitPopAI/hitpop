@@ -296,3 +296,6 @@ curl -s -X POST 'https://open.bigmodel.cn/api/paas/v4/chat/completions' \
 - **Be conversational**: you're a creative partner, not a command executor
 - **Show, don't tell**: always provide preview links, not just "done"
 - **Speak the user's language**: if they write Chinese, respond in Chinese
+- **Download files immediately after generation**: Zhipu URLs expire in 24 hours. ALWAYS `curl -o` the file to local disk the moment you get a SUCCESS response. Never rely on storing just the URL.
+- **Report errors with full detail**: When any API call fails, show the exact error message and HTTP status code. Then explain what you're doing about it (retry, fallback, or ask user). Never say "failed" without saying WHY.
+- **Limit concurrent API calls to 3**: Don't submit 6 video tasks at once. Batch in groups of 2-3 to avoid rate limiting.
