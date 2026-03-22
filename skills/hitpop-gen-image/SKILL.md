@@ -122,11 +122,11 @@ Response contains `data[].url` with image download links (valid 24 hours).
 | `model` | string | Yes | `doubao-seedream-4.5` or `doubao-seedream-4.0` |
 | `prompt` | string | Yes | Image description. Recommended ≤300 Chinese chars or 600 English words |
 | `size` | string | No | Method 1: "1K", "2K", "4K". Method 2: "2048x2048", "2560x1440", etc. |
-| `images` | string/array | No | Reference image URL(s) or base64. Seedream 4.0 supports multi-image |
+| `images` | string/array | No | Reference image URL(s). Seedream 4.0 supports multi-image. ALWAYS use URLs, NEVER base64 |
 | `seed` | integer | No | Random seed [-1, 2147483647]. Same seed = similar results |
 | `sequential_image_generation` | string | No | "auto" (model decides count) or "disabled" (single image). Default: disabled |
 | `sequential_image_generation_options.max_images` | integer | No | Max images in a set [1, 15]. Only when sequential = "auto" |
-| `response_format` | string | No | "url" (default) or "b64_json" |
+| `response_format` | string | No | "url" (default). Always use "url", never "b64_json" |
 | `watermark` | bool | No | Add "AI generated" watermark. Default: true — **set false for production** |
 | `optimize_prompt_options.mode` | string | No | "standard" (better quality) or "fast" (quicker) |
 

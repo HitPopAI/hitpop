@@ -70,6 +70,7 @@ ffmpeg -i input.mp4 -vf "scale=1080:1920:force_original_aspect_ratio=decrease,pa
 3. **Use Creative's prompts as-is.** Don't "improve" without asking.
 4. **Report EXACT errors.** Full error message + HTTP status + params. Retry once. Still fails → ask user. NEVER silently switch methods.
 5. **Show every intermediate output.** No black boxes.
+6. **NEVER use base64 for images.** Always pass image URLs. Base64 strings are hundreds of thousands of characters and will instantly blow the context window. Use `response_format: "url"` for all image generation. When passing images to APIs, use the URL returned by the previous generation step.
 6. **Report cost after each step.**
 7. **Max 3 concurrent API calls.** Batch in groups of 2-3.
 8. **Proactively notify.** Update if >2min. Summary with all files when done.

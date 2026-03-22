@@ -156,7 +156,7 @@ done
 ### Image-Specific Parameters
 | Parameter | Type | Required | Description |
 |---|---|---|---|
-| `image_url` | array | Yes (for img models) | Array of image URLs or base64. Formats: png, jpeg, jpg, webp |
+| `image_url` | array | Yes (for img models) | Array of image URLs. Formats: png, jpeg, jpg, webp. ALWAYS use URLs, NEVER base64 |
 | `aspect_ratio` | string | Optional | "16:9", "9:16", "4:3", "3:4", "1:1" |
 | `movement_amplitude` | string | Optional | "auto", "small", "medium", "large" |
 
@@ -164,7 +164,7 @@ done
 - **img2video (reference)**: 1-7 images, each < 50MB, min 128x128, ratio < 4:1
 - **pro/turbo-img2video**: Single image only, < 50MB, ratio < 4:1
 - **frame models**: Exactly 2 images (start + end), similar resolution (ratio 0.8-1.25)
-- Base64 format: `data:image/png;base64,{base64_data}` (decoded < 10MB)
+- Always use image URLs, never base64 encoding (base64 bloats context window and causes failures)
 
 ## Tips
 - Use `viduq2-turbo-*` for fast iterations, `viduq2-pro-*` for final output
