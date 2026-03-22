@@ -54,11 +54,69 @@ curl -s "https://open.bigmodel.cn/api/paas/v4/async-result/$TASK_ID" \
 # Poll until task_status = "SUCCESS"
 ```
 
-### Voiceover
+### Voiceover (GLM-TTS — primary, Edge TTS — fallback)
+
+**Primary: GLM-TTS via Zhipu API** — same API key as video/image generation, higher quality, emotional expression, stable.
+
 ```bash
-edge-tts --voice "zh-CN-XiaoxiaoNeural" --text "TEXT" --write-media voice.mp3
-edge-tts --voice "en-US-AriaNeural" --text "TEXT" --write-media voice.mp3
+# Basic call — generates wav file
+curl -X POST "https://open.bigmodel.cn/api/paas/v4/audio/speech" \
+  -H "Authorization: Bearer $ZHIPU_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "glm-tts",
+    "input": "TEXT_HERE",
+    "voice": "female",
+    "speed": 1.0,
+    "volume": 1.0,
+    "response_format": "wav"
+  }' --output voice.wav
+
+# Convert wav to mp3 for smaller file size
+ffmpeg -i voice.wav -codec:a libmp3lame -b:a 192k voice.mp3
 ```
+
+**Available voices:**
+| Voice ID | Character | Best for |
+|---|---|---|
+| `female` | Tongtong (default) | Narration, warm female voice |
+| `xiaochen` | Xiao Chen | Young professional female |
+| `chuichui` | Chuichui | Energetic, youthful |
+| `jam` | Jam | Male, casual |
+| `kazi` | Kazi | Male, mature |
+| `douji` | Douji | Male, friendly |
+| `luodo` | Luodo | Male, deep |
+
+**Multi-character dialogue:** Use different voice IDs for different characters:
+```bash
+# Lin Xiao's lines — warm female
+curl -X POST "https://open.bigmodel.cn/api/paas/v4/audio/speech" \
+  -H "Authorization: Bearer $ZHIPU_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"model":"glm-tts","input":"LINE_TEXT","voice":"female","speed":1.0,"response_format":"wav"}' \
+  --output linxiao_line1.wav
+
+# Old Chen's lines — mature male
+curl -X POST "https://open.bigmodel.cn/api/paas/v4/audio/speech" \
+  -H "Authorization: Bearer $ZHIPU_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"model":"glm-tts","input":"LINE_TEXT","voice":"kazi","speed":0.95,"response_format":"wav"}' \
+  --output oldchen_line1.wav
+```
+
+**Voiceover stability rules:**
+1. **Split long text into segments of ≤300 characters.** GLM-TTS handles longer text better than Edge TTS, but still split for safety.
+2. **Merge segments with FFmpeg:**
+```bash
+ffmpeg -f concat -safe 0 -i segments.txt -c copy voice_full.wav
+```
+3. **If GLM-TTS fails, retry up to 3 times.** If still failing, fall back to Edge TTS:
+```bash
+# Fallback: Edge TTS (free, no API key needed)
+edge-tts --voice "zh-CN-XiaoxiaoNeural" --text "TEXT" --write-media voice.mp3
+```
+4. **Verify each audio file** — check file size > 0 before proceeding.
+5. **Use consistent voice per character** — never mix voice IDs within one character's dialogue.
 
 ### Subtitles
 ```bash
@@ -139,6 +197,18 @@ ffmpeg -i output_synced.mp4 -vf "unsharp=5:5:1.0:5:5:0.0" output_enhanced.mp4
 6. **Report cost after each step.** Main should always know the running total.
 7. **Limit concurrent API calls to 3.** Zhipu has rate limits. Submitting 6 video tasks simultaneously risks throttling. Generate in batches of 2-3, download each batch, then proceed.
 8. **Proactively notify on completion or failure.** If a task takes >2 minutes, send a status update. Never let the user wonder "what happened." If all steps finish, send a summary with all output files.
+9. **Compress video before sending to Telegram.** Telegram has a 16MB file size limit for bots. ALWAYS check file size before sending. If >15MB, compress:
+```bash
+# Check file size
+FILE_SIZE=$(stat -f%z output.mp4 2>/dev/null || stat -c%s output.mp4)
+if [ "$FILE_SIZE" -gt 15728640 ]; then
+  # Compress to ~12MB target
+  DURATION=$(ffprobe -v error -show_entries format=duration -of csv=p=0 output.mp4)
+  TARGET_BITRATE=$(echo "12 * 8192 / $DURATION" | bc)k
+  ffmpeg -i output.mp4 -b:v $TARGET_BITRATE -c:a aac -b:a 128k output_compressed.mp4
+fi
+```
+Never attempt to send a file >15MB to Telegram — it will fail silently.
 
 ## Mandatory Character-First Pipeline (NON-NEGOTIABLE)
 

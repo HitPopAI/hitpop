@@ -1,6 +1,6 @@
 ---
 name: hitpop-voiceover
-description: "AI voiceover and text-to-speech for video narration. Supports OpenAI TTS, ElevenLabs, and Edge TTS (free). Generate natural-sounding voiceovers in 50+ languages, then merge with video using FFmpeg."
+description: "AI voiceover and text-to-speech for video narration. Primary: GLM-TTS via Zhipu API (emotional, stable, same API key). Fallback: Edge TTS (free). Also supports OpenAI TTS and ElevenLabs."
 version: 0.1.0
 metadata:
   openclaw:
@@ -15,7 +15,44 @@ metadata:
 
 Generate voiceovers for your videos using multiple TTS providers.
 
-## Option 1: Edge TTS (Free, No API Key)
+## Option 1: GLM-TTS via Zhipu API (Recommended — Same API Key)
+
+GLM-TTS — emotional, natural, stable. Uses the same `ZHIPU_API_KEY` as video/image generation. Supports 7 voice characters with emotional expression.
+
+```bash
+# Generate voiceover (outputs wav)
+curl -X POST "https://open.bigmodel.cn/api/paas/v4/audio/speech" \
+  -H "Authorization: Bearer $ZHIPU_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "glm-tts",
+    "input": "Your narration text here",
+    "voice": "female",
+    "speed": 1.0,
+    "volume": 1.0,
+    "response_format": "wav"
+  }' --output voiceover.wav
+
+# Convert to mp3 for smaller file
+ffmpeg -i voiceover.wav -codec:a libmp3lame -b:a 192k voiceover.mp3
+```
+
+**Voices:**
+| Voice ID | Character | Best for |
+|---|---|---|
+| `female` | Tongtong (default) | Narration, warm female |
+| `xiaochen` | Xiao Chen | Young professional female |
+| `chuichui` | Chuichui | Energetic, youthful |
+| `jam` | Jam | Male, casual |
+| `kazi` | Kazi | Male, mature |
+| `douji` | Douji | Male, friendly |
+| `luodo` | Luodo | Male, deep |
+
+**Parameters:** `speed` (0.5-2.0), `volume` (0.5-2.0), `response_format` (wav/mp3/pcm)
+
+**Multi-character dialogue:** Use different voice IDs per character, generate each line separately, merge with FFmpeg.
+
+## Option 2: Edge TTS (Free Fallback, No API Key)
 
 Microsoft Edge TTS — free, 300+ voices, 75+ languages.
 
@@ -32,7 +69,7 @@ edge-tts --voice "en-US-AriaNeural" --text "Welcome to our product showcase" --w
 edge-tts --voice "zh-CN-XiaoxiaoNeural" --text "Welcome to our product showcase" --write-media voiceover_cn.mp3
 ```
 
-## Option 2: OpenAI TTS (Best Quality)
+## Option 3: OpenAI TTS (Best Quality)
 
 Requires `OPENAI_API_KEY`.
 
@@ -49,7 +86,7 @@ curl -s https://api.openai.com/v1/audio/speech \
 
 Voices: `alloy`, `echo`, `fable`, `onyx`, `nova`, `shimmer`
 
-## Option 3: ElevenLabs (Most Natural)
+## Option 4: ElevenLabs (Most Natural)
 
 Requires `ELEVENLABS_API_KEY`.
 
@@ -76,6 +113,9 @@ ffmpeg -i video.mp4 -i voiceover.mp3 \
 ```
 
 ## Tips
-- Use Edge TTS for free prototyping, OpenAI/ElevenLabs for production
+- Use GLM-TTS as primary — same API key as video generation, best Chinese quality, emotional expression
+- Fall back to Edge TTS if GLM-TTS is down or for quick prototyping
+- Use OpenAI/ElevenLabs for premium English voiceovers
 - Generate voiceover first, then use its duration to set video length
-- For long scripts, split into paragraphs and generate separately, then concat
+- For long scripts, split into segments (≤300 chars), generate separately, then concat with FFmpeg
+- For multi-character scenes, use different GLM-TTS voice IDs per character
