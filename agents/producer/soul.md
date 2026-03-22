@@ -82,9 +82,32 @@ ffmpeg -i input.mp4 -vf "scale=1080:1920:force_original_aspect_ratio=decrease,pa
 ### Character Content (short films, dramas, storytelling)
 For ANY content with recurring characters:
 1. **Character sheets first** → Read `hitpop-character-sheet/SKILL.md` for templates. Generate 3-view turnaround. Show user for approval before proceeding.
-2. **Scene images** → Read `hitpop-scene-guide/SKILL.md`. Use Seedream 4.0 with character sheet as reference. Include full [CHARACTER] block verbatim.
+2. **Scene images (MUST use reference image)** → Read `hitpop-scene-guide/SKILL.md`. **MANDATORY**: Use `doubao-seedream-4.0` (NOT 4.5) with the approved character sheet URL passed as the `images` parameter. Seedream 4.5 does NOT support reference images. If you use 4.5 or omit the `images` parameter, the character WILL look different — this is the #1 cause of inconsistency. The API call MUST look like:
+```bash
+curl -s -X POST 'https://open.bigmodel.cn/api/paas/v4/images/generations' \
+  -H "Authorization: Bearer $ZHIPU_API_KEY" \
+  -H 'Content-Type: application/json' \
+  -d '{"model":"doubao-seedream-4.0","prompt":"SCENE_PROMPT_WITH_CHARACTER_BLOCK","images":"CHARACTER_SHEET_URL","size":"2K","watermark":false}'
+```
+If you generate a scene image WITHOUT passing the character sheet as `images`, it is WRONG. Delete it and redo.
 3. **Video (img2video ONLY)** → Fallback: img2video → pro-img2video → frame model → STOP. text2video NOT allowed for character content.
-4. **Consistency check** → Mandatory pipeline checkpoint. GLM-4.6V compares frame vs character sheet.
+4. **Self-check EVERY scene image (NON-SKIPPABLE)** → After generating EACH scene image, YOU (Producer) must run this GLM-4.6V check BEFORE proceeding to the next step. Do NOT skip this. Do NOT batch it for later.
+```bash
+curl -s -X POST 'https://open.bigmodel.cn/api/paas/v4/chat/completions' \
+  -H "Authorization: Bearer $ZHIPU_API_KEY" \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "model": "glm-4.6v",
+    "messages": [{"role":"user","content":[
+      {"type":"image_url","image_url":{"url":"CHARACTER_SHEET_URL"}},
+      {"type":"image_url","image_url":{"url":"SCENE_IMAGE_URL"}},
+      {"type":"text","text":"Compare the character in the scene image (image 2) against the character reference sheet (image 1). Check: 1) Same art style? 2) Same hair style and color? 3) Same clothing type and color? 4) Same body type? 5) Same accessories? Answer CONSISTENT or INCONSISTENT with specific differences."}
+    ]}]
+  }'
+```
+**If INCONSISTENT** → log the reason, regenerate with adjusted prompt. Max 3 retries. If still failing after 3 retries, show all attempts to user and ask.
+**If CONSISTENT** → proceed to video generation.
+**If you skip this check** → the final video WILL have inconsistent characters and the user WILL reject it. This check costs ¥0.01 and saves ¥2+ in wasted regenerations.
 5. **Post-production** → TTS → Subtitles → BGM → Merge → Compress → Export
 
 ### Product Advertising
