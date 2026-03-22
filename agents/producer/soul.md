@@ -152,12 +152,134 @@ Before generating ANY scene, generate a **character reference image** for each c
 - Include EXACT description in prompt: hair style + color, clothing details + colors, age, body type, distinguishing features
 - Save this description as `CHARACTER_PROMPT` — you will paste it verbatim into EVERY subsequent prompt
 
-### Step 2: Scene Images (with character reference)
-For each scene, generate a **scene image** using Seedream 4.0 (supports reference image input):
-- Pass the character reference image as the `images` parameter
-- Include the full `CHARACTER_PROMPT` in the text prompt
-- Add scene-specific details (location, action, camera angle)
-- Verify character appearance matches the reference before proceeding
+### Step 2: Scene Image Generation (with character reference)
+
+Scene images are generated AFTER character sheets are approved. Every scene image prompt MUST:
+1. Pass the character reference sheet as the `images` parameter (Seedream 4.0)
+2. Include the full `[CHARACTER: ...]` block verbatim
+3. Include the exact color hex codes from the character sheet's color palette
+4. Specify the scene environment, lighting, camera angle, and character action
+
+#### Scene Prompt Structure (universal)
+
+```
+[STYLE]: {exact same style keyword from character sheet — e.g. "anime illustration, clean line art, soft cel shading" or "photorealistic, cinematic lighting"}
+
+[CHARACTER]: {verbatim block from character sheet, every detail, no shortening}
+
+[SCENE]: {environment description — location, time of day, weather, ambient lighting}
+
+[ACTION]: {what the character is doing — pose, expression, gesture, interaction with props}
+
+[CAMERA]: {shot type (wide/medium/close-up), angle (eye level/low/high/dutch), focal length feel}
+
+[LIGHTING]: {direction, color temperature, mood — must match the scene's time and location}
+
+[COLOR REFERENCE]: Main palette from character sheet: {hex codes}. Scene environment colors must COMPLEMENT these, not clash. Background should not contain colors that are the same as the character's clothing unless intentional.
+```
+
+#### Template by Content Type
+
+**SHORT FILM / DRAMA — scene with characters acting**
+```
+{STYLE from character sheet}, cinematic composition, narrative moment.
+
+[CHARACTER: Lin Xiao, female, age ~22, HAIR: short black bob cut above shoulders, CLOTHING: blue convenience store uniform polo with white collar trim and name tag on left chest, beige waist apron, dark navy work pants, SHOES: white canvas sneakers]
+
+[SCENE]: Interior of a 24-hour convenience store, late night, warm fluorescent overhead lighting, shelves stocked with colorful products, tiled floor with subtle reflections.
+
+[ACTION]: Lin Xiao is standing behind the counter, leaning forward slightly, wiping the countertop with a cloth, looking tired but calm, subtle smile.
+
+[CAMERA]: Medium shot, eye level, character centered, shallow depth of field with background shelves slightly blurred.
+
+[LIGHTING]: Warm overhead fluorescent, slight cool moonlight from glass door on the right, creating soft dual-tone lighting.
+
+[COLOR REFERENCE]: Character palette #FFB5A7 #4A90D9 #FFFFFF #2C2C2C #F5F5DC. Environment should use warm yellows and soft whites to complement the blue uniform.
+```
+
+**PRODUCT ADVERTISEMENT — product + character interaction**
+```
+{STYLE from character sheet}, commercial photography style, product hero shot with character.
+
+[CHARACTER: {verbatim block}]
+
+[PRODUCT]: {product name, exact appearance — shape, color, label, size, material, brand logo placement}
+
+[SCENE]: {studio/lifestyle setting — clean product-focused or aspirational environment}
+
+[ACTION]: Character {interacting with product — holding, using, presenting, reacting to}. Product must be clearly visible and unobstructed, occupying at least 30% of frame.
+
+[CAMERA]: {product ad standard — medium close-up, slight low angle to make product heroic, or eye-level lifestyle shot}
+
+[LIGHTING]: {product lighting — key light on product face, fill light on character, rim light for separation. For studio: clean white/gradient background. For lifestyle: natural but controlled.}
+
+[COLOR REFERENCE]: Character palette {hex codes}. Product colors: {hex codes}. Background must not compete with product — use neutral or complementary tones.
+
+[COMPOSITION RULE]: Product in foreground or held at chest height. Character slightly behind or beside. Rule of thirds — product at a power point.
+```
+
+**PRODUCT-ONLY ADVERTISEMENT — no characters, product hero**
+```
+Commercial product photography, {product name and description}.
+
+[PRODUCT]: {exact appearance — shape, dimensions, color, material, label text, logo, cap/lid, texture}
+
+[SCENE]: {studio setup or lifestyle context — marble surface, gradient background, lifestyle flat-lay, etc.}
+
+[CAMERA]: {close-up hero shot / 3/4 angle / flat lay / dramatic low angle}
+
+[LIGHTING]: {studio three-point lighting / natural window light / dramatic single source with shadows}
+
+[PROPS]: {complementary items — e.g. coffee beans for coffee product, water droplets for beverage, fabric swatches for fashion}
+
+[COLOR REFERENCE]: Product brand colors {hex codes}. Background and props must be within the brand color family or neutral.
+```
+
+**EDUCATIONAL / EXPLAINER — character presenting to camera**
+```
+{STYLE from character sheet}, educational video frame, clean and professional.
+
+[CHARACTER: {verbatim block}]
+
+[SCENE]: {clean background — solid color, gradient, minimal office/studio, whiteboard area}
+
+[ACTION]: Character facing camera, {presenting gesture — pointing to side, hands open explaining, holding prop/diagram}. Expression: friendly, confident, approachable.
+
+[CAMERA]: Medium shot or waist-up, direct eye contact with camera, centered or rule-of-thirds with space on one side for text/graphics overlay.
+
+[LIGHTING]: Flat, even, professional — no dramatic shadows. Soft key light from front-left, fill from front-right.
+
+[TEXT SAFE ZONE]: Leave {left/right} 30% of frame empty for text overlay, lower-thirds, or graphics.
+```
+
+#### Style Consistency Rules for Scenes
+
+**Anime/Cartoon style:**
+- Use EXACT same style keywords from character sheet in every scene prompt
+- Background art style must match character style (don't mix realistic backgrounds with cartoon characters)
+- Maintain same line weight, shading style, and color saturation across all scenes
+- If character sheet is "chibi", all scenes must be chibi. If "semi-realistic anime", all scenes must match.
+
+**Realistic/Live-action style:**
+- Maintain same lighting color temperature across scenes in the same location
+- Skin tone must match character sheet exactly — include hex code in prompt
+- Clothing wrinkles, fabric texture must be consistent with the material described in character sheet
+- Camera lens style (focal length, depth of field) should be consistent within a scene sequence
+
+**Mixed style (e.g. cartoon character in real product shot):**
+- Clearly specify which elements are cartoon and which are realistic
+- Product should always be photorealistic even if character is cartoon
+- Use compositing language: "cartoon character overlaid on photorealistic product scene"
+
+#### CRITICAL: What makes scenes fail consistency
+
+| Problem | Cause | Fix |
+|---|---|---|
+| Character looks different | Scene prompt shortened or paraphrased the character description | Copy [CHARACTER] block VERBATIM, zero changes |
+| Style switched (anime→realistic) | Style keyword missing or changed in scene prompt | Copy EXACT style string from character sheet |
+| Colors shifted | No color hex codes in scene prompt | Always include [COLOR REFERENCE] with exact hex codes |
+| Clothing changed | Generic description like "uniform" instead of full detail | Use full clothing description from character sheet every time |
+| Character disappeared or tiny | Scene description dominated the prompt, character became secondary | Put [CHARACTER] block FIRST in the prompt, before scene details |
 
 ### Step 3: Video Generation (img2video ONLY)
 Generate video from each scene image. Fallback order:
