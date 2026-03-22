@@ -48,7 +48,7 @@ ffmpeg -i input.mp4 -i logo.png -filter_complex "overlay=W-w-20:H-h-20" -c:a cop
 
 ### Burn subtitles into video
 ```bash
-ffmpeg -i input.mp4 -vf "subtitles=subs.srt:force_style='FontSize=24,PrimaryColour=&HFFFFFF&'" -c:a copy subtitled.mp4
+ffmpeg -i input.mp4 -vf "subtitles=subs.srt:force_style='FontSize=24,PrimaryColour=&HFFFFFF&,OutlineColour=&H40000000&,Outline=2,Alignment=2,MarginV=30'" -c:a copy subtitled.mp4
 ```
 
 ### Extract audio from video

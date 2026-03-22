@@ -72,7 +72,7 @@ whisper audio.wav --model base --output_format srt
 ffmpeg -i video.mp4 -i voice.mp3 -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 -shortest output.mp4
 
 # Burn subtitles
-ffmpeg -i video.mp4 -vf "subtitles=subs.srt:force_style='FontSize=22,PrimaryColour=&HFFFFFF&'" output.mp4
+ffmpeg -i video.mp4 -vf "subtitles=subs.srt:force_style='FontSize=22,PrimaryColour=&HFFFFFF&,OutlineColour=&H40000000&,Outline=2,Alignment=2,MarginV=30'" output.mp4
 
 # Mix voice + BGM
 ffmpeg -i video.mp4 -i voice.mp3 -i bgm.mp3 \
