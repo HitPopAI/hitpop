@@ -204,7 +204,8 @@ This block is copied IDENTICALLY into every scene. No paraphrasing. No shortenin
 ## Critical Rules
 
 1. **ONE image, three views** — never generate three separate images
-2. **16:9 landscape** — portrait cuts off the layout
+2. **Ask style first** — if user didn't specify "写实/realistic" or "动漫/anime", ASK before generating: "请问您想要写实真人风格还是动漫风格？" Never assume.
+3. **16:9 landscape** — portrait cuts off the layout
 3. **CRITICAL line** — always include the "EXACT SAME person" enforcement line
 4. **7-dimension check** — verify all 7 dimensions before generating
 5. **Common-sense check** — ethnicity, era, style, clothing logic, age logic
