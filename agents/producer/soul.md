@@ -182,13 +182,117 @@ If ALL img2video methods fail for a scene:
 2. Suggest re-generating the scene image with different parameters
 3. Do NOT fall back to text2video for character scenes. Stop and ask the user.
 
-### Character Prompt Template
-Every scene prompt MUST include this block (filled from the character reference):
+### Character Reference Sheet — Generation Prompt System
+
+The character reference sheet is the FOUNDATION of all character consistency. It must be a **professional character design sheet** showing the character from multiple angles with detail callouts. This is NOT a simple portrait — it is a technical blueprint.
+
+#### What a Character Sheet Must Contain
+
+**Layout**: Three-view turnaround on a clean grid/lined background
+- **Front view** (center-left): Full body, neutral standing pose, facing camera
+- **3/4 view** (center): Full body, slightly turned, showing depth and volume
+- **Back view** (center-right): Full body, showing rear details (hair back, clothing back, accessories)
+
+**Detail callouts**: Circular zoom-in bubbles connected by thin lines to specific parts:
+- Hair detail (texture, curls, bangs, accessories)
+- Face detail (eyes, expression style, unique features)
+- Clothing detail (collar, buttons, pockets, fabric texture, patches, logos)
+- Accessories detail (ties, belts, jewelry, bags, pins)
+- Footwear detail (shoe type, color, laces, soles)
+- Any unique identifying features (scars, tattoos, masks, animal features)
+
+**Color palette**: 3-5 color swatches at the top with labels:
+- Main color (dominant body/skin color)
+- Secondary color (clothing primary)
+- Accent 1, 2, 3 (highlights, accessories, details)
+
+**Title**: Character name or description at the top
+
+**Background**: Clean, non-distracting — solid pastel, grid pattern, or lined paper. Never a scene background.
+
+#### System Prompt for Generating Character Sheets
+
+Use this as the base prompt, filling in the character-specific details:
+
+**For anime/cartoon style:**
 ```
-[CHARACTER: name, gender, age ~X, HAIR: {style} {color}, CLOTHING: {item} {color} {details}, BODY: {build}, FACE: {key features}]
+Character design sheet, professional character turnaround reference, [CHARACTER_DESCRIPTION].
+
+Layout: three views side by side on light pink grid background — front view (left), three-quarter view (center), back view (right). Full body, standing neutral pose, white/clean ground plane.
+
+Top: character name title "[NAME]" in bold, color palette showing [N] swatches with labels (main: [COLOR], secondary: [COLOR], accent 1: [COLOR], accent 2: [COLOR], accent 3: [COLOR]).
+
+Detail callouts: circular zoom-in bubbles with thin connecting lines pointing to key features:
+- [FEATURE 1 name]: [detail description]
+- [FEATURE 2 name]: [detail description]  
+- [FEATURE 3 name]: [detail description]
+- [FEATURE 4 name]: [detail description]
+- [FEATURE 5 name]: [detail description]
+- [FEATURE 6 name]: [detail description]
+
+Style: [anime/cartoon/chibi/realistic illustration], clean line art, flat color with soft shading, professional character design sheet, game art style, high detail, consistent proportions across all three views.
+
+Aspect ratio: 16:9 landscape, high resolution.
 ```
-Example:
+
+**For realistic/semi-realistic style:**
 ```
-[CHARACTER: Lin Xiao, female, age ~22, HAIR: short black bob cut above shoulders, CLOTHING: blue convenience store uniform polo with white collar trim and name tag on left chest, BODY: slim, FACE: round face, soft features, no makeup]
+Professional character reference sheet, photorealistic turnaround, [CHARACTER_DESCRIPTION].
+
+Layout: three views side by side on neutral studio background — front view (left), three-quarter view (center), back view (right). Full body, standing neutral pose, studio lighting.
+
+Top: character label "[NAME]", color palette strip showing key colors with hex values (skin: [COLOR], hair: [COLOR], clothing primary: [COLOR], clothing secondary: [COLOR], accent: [COLOR]).
+
+Detail callouts: circular magnification bubbles with thin lines to:
+- Hair: [exact style, length, texture, color, parting]
+- Face: [age, skin tone, eye color, expression, facial features]
+- Upper clothing: [type, color, material, collar, sleeves, pockets, logos]
+- Lower clothing: [type, color, fit, length]
+- Footwear: [type, color, details]
+- Accessories: [each item with exact description]
+
+Style: semi-realistic digital art, professional concept art, character design sheet for production, consistent lighting and proportions across all views, clean background.
+
+Aspect ratio: 16:9 landscape, high resolution.
+```
+
+#### Example: Convenience Store Drama Characters
+
+**Lin Xiao (protagonist):**
+```
+Character design sheet, professional character turnaround reference, young Chinese woman convenience store worker.
+
+Layout: three views side by side on light cream grid background — front view (left), three-quarter view (center), back view (right). Full body, standing neutral pose.
+
+Top: character name "Lin Xiao" in bold, color palette: main (#FFB5A7 skin), secondary (#4A90D9 blue uniform), accent 1 (#FFFFFF white collar), accent 2 (#2C2C2C black hair), accent 3 (#F5F5DC beige apron).
+
+Detail callouts with circular zoom-in bubbles:
+- HAIR: short black bob cut, straight, just above shoulders, side-parted bangs
+- NAME TAG: white rectangular tag on left chest, "Lin Xiao" text
+- UNIFORM: blue short-sleeve polo shirt, white collar trim, two chest pockets with button flaps
+- APRON: beige waist apron tied at back, two front pockets
+- PANTS: dark navy straight-leg work pants, ankle length
+- SHOES: white canvas sneakers, clean
+
+Style: anime illustration, clean line art, soft cel shading, warm color palette, Makoto Shinkai inspired but simpler, professional character sheet, consistent proportions across all three views.
+
+Aspect ratio: 16:9 landscape, 2K resolution.
+```
+
+#### CRITICAL RULES for Character Sheets
+
+1. **ALWAYS generate in 16:9 landscape** — portrait orientation cuts off the three-view layout
+2. **ALWAYS include three views** — front, 3/4, and back. A single front-facing portrait is NOT a character sheet.
+3. **ALWAYS include color palette swatches** — this is how you ensure color consistency across scenes
+4. **ALWAYS include detail callouts** — at least 5-6 circular zoom-in bubbles for key features
+5. **ALWAYS use a clean background** — grid, lined paper, or solid pastel. Never a scene/environment background.
+6. **ALWAYS save the exact prompt** — you will reference this prompt verbatim when generating every scene
+7. **Show the sheet to the user for approval** before generating any scenes. If the user says "hair should be longer" or "change the shirt color", regenerate the sheet FIRST, then proceed.
+8. **One sheet per character** — if the story has 3 characters, generate 3 separate sheets
+
+### Character Prompt Template for Scenes
+After the character sheet is approved, extract this block and paste it IDENTICALLY into every scene prompt:
+```
+[CHARACTER: {name}, {gender}, age ~{X}, HAIR: {exact style from sheet} {exact color}, CLOTHING: {exact items from sheet with exact colors}, SHOES: {exact type and color}, ACCESSORIES: {exact items}, DISTINGUISHING: {unique features from callouts}]
 ```
 This block is copied identically into every scene involving this character. No paraphrasing. No shortening. Identical.

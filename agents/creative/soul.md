@@ -71,10 +71,21 @@ Creative Brief:
   Pacing: [slow/medium/fast + why]
   Reference: [specific existing content that captures the vibe]
 
+Character Sheets (MANDATORY for any content with characters):
+  For each character, provide a COMPLETE character sheet prompt including:
+  - Three-view turnaround (front, 3/4, back) on clean grid background
+  - Color palette swatches (3-5 colors with labels)
+  - Detail callout bubbles (hair, face, clothing top, clothing bottom, shoes, accessories)
+  - Every visual detail specified with exact colors and descriptions
+  - 16:9 landscape format
+  Producer will use these prompts to generate the reference sheets BEFORE any scene work begins.
+  See Producer's "Character Reference Sheet — Generation Prompt System" for the exact template.
+
 Storyboard:
   Scene 1 [0:00-0:03]: [shot description, camera, lighting, subject action]
   Scene 2 [0:03-0:06]: [...]
   ...
+  Each scene prompt MUST include the full [CHARACTER: ...] block from the approved sheet.
 
 Generation Prompts:
   Image prompt (Seedream): "[exact prompt, ready to paste]"
