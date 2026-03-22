@@ -235,6 +235,175 @@ Commercial product photography, {product name and description}.
 [COLOR REFERENCE]: Product brand colors {hex codes}. Background and props must be within the brand color family or neutral.
 ```
 
+---
+
+## Product Reference Sheet System (MANDATORY for all advertising content)
+
+Product advertising has ZERO tolerance for inconsistency. A label in the wrong color, a logo on the wrong side, a bottle with the wrong shape — any of these destroys credibility instantly. This system ensures product accuracy across every frame.
+
+### Input Handling: How users provide product information
+
+Users provide product info in many ways. Handle ALL of these:
+
+| User provides | Your action |
+|---|---|
+| **Real product photo** (uploaded image) | Use as primary reference. Extract all visual details. Generate product reference sheet based on it. |
+| **Multiple product photos** (different angles) | Even better. Use as multi-angle reference. Stitch into a product reference sheet. |
+| **Product URL / website link** | Fetch the page, extract product images and description. Use the best product photo as reference. |
+| **Brand name + product name only** (no image) | Search the web for official product images. Download the best one. Generate reference sheet from it. |
+| **Verbal description only** (no image, no brand) | Generate the product from scratch using AI. Create reference sheet. Get user approval BEFORE proceeding. |
+| **3D model / render** | Use directly as reference. Extract angles for reference sheet. |
+| **Logo file only** | Generate product mock-up incorporating the logo. Create reference sheet. |
+
+**CRITICAL**: For real product photos, the AI-generated product must match the REAL product exactly. This is NOT creative interpretation — it is accurate reproduction. If the label says "Coca-Cola" in white script on red, every generated frame must have "Coca-Cola" in white script on red. No exceptions.
+
+### Step P1: Product Reference Sheet
+
+Before generating ANY ad scene, create a **product reference sheet** — similar to a character sheet but for the product.
+
+**Layout**: Multi-angle turnaround on clean white/neutral background
+- **Front view**: Product facing camera, label/logo fully visible
+- **3/4 view**: Product at 45-degree angle, showing depth and form
+- **Side view**: Profile showing thickness/depth
+- **Back view**: Back label, barcode area, secondary info (if applicable)
+- **Top-down view**: For products where top matters (bottles with caps, boxes with lids)
+- **Detail callouts**: Circular zoom-in bubbles for:
+  - Logo (exact position, size, font, color)
+  - Label text (exact wording, font size, color)
+  - Material texture (matte, glossy, metallic, transparent, fabric)
+  - Color hex codes (primary, secondary, accent — extracted from real photo or brand guide)
+  - Unique features (cap shape, handle, button, screen, stitching, embossing)
+
+**Product reference sheet prompt template:**
+```
+Product reference sheet, professional multi-angle product photography turnaround.
+
+Product: {exact product name and type}
+Brand: {brand name}
+
+Layout: 5 views on pure white background — front (center), 3/4 angle (left), side profile (right), back (bottom-left), top-down (bottom-right). Clean studio lighting, no shadows on background.
+
+Detail callouts with circular zoom-in bubbles:
+- LOGO: {exact description — text, font, color, position on product}
+- LABEL: {exact text content, font color, background color}
+- MATERIAL: {surface finish — glossy plastic, matte aluminum, brushed steel, frosted glass, etc.}
+- COLOR: Primary {hex}, Secondary {hex}, Accent {hex}
+- CAP/LID: {shape, color, material}
+- UNIQUE FEATURE: {any distinguishing detail}
+
+Dimensions reference: {approximate height x width ratio}
+
+Style: Commercial product photography, ultra-sharp focus, pure white background (#FFFFFF), studio three-point lighting, no color cast, accurate color reproduction.
+
+Aspect ratio: 16:9 landscape, high resolution.
+```
+
+**When user provides a real photo:**
+```
+Product reference sheet, multi-angle turnaround based on the provided product photo.
+
+Analyze the reference photo carefully and reproduce this EXACT product from 5 angles: front, 3/4, side, back, top-down. Match EXACTLY:
+- Label text, font, and positioning
+- Logo color, size, and placement
+- Product shape, proportions, and dimensions
+- Material finish and surface texture
+- Color tones — use the exact colors from the photo, not approximations
+
+Detail callouts: {extract from the real photo}
+
+Pure white background, studio lighting, consistent across all 5 views.
+```
+
+### Step P2: Product Style Lock
+
+After the product reference sheet is approved, extract a **style lock** — a fixed set of visual parameters applied to EVERY subsequent ad frame:
+
+```
+[PRODUCT STYLE LOCK]
+Product: {name}
+Shape: {exact shape description}
+Primary color: {hex}
+Secondary color: {hex}
+Logo: {exact text, position, color}
+Label: {exact text, position, color}
+Material: {finish type}
+Lighting setup: {key light direction, fill ratio, rim light yes/no}
+Shadow style: {contact shadow / drop shadow / none, density %}
+Background: {white / gradient / lifestyle — specify exactly}
+Camera focal length feel: {35mm wide / 50mm standard / 85mm portrait / 100mm macro}
+```
+
+This block is copied into EVERY ad scene prompt. No changes between frames. This is how you achieve the consistency that professional e-commerce catalogs have.
+
+### Step P3: Ad Scene Generation with Product
+
+Every ad scene prompt MUST include the full product style lock AND the product reference image as input.
+
+**Multi-angle product ad set** (for e-commerce listings):
+```
+Generate {N} product photos of {product name}, each from a different angle, using the product reference sheet as input image.
+
+[PRODUCT STYLE LOCK: {paste entire block}]
+
+Angle 1: Front view, straight-on, eye level. Pure white background. Studio lighting.
+Angle 2: 45-degree from upper-right. Show depth and form. Pure white background.
+Angle 3: Side profile. Highlight side details. Pure white background.
+Angle 4: Top-down overhead view. Show top surface and cap/lid. Pure white background.
+Angle 5: Low angle hero shot. Slight upward camera, dramatic but clean.
+
+CRITICAL: Product must be IDENTICAL in every frame — same label, same logo position, same color, same proportions. Only the camera angle changes.
+```
+
+**Lifestyle product ad** (product in context):
+```
+{product name} in lifestyle setting, commercial photography.
+
+[PRODUCT STYLE LOCK: {paste entire block}]
+
+[SCENE]: {lifestyle environment — kitchen counter for food product, desk for tech, bathroom shelf for cosmetics, etc.}
+
+[COMPOSITION]: Product placed at {position}, occupying {30-50%} of frame. Product must be the clear focal point. Environment supports but does not compete.
+
+[LIGHTING]: Natural-looking but controlled. Key light on product. Environment lit separately. Product colors must match reference sheet EXACTLY — no color cast from environment lighting.
+
+[PROPS]: {complementary items that tell a story — but NONE that obscure the product}
+
+CRITICAL: The product in this lifestyle shot must be pixel-identical to the product reference sheet. Same label, same colors, same proportions. The environment changes. The product does NOT.
+```
+
+### Step P4: Product Consistency Check (GLM-4.6V)
+
+After each product ad frame is generated, run a GLM-4.6V check comparing it against the product reference sheet:
+
+```bash
+curl -s -X POST 'https://open.bigmodel.cn/api/paas/v4/chat/completions' \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer $ZHIPU_API_KEY" \
+  -d '{
+    "model": "glm-4.6v",
+    "messages": [{
+      "role": "user",
+      "content": [
+        {"type": "image_url", "image_url": {"url": "PRODUCT_REFERENCE_SHEET_URL"}},
+        {"type": "image_url", "image_url": {"url": "GENERATED_AD_FRAME_URL"}},
+        {"type": "text", "text": "Image 1 is a product reference sheet. Image 2 is a generated ad frame. Compare strictly for PRODUCT ACCURACY: 1) Is the product shape identical? 2) Is the logo text, position, and color correct? 3) Is the label text accurate and readable? 4) Are the product colors matching (compare hex values)? 5) Is the material finish correct (matte/glossy/metallic)? 6) Are proportions correct? Answer ACCURATE or INACCURATE, then list every discrepancy found."}
+      ]
+    }]
+  }'
+```
+
+**Product accuracy verdicts:**
+- **ACCURATE**: Product matches reference in shape, color, logo, label, material. Minor lighting/angle differences acceptable.
+- **INACCURATE**: Any of these = automatic REJECT:
+  - Logo text wrong, misspelled, or missing
+  - Label text changed or unreadable
+  - Product color shifted (wrong hex)
+  - Product shape/proportions distorted
+  - Material finish changed (matte became glossy or vice versa)
+  - Wrong product entirely
+
+**For brand advertising, there is ZERO tolerance. One wrong letter on a logo = reject. One shade off on brand color = reject. This is non-negotiable.**
+
 **EDUCATIONAL / EXPLAINER — character presenting to camera**
 ```
 {STYLE from character sheet}, educational video frame, clean and professional.
