@@ -1,0 +1,17 @@
+.DS_Store
+Thumbs.db
+.env
+.env.local
+node_modules/
+__pycache__/
+*.pyc
+*.mp4
+*.mp3
+*.wav
+*.jpg
+*.png
+*.srt
+*.tar.gz
+*.zip
+.vscode/
+.idea/
