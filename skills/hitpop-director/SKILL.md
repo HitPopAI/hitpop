@@ -142,10 +142,37 @@ curl -s -X POST 'https://open.bigmodel.cn/api/paas/v4/chat/completions' \
 {
   "name": "Quick Try",
   "steps": [
-    {"id": "video", "skill": "hitpop-gen-video", "description": "Text-to-video generation", "params": {"model": "viduq2-text2video", "prompt": "USER_DESCRIPTION", "duration": "5", "size": "1920x1080", "with_audio": true}}
+    {"id": "image", "skill": "hitpop-gen-image", "description": "Generate a scene image first", "params": {"model": "doubao-seedream-4.5", "prompt": "USER_DESCRIPTION", "size": "2K"}},
+    {"id": "video", "skill": "hitpop-gen-video", "description": "Generate video from image", "params": {"model": "viduq2-pro-img2video", "image_url": ["$image.output"], "duration": "5", "size": "1920x1080"}}
   ]
 }
 ```
+
+**NOTE: text2video (viduq2-text2video) is NOT allowed for content requiring character consistency** (short films, dramas, multi-scene storytelling). It produces random faces and styles every time. text2video is fine for abstract visuals, landscapes, B-roll, or single-scene content with no recurring characters.
+
+#### "Make me a short film / drama" (Character Content — MANDATORY character-first pipeline)
+```json
+{
+  "name": "Short Film",
+  "steps": [
+    {"id": "characters", "skill": "hitpop-gen-image", "description": "Generate character reference sheets (one per character, front-facing, full detail)", "params": {"model": "doubao-seedream-4.5", "prompt": "CHARACTER_DESCRIPTION_FULL_DETAIL", "size": "2K"}},
+    {"id": "scenes", "skill": "hitpop-gen-image", "description": "Generate scene images using character reference (Seedream 4.0 with reference image input)", "params": {"model": "doubao-seedream-4.0", "images": ["$characters.output"], "prompt": "SCENE_DESCRIPTION + CHARACTER_PROMPT_VERBATIM"}},
+    {"id": "clips", "skill": "hitpop-gen-video", "description": "img2video ONLY — generate video from each scene image with character reference", "params": {"model": "viduq2-img2video", "image_url": ["$characters.output", "$scenes.output"], "duration": "5"}},
+    {"id": "check", "skill": "hitpop-director", "description": "GLM-4.6V consistency check — Critic compares each clip frame to character reference", "params": {"model": "glm-4.6v", "reference": "$characters.output", "frames": "$clips.output"}},
+    {"id": "voice", "skill": "hitpop-voiceover", "description": "Per-character dialogue voiceover", "params": {"engine": "edge-tts"}},
+    {"id": "subs", "skill": "hitpop-subtitle", "description": "Auto-generate subtitles from dialogue", "params": {"input": "$voice.output"}},
+    {"id": "merge", "skill": "hitpop-edit", "description": "Merge all clips + dialogue + subtitles + BGM", "params": {"clips": "$clips.output", "audio": "$voice.output", "subtitle": "$subs.output"}},
+    {"id": "export", "skill": "hitpop-publish", "description": "Export for target platform", "params": {"input": "$merge.output", "platform": "tiktok"}}
+  ]
+}
+```
+
+**CRITICAL RULES for character content:**
+1. Characters MUST be generated first, before any scene
+2. Every scene image MUST use character reference as input
+3. Every video clip MUST use img2video (NEVER text2video)
+4. Every clip MUST pass GLM-4.6V consistency check before merge
+5. If img2video fails: retry with different params → try pro-img2video → try frame model → STOP and ask user. Do NOT fall back to text2video for character scenes.
 
 #### "Help me batch-create social media content" (Batch Social Content)
 ```json

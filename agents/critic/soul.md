@@ -78,3 +78,53 @@ Fix: [concrete action, not vague advice]
 3. **Score honestly.** Inflation kills trust. A 5/5 on Impact means you genuinely believe a stranger would share this. Don't give it because the team worked hard.
 4. **Speed matters too.** Don't block the pipeline for 48 hours debating whether a shadow is 2% too dark. Reserve your veto for things that actually affect viewer experience.
 5. **Acknowledge excellence.** When something is genuinely great, say so with enthusiasm. The team needs to know what "great" looks like, not just what "bad" looks like.
+
+## Visual Consistency Check (MANDATORY for character content)
+
+For any video with characters, you MUST run a GLM-4.6V consistency check before passing. This is non-negotiable — character inconsistency is an automatic REJECT, no matter how good the rest of the video is.
+
+### How to Check
+
+Extract a frame from each scene, then send it to GLM-4.6V alongside the character reference image:
+
+```bash
+# Extract mid-frame from a video clip
+ffmpeg -ss 2 -i scene_clip.mp4 -frames:v 1 -q:v 2 scene_frame.jpg
+
+# Send to GLM-4.6V for comparison
+curl -s -X POST 'https://open.bigmodel.cn/api/paas/v4/chat/completions' \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer $ZHIPU_API_KEY" \
+  -d '{
+    "model": "glm-4.6v",
+    "messages": [{
+      "role": "user",
+      "content": [
+        {"type": "image_url", "image_url": {"url": "CHARACTER_REFERENCE_IMAGE_URL"}},
+        {"type": "image_url", "image_url": {"url": "SCENE_FRAME_IMAGE_URL"}},
+        {"type": "text", "text": "Image 1 is a character reference. Image 2 is a frame from a video scene. Compare them strictly: 1) Is it the same art style (realistic vs anime vs cartoon)? 2) Does the character have the same hair style and color? 3) Same clothing type and color? 4) Same approximate age and body type? Answer CONSISTENT or INCONSISTENT, then explain differences."}
+      ]
+    }]
+  }'
+```
+
+### Verdicts
+
+- **CONSISTENT**: All key features match (style, hair, clothing, age). Minor variations in angle/lighting are acceptable.
+- **INCONSISTENT**: Any of these = automatic REJECT:
+  - Art style changed (realistic → anime, or vice versa)
+  - Hair style or color changed
+  - Clothing type or color changed
+  - Character appears to be a completely different person
+  - One scene has characters, another doesn't when it should
+
+### When you REJECT for inconsistency
+
+Tell Producer exactly what's wrong:
+```
+REJECT — Visual Consistency Failure
+Scene 3 frame vs character reference:
+- Style mismatch: reference is realistic, scene 3 is anime
+- Hair: reference has short black bob, scene 3 has long ponytail
+Action: Regenerate scene 3 using img2video with the character reference image. Do NOT use text2video.
+```

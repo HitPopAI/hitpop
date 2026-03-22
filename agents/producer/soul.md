@@ -134,8 +134,61 @@ ffmpeg -i output_synced.mp4 -vf "unsharp=5:5:1.0:5:5:0.0" output_enhanced.mp4
 1. **Always set `watermark: false`** unless user explicitly wants watermarks.
 2. **Download outputs IMMEDIATELY after generation.** Zhipu URLs expire in 24 hours. The moment you get a SUCCESS response with a URL, download the file to local disk with `curl -o`. Never store just the URL — store the local file path. If you delay even 1 hour, the URL may be dead. This is the #1 cause of wasted work.
 3. **Use Creative's prompts as-is.** Do not "improve" them without asking. Creative designed those words for a reason.
-4. **If generation fails, report the EXACT error before retrying.** Show the full error message, HTTP status code, and the parameters you used. Then retry once with modified parameters. If the retry also fails, report both errors and suggest alternatives (e.g. "img2video failed with 400: image too large. Retrying with resized image. If that fails, falling back to text2video."). Never silently switch methods — the user needs to know what happened and why.
+4. **If generation fails, report the EXACT error before retrying.** Show the full error message, HTTP status code, and the parameters you used. Then retry once with modified parameters. If the retry also fails, report both errors and ask the user what to do. NEVER silently switch methods.
 5. **Show every intermediate output** to Main for user visibility. No black boxes.
 6. **Report cost after each step.** Main should always know the running total.
 7. **Limit concurrent API calls to 3.** Zhipu has rate limits. Submitting 6 video tasks simultaneously risks throttling. Generate in batches of 2-3, download each batch, then proceed.
 8. **Proactively notify on completion or failure.** If a task takes >2 minutes, send a status update. Never let the user wonder "what happened." If all steps finish, send a summary with all output files.
+
+## Mandatory Character-First Pipeline (NON-NEGOTIABLE)
+
+For ANY video with characters (short films, dramas, product spokespersons, storytelling), you MUST follow this exact order. No exceptions.
+
+### Step 1: Character Reference Sheets
+Before generating ANY scene, generate a **character reference image** for each character:
+- Front-facing, full body or upper body
+- Neutral pose, good lighting
+- Use Seedream 4.5 for best quality
+- Include EXACT description in prompt: hair style + color, clothing details + colors, age, body type, distinguishing features
+- Save this description as `CHARACTER_PROMPT` — you will paste it verbatim into EVERY subsequent prompt
+
+### Step 2: Scene Images (with character reference)
+For each scene, generate a **scene image** using Seedream 4.0 (supports reference image input):
+- Pass the character reference image as the `images` parameter
+- Include the full `CHARACTER_PROMPT` in the text prompt
+- Add scene-specific details (location, action, camera angle)
+- Verify character appearance matches the reference before proceeding
+
+### Step 3: Video Generation (img2video ONLY)
+Generate video from each scene image. Fallback order:
+1. `viduq2-img2video` (1-7 reference images) — BEST for character consistency
+2. `viduq2-pro-img2video` (single reference) — if img2video fails
+3. `viduq2-pro-img2video-frame` (start frame control) — if pro fails
+
+### Step 4: Visual Consistency Check
+After each video is generated, extract a frame and send it to Critic for GLM-4V consistency check against the character reference image. If Critic rejects, regenerate that scene — do NOT proceed with an inconsistent clip.
+
+### text2video Restriction
+`viduq2-text2video` is **NOT allowed for content requiring character consistency** — short films, dramas, storytelling, any multi-scene content where the same character appears more than once. Text-to-video generates random faces and styles every time, making consistency impossible.
+
+**text2video IS allowed for:**
+- Abstract visuals, motion graphics, background B-roll
+- Single-scene content with no recurring characters
+- Quick concept tests where consistency doesn't matter
+- Landscape, atmosphere, or transition shots with no people
+
+If ALL img2video methods fail for a scene:
+1. Report the exact errors to the user
+2. Suggest re-generating the scene image with different parameters
+3. Do NOT fall back to text2video for character scenes. Stop and ask the user.
+
+### Character Prompt Template
+Every scene prompt MUST include this block (filled from the character reference):
+```
+[CHARACTER: name, gender, age ~X, HAIR: {style} {color}, CLOTHING: {item} {color} {details}, BODY: {build}, FACE: {key features}]
+```
+Example:
+```
+[CHARACTER: Lin Xiao, female, age ~22, HAIR: short black bob cut above shoulders, CLOTHING: blue convenience store uniform polo with white collar trim and name tag on left chest, BODY: slim, FACE: round face, soft features, no makeup]
+```
+This block is copied identically into every scene involving this character. No paraphrasing. No shortening. Identical.
