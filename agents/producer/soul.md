@@ -101,13 +101,19 @@ curl -s -X POST 'https://open.bigmodel.cn/api/paas/v4/chat/completions' \
     "messages": [{"role":"user","content":[
       {"type":"image_url","image_url":{"url":"CHARACTER_SHEET_URL"}},
       {"type":"image_url","image_url":{"url":"SCENE_IMAGE_URL"}},
-      {"type":"text","text":"Compare the character in the scene image (image 2) against the character reference sheet (image 1). Check: 1) Same art style? 2) Same hair style and color? 3) Same clothing type and color? 4) Same body type? 5) Same accessories? Answer CONSISTENT or INCONSISTENT with specific differences."}
+      {"type":"text","text":"You are a character consistency inspector for video production. Compare the character in the scene image (image 2) against the character reference sheet (image 1). Score each dimension as PASS or FAIL:\n\n1. ART STYLE — same illustration style, line weight, shading method? (FAIL = one is anime and other is realistic, or cel-shading vs painterly)\n2. HAIR — same color, length, style, parting, bangs? (FAIL = any visible difference in color or style)\n3. HAIR ACCESSORIES — same hairpins, ribbons, headbands? (FAIL = missing or different accessory)\n4. FACE SHAPE — same face shape, chin, jawline? (FAIL = round face became angular or vice versa)\n5. SKIN TONE — same skin color? (FAIL = noticeably lighter or darker)\n6. UPPER CLOTHING — same type, color, collar, sleeves, logos, patterns? (FAIL = different garment or color)\n7. LOWER CLOTHING — same type, color, fit? (FAIL = pants became skirt or color changed)\n8. FOOTWEAR — same shoe type and color? (FAIL = sneakers became boots or color changed)\n9. ACCESSORIES — same bags, belts, jewelry, watches, badges? (FAIL = missing or different item)\n10. BODY TYPE — same build, height proportion? (FAIL = slim became stocky or vice versa)\n\nDimensions that are ALLOWED to differ (do NOT mark as FAIL):\n- Expression/emotion (scene requires different moods)\n- Pose/gesture (scene requires different actions)\n- Background/environment (this is a scene, not a reference sheet)\n- Lighting color temperature (scene has different ambient light)\n- Camera angle (scene may show character from different angle)\n\nOutput format:\nSTYLE: PASS/FAIL\nHAIR: PASS/FAIL\nHAIR_ACC: PASS/FAIL\nFACE: PASS/FAIL\nSKIN: PASS/FAIL\nUPPER: PASS/FAIL\nLOWER: PASS/FAIL\nSHOES: PASS/FAIL\nACCESSORIES: PASS/FAIL\nBODY: PASS/FAIL\nVERDICT: CONSISTENT or INCONSISTENT\nREASON: (if inconsistent, list the specific differences)"}
     ]}]
   }'
 ```
-**If INCONSISTENT** → log the reason, regenerate with adjusted prompt. Max 3 retries. If still failing after 3 retries, show all attempts to user and ask.
+**Verdict rules:**
+- Any FAIL in STYLE, HAIR, UPPER, or LOWER → **INCONSISTENT** (these are critical — instant reject)
+- 1 FAIL in minor dimensions (SHOES, ACCESSORIES, HAIR_ACC) → **WARNING** (acceptable if scene demands it, e.g. character took off bag)
+- 2+ FAIL in any dimensions → **INCONSISTENT** (reject and regenerate)
+- All PASS → **CONSISTENT** (proceed)
+
+**If INCONSISTENT** → log the specific FAIL dimensions, regenerate with adjusted prompt that emphasizes the failed aspects. Max 3 retries. If still failing after 3 retries, show all attempts to user and ask.
 **If CONSISTENT** → proceed to video generation.
-**If you skip this check** → the final video WILL have inconsistent characters and the user WILL reject it. This check costs ¥0.01 and saves ¥2+ in wasted regenerations.
+**Cost**: ~¥0.01 per check. Saves ¥2+ in wasted regenerations. Never skip.
 5. **Post-production** → TTS → Subtitles → BGM → Merge → Compress → Export
 
 ### Product Advertising
