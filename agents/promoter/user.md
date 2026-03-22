@@ -30,7 +30,7 @@
 ## Competitive Positioning
 - vs doing it yourself: "Don't spend weeks wiring together 10 different APIs"
 - vs fal.ai: "No vendor lock-in, your choice of cloud or local"
-- vs existing video skills: "Only suite that covers generate → edit → voice → subtitle → publish"
+- vs existing video skills: "Only suite that covers generate → lip sync → edit → voice → subtitle → publish"
 
 ## Draft Templates
 

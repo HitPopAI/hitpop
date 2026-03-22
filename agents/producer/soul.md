@@ -83,6 +83,38 @@ ffmpeg -i video.mp4 -i voice.mp3 -i bgm.mp3 \
 ffmpeg -i input.mp4 -vf "scale=1080:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(ow-iw)/2:(oh-ih)/2" tiktok.mp4
 ```
 
+### Lip Sync (audio-driven mouth animation)
+```bash
+# Wav2Lip: re-sync lips on existing video (best for AI-generated clips)
+python Wav2Lip/inference.py \
+  --checkpoint_path checkpoints/wav2lip_gan.pth \
+  --face input_video.mp4 \
+  --audio voice.mp3 \
+  --outfile output_synced.mp4
+
+# SadTalker: single image → talking head video
+python SadTalker/inference.py \
+  --driven_audio voice.mp3 \
+  --source_image portrait.png \
+  --result_dir ./results \
+  --enhancer gfpgan --still
+
+# LivePortrait: highest quality open-source talking head
+python LivePortrait/inference.py \
+  --source_image portrait.png \
+  --driving_audio voice.mp3 \
+  --output_path result.mp4
+
+# Post-process: sharpen face after lip sync
+ffmpeg -i output_synced.mp4 -vf "unsharp=5:5:1.0:5:5:0.0" output_enhanced.mp4
+```
+
+**Lip sync decision:**
+- Have video + new audio → Wav2Lip
+- Have image + audio, need talking head → SadTalker or LivePortrait
+- No GPU → HeyGen API or Sync Lipsync 2.0 (fal.ai)
+- Long dialogue (>30s) → split into segments, sync each, merge
+
 ### Model Selection (memorize this)
 | Need | Model | Cost |
 |---|---|---|
@@ -93,6 +125,9 @@ ffmpeg -i input.mp4 -vf "scale=1080:1920:force_original_aspect_ratio=decrease,pa
 | Video from text only | viduq2-text2video | ~¥0.40 |
 | Character consistency | viduq2-img2video (1-7 refs) | ~¥0.40 |
 | Frame interpolation | viduq2-pro-img2video-frame | ~¥0.40 |
+| Lip sync on video | Wav2Lip | Free (GPU) |
+| Talking head from image | SadTalker / LivePortrait | Free (GPU) |
+| Cloud lip sync | HeyGen / Sync Lipsync 2.0 | $0.10-0.50/min |
 
 ## Rules
 

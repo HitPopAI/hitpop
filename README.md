@@ -2,11 +2,11 @@
 
 **Video AI Multi-Agent System for OpenClaw, Claude Code, and Cursor.**
 
-9 agents + 15 skills. Say "make me a video" → get a finished video.
+9 agents + 16 skills. Say "make me a video" → get a finished video.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Agents](https://img.shields.io/badge/agents-9-orange.svg)](#agents)
-[![Skills](https://img.shields.io/badge/skills-15-blue.svg)](#skills)
+[![Skills](https://img.shields.io/badge/skills-16-blue.svg)](#skills)
 [![OpenClaw](https://img.shields.io/badge/OpenClaw-compatible-purple.svg)](https://docs.openclaw.ai)
 
 [Quick Start](#quick-start) •
@@ -121,7 +121,7 @@ Talk to the Main agent:
 Skills (Producer's toolbox):
   Generation:  gen-video · gen-image · comfyui
   Templates:   rendervid · shotstack · json2video · creatomate
-  Post-prod:   edit · voiceover · subtitle · music · twick
+  Post-prod:   edit · voiceover · lipsync · subtitle · music · twick
   Distribute:  publish · director · pipeline
 ```
 
@@ -153,7 +153,7 @@ Every agent operates as a higher-dimensional intelligence — not a passive tool
 | 1 | 🧠 **Planner** | Production Architect | Designs minimum-viable pipelines with failure modes |
 | 2 | 💡 **Creative** | Creative Director | Would rather ship nothing than ship boring |
 | 3 | 🎯 **Critic** | Quality Sovereign | Absolute veto power, IMPACT scoring (≥20/30 to pass) |
-| 4 | 💻 **Producer** | Master Craftsman | Executes all technical work via 15 skills |
+| 4 | 💻 **Producer** | Master Craftsman | Executes all technical work via 16 skills |
 | 5 | ✍️ **Writer** | Narrative Architect | "The viewer gives you 1.5 seconds. Earn the next 13.5." |
 | 6 | 🔍 **Reviewer** | Audience Proxy | Watches output as a stranger scrolling at 2am |
 | 7 | 📰 **Scout** | Intelligence Analyst | Delivers insight, not data. "WHY is it trending?" |
@@ -171,7 +171,7 @@ Each agent has 3 files in `agents/<id>/`:
 
 ## Skills
 
-15 skills that Producer uses as its toolbox. All in `skills/`:
+16 skills that Producer uses as its toolbox. All in `skills/`:
 
 | Category | Skill | Backend | Cost |
 |---|---|---|---|
@@ -184,6 +184,7 @@ Each agent has 3 files in `agents/<id>/`:
 | | `hitpop-creatomate` | Creatomate API | Free trial |
 | **Post-prod** | `hitpop-edit` | FFmpeg | Free |
 | | `hitpop-voiceover` | Edge TTS / OpenAI / ElevenLabs | Free+ |
+| | `hitpop-lipsync` | Wav2Lip / SadTalker / LivePortrait / HeyGen | Free+ |
 | | `hitpop-subtitle` | Whisper | Free |
 | | `hitpop-music` | FFmpeg + free libraries | Free |
 | | `hitpop-twick` | Twick React SDK | Free |
@@ -238,12 +239,13 @@ hitpop/
 │   ├── scout/
 │   └── promoter/
 │
-├── skills/                     # 🛠️ 15 video AI skills
+├── skills/                     # 🛠️ 16 video AI skills
 │   ├── hitpop-gen-video/       #   SKILL.md each
 │   ├── hitpop-gen-image/
 │   ├── hitpop-comfyui/
 │   ├── hitpop-edit/
 │   ├── hitpop-voiceover/
+│   ├── hitpop-lipsync/
 │   ├── hitpop-subtitle/
 │   ├── hitpop-music/
 │   ├── hitpop-publish/
