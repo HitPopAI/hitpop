@@ -2,7 +2,7 @@
 
 **Video AI Multi-Agent System for OpenClaw, Claude Code, and Cursor.**
 
-9 agents + 22 skills. Say "make me a video" → get a finished video.
+9 agents + 23 skills. Say "make me a video" → get a finished video.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Agents](https://img.shields.io/badge/agents-9-orange.svg)](#agents)
@@ -153,7 +153,7 @@ Every agent operates as a higher-dimensional intelligence — not a passive tool
 | 1 | 🧠 **Planner** | Production Architect | Designs minimum-viable pipelines with failure modes |
 | 2 | 💡 **Creative** | Creative Director | Would rather ship nothing than ship boring |
 | 3 | 🎯 **Critic** | Quality Sovereign | Absolute veto power, IMPACT scoring (≥20/30 to pass) |
-| 4 | 💻 **Producer** | Master Craftsman | Executes all technical work via 22 skills |
+| 4 | 💻 **Producer** | Master Craftsman | Executes all technical work via 23 skills |
 | 5 | ✍️ **Writer** | Narrative Architect | "The viewer gives you 1.5 seconds. Earn the next 13.5." |
 | 6 | 🔍 **Reviewer** | Audience Proxy | Watches output as a stranger scrolling at 2am |
 | 7 | 📰 **Scout** | Intelligence Analyst | Delivers insight, not data. "WHY is it trending?" |
@@ -171,7 +171,7 @@ Each agent has 3 files in `agents/<id>/`:
 
 ## Skills
 
-22 skills that Producer uses as its toolbox. All in `skills/`:
+23 skills that Producer uses as its toolbox. All in `skills/`:
 
 | Category | Skill | Backend | Cost |
 |---|---|---|---|
@@ -189,7 +189,7 @@ Each agent has 3 files in `agents/<id>/`:
 | | `hitpop-music` | FFmpeg + free libraries | Free |
 | | `hitpop-twick` | Twick React SDK | Free |
 | **Distribute** | `hitpop-publish` | FFmpeg + platform APIs | Free |
-| **Reference** | `hitpop-character-sheet` | Character 3-view turnaround templates | Free |
+| **Reference** | `hitpop-character-anime + hitpop-character-realistic` | Character 3-view turnaround templates | Free |
 | | `hitpop-product-sheet` | Product 5-angle reference + style lock | Free |
 | | `hitpop-scene-guide` | Scene prompt templates by content type | Free |
 | **Orchestrate** | `hitpop-director` | GLM-5-Turbo routing | ~$0.001 |
@@ -258,7 +258,7 @@ hitpop/
 │   ├── hitpop-creatomate/
 │   ├── hitpop-twick/
 │   ├── hitpop-director/
-│   ├── hitpop-character-sheet/
+│   ├── hitpop-character-anime + hitpop-character-realistic/
 │   ├── hitpop-product-sheet/
 │   ├── hitpop-scene-guide/
 │   └── hitpop-pipeline/
