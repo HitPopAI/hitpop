@@ -1,7 +1,7 @@
 ---
 name: hitpop-virtual-idol
-description: "AI Virtual Idol pipeline — design character, generate AI cover songs, create lip-sync music videos, and publish to Douyin/TikTok. Full pipeline from character concept to viral content."
-version: 0.1.0
+description: "AI Virtual Idol pipeline — photorealistic AI singer/performer for Douyin/TikTok. Generate realistic human character, AI cover songs (RVC), high-quality lip sync (TopView Avatar 4 / HeyGen), stage scenes, and publish. Full pipeline from character concept to viral content."
+version: 0.2.0
 metadata:
   openclaw:
     emoji: "🌟"
@@ -14,67 +14,104 @@ metadata:
         - ffmpeg
 ---
 
-# Hitpop Virtual Idol — AI Singer/Performer Pipeline
+# Hitpop Virtual Idol — Photorealistic AI Singer Pipeline
 
-Create AI virtual idols that sing, perform, and post content on Douyin/TikTok. Everything is AI-generated: character design, voice, music video, lip sync.
+Create AI virtual idols that look like REAL PEOPLE — singing, performing, and posting on Douyin/TikTok. The audience should NOT be able to tell it's AI at first glance.
+
+**Style: Photorealistic. NOT anime. NOT cartoon. Real human appearance.**
+
+Reference: 抖音上的 @宋居寒, @在野 等写实虚拟偶像账号，1.8万+ 点赞。
 
 ## Complete Pipeline
 
 ```
-1. Design Idol  →  2. Setup Voice  →  3. Pick Song  →  4. AI Cover  →  5. Generate MV  →  6. Lip Sync  →  7. Post-Production  →  8. Publish
+1. Design Idol (realistic)  →  2. Generate Face Photo  →  3. Setup Voice (RVC)
+       ↓
+4. Pick Song  →  5. AI Cover  →  6. Generate Stage Scene
+       ↓
+7. Lip Sync (TopView/HeyGen)  →  8. Post-Production  →  9. Publish to Douyin
 ```
 
-## Step 1: Design the Virtual Idol
+## Step 1: Design the Idol
 
-Use `hitpop-character-sheet` to create the idol's visual identity.
+Define the idol's persona (save as `idol_profiles/{name}.json`):
 
-**Idol Profile** (save as `idol_profiles/{name}.json`):
 ```json
 {
-  "name": "星璃",
-  "name_en": "Xingli",
-  "age": "19",
-  "personality": "甜美可爱，有点傲娇，喜欢唱抒情歌",
-  "visual_style": "anime",
-  "voice_model_url": "https://huggingface.co/.../xingli_rvc_v2.zip",
+  "name": "宋居寒",
+  "name_en": "Song Juhan",
+  "gender": "male",
+  "age": "22",
+  "nationality": "Chinese",
+  "personality": "冷酷帅气，摇滚气质，舞台霸气但私下温柔",
+  "music_style": "摇滚/抒情/古风翻唱",
+  "visual_style": "photorealistic",
+  "appearance": {
+    "face": "sharp jawline, high cheekbones, intense dark eyes",
+    "hair": "blonde/silver long hair, styled messy, past shoulders",
+    "skin": "fair, clean, Korean idol style",
+    "build": "slim, 178cm, model proportions"
+  },
+  "signature_look": "leather jacket, choker necklace, silver rings, eyeliner",
+  "stage_style": "band setup with drums, guitar, moody purple/blue lighting",
+  "voice_model_url": "https://huggingface.co/.../songjuhan_rvc_v2.zip",
   "voice_settings": {
     "pitch_change": 0,
-    "index_rate": 0.55,
-    "reverb_size": 0.15
+    "index_rate": 0.55
   },
-  "signature_colors": ["#FF69B4", "#FFB6C1", "#FFFFFF"],
-  "character_sheet_url": "URL_OF_APPROVED_CHARACTER_SHEET",
   "social_accounts": {
-    "douyin": "@xingli_ai",
-    "tiktok": "@xingli_ai"
+    "douyin": "@songjuhan_ai"
   }
 }
 ```
 
-Generate character sheet with `hitpop-character-sheet` (anime or semi-realistic style). Get user approval before proceeding.
+## Step 2: Generate Photorealistic Face/Body Photo
 
-## Step 2: Setup Voice
+Use Seedream 4.5 to generate the idol's base photos. These will be used for ALL subsequent lip sync videos — consistency is critical.
 
-Two options:
+**Generate multiple base images for variety:**
 
-**Option A: Use existing RVC model** from voice-models.com or HuggingFace
-- Browse models, find a voice that matches the idol's personality
-- Copy the .zip download URL into the idol profile
+```bash
+# Portrait — for lip sync singing videos (upper body, facing camera)
+curl -s -X POST 'https://open.bigmodel.cn/api/paas/v4/images/generations' \
+  -H "Authorization: Bearer $ZHIPU_API_KEY" -H 'Content-Type: application/json' \
+  -d '{
+    "model": "doubao-seedream-4.5",
+    "prompt": "Photorealistic portrait photo of a 22-year-old Chinese male singer on stage. Sharp jawline, high cheekbones, intense dark eyes, blonde/silver long messy hair past shoulders. Wearing black leather jacket over mesh top, silver choker necklace, multiple silver rings. Standing at microphone, moody purple and blue stage lighting, bokeh lights in background. Shot on Canon EOS R5, 85mm f/1.4, shallow depth of field. 8K, ultra-detailed skin texture, natural lighting.",
+    "size": "1080x1920",
+    "watermark": false
+  }'
 
-**Option B: Train custom voice** (better quality, more unique)
-- Collect 10-30 minutes of clean vocal audio (from any source)
-- Use Replicate's `create-rvc-dataset` + `train-rvc-model` (see `hitpop-ai-cover` skill)
-- Save the trained model URL in the idol profile
+# Full body — for MV scenes
+# Same prompt but "full body standing on stage, 9:16 vertical"
 
-## Step 3: Pick a Song
+# Close-up face — for detailed lip sync
+# Same character but "extreme close-up face portrait, mouth clearly visible"
+```
 
-Choose a song for the idol to "cover":
-- User provides a song file or YouTube link
-- Or search for trending songs on Douyin/TikTok
-- Instrumentals work best (no need for vocal separation)
-- For songs with vocals, the RVC model auto-separates them
+**CRITICAL: Save these base images. Every lip sync video MUST use the same face photo to maintain idol identity.**
 
-## Step 4: Generate AI Cover
+## Step 3: Setup Voice (RVC Model)
+
+**Option A: Download pre-made voice** from HuggingFace
+- Browse https://huggingface.co/QuickWick/Music-AI-Voices
+- Pick a voice matching the idol's style (male rock singer, female ballad singer, etc.)
+
+**Option B: Train custom voice** on Replicate
+- See `hitpop-ai-cover/SKILL.md` for training instructions
+- Need 10-30 min of clean vocal audio from any source
+
+Save voice model URL in idol profile JSON.
+
+## Step 4: Pick a Song
+
+Choose songs strategically:
+- **Hot on Douyin right now** — ride the trending wave
+- **Classic emotional songs** — 古风/情歌 always perform well
+- **Songs that suit the idol's voice range** — don't pick soprano for a bass voice
+- User can provide a song file, YouTube link, or just a song name
+
+## Step 5: AI Cover
 
 Use `hitpop-ai-cover` skill:
 ```bash
@@ -84,7 +121,7 @@ curl -s -X POST "https://api.replicate.com/v1/predictions" \
   -d '{
     "version": "zsxkib/realistic-voice-cloning",
     "input": {
-      "song_input": "SONG_URL",
+      "song_input": "SONG_URL_OR_FILE",
       "rvc_model": "CUSTOM",
       "custom_rvc_model_download_url": "IDOL_VOICE_MODEL_URL",
       "pitch_change": 0,
@@ -94,36 +131,88 @@ curl -s -X POST "https://api.replicate.com/v1/predictions" \
     }
   }'
 ```
-Download the AI cover audio immediately.
+Cost: ~$0.034/song. Download output immediately.
 
-## Step 5: Generate Music Video Visuals
+## Step 6: Generate Stage/Performance Scene
 
-Two approaches based on content type:
+Generate scene backgrounds for the MV:
 
-### MV Type A: Static Image + Lip Sync (simplest, most common on Douyin)
-- Use the idol's character sheet or generate a new pose image
-- Generate a portrait/upper-body image of the idol in a MV setting:
+```bash
+# Stage scene — band performance
+curl -s -X POST 'https://open.bigmodel.cn/api/paas/v4/images/generations' \
+  -H "Authorization: Bearer $ZHIPU_API_KEY" -H 'Content-Type: application/json' \
+  -d '{
+    "model": "doubao-seedream-4.5",
+    "prompt": "Photorealistic live music venue stage, moody purple and blue lighting, fog machine haze, Marshall guitar amps in background, drum kit behind, spotlight from above, bokeh lights, cinematic atmosphere. No people. Empty stage ready for performer. 9:16 vertical.",
+    "size": "1080x1920",
+    "watermark": false
+  }'
 ```
-[IDOL CHARACTER BLOCK] in a music studio, wearing headphones, microphone in front, neon lights, [camera: medium close-up, slight low angle], cinematic lighting, 9:16 vertical composition for Douyin/TikTok
+
+Or use Vidu to generate a short stage background video loop.
+
+## Step 7: Lip Sync (THE MOST CRITICAL STEP)
+
+This is what makes or breaks the virtual idol. Use the BEST available option:
+
+### Option A: TopView Avatar 4 (RECOMMENDED — most realistic)
+
+TopView's Avatar 4 has the best lip sync for realistic virtual humans. It supports:
+- Photo to talking video
+- Natural head motion + facial expressions
+- Emotional mapping
+- 30+ languages
+
 ```
-- Use Seedream 4.5 for the base image
-- Then apply lip sync in Step 6
+1. Go to topview.ai/make/video-avatar (or use API)
+2. Upload the idol's portrait photo (from Step 2)
+3. Upload the AI cover audio (from Step 5)
+4. Select Avatar 4 mode
+5. Enable "still" mode for singing (minimal head movement)
+6. Generate → download
+```
 
-### MV Type B: Animated MV (more effort, higher quality)
-- Generate 3-5 scene images of the idol in different poses/settings
-- Use img2video (viduq2-img2video) for each scene
-- Apply lip sync to key scenes
-- Edit together with FFmpeg
+**TopView API (if available):**
+```bash
+curl -X POST "https://api.topview.ai/v1/video/avatar" \
+  -H "Authorization: Bearer $TOPVIEW_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "avatar_image": "IDOL_PORTRAIT_URL",
+    "audio_url": "AI_COVER_AUDIO_URL",
+    "avatar_model": "avatar4",
+    "dimension": {"width": 1080, "height": 1920}
+  }'
+```
 
-### MV Type C: Lyric Video (easiest)
-- Generate a background image/video
-- Overlay lyrics with timing synced to audio
-- Add idol's image as a small inset or watermark
+Pricing: $18-45/month subscription, or per-credit usage.
 
-## Step 6: Lip Sync
+### Option B: HeyGen (alternative — also very realistic)
 
-Use Replicate's SadTalker for image-to-talking-video:
+```bash
+curl -X POST 'https://api.heygen.com/v2/video/generate' \
+  -H "X-Api-Key: $HEYGEN_API_KEY" \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "video_inputs": [{
+      "character": {
+        "type": "talking_photo",
+        "talking_photo_id": "PHOTO_ID"
+      },
+      "voice": {
+        "type": "audio",
+        "audio_url": "AI_COVER_AUDIO_URL"
+      }
+    }],
+    "dimension": {"width": 1080, "height": 1920}
+  }'
+```
 
+Pricing: ~$0.10-0.50/min
+
+### Option C: Replicate SadTalker (cheapest, lower quality)
+
+Only use this as fallback if TopView/HeyGen are unavailable:
 ```bash
 curl -s -X POST "https://api.replicate.com/v1/predictions" \
   -H "Authorization: Bearer $REPLICATE_API_TOKEN" \
@@ -134,86 +223,91 @@ curl -s -X POST "https://api.replicate.com/v1/predictions" \
       "source_image": "IDOL_PORTRAIT_URL",
       "driven_audio": "AI_COVER_AUDIO_URL",
       "enhancer": "gfpgan",
-      "still": true,
-      "preprocess": "crop"
+      "still": true
     }
   }'
 ```
+Cost: ~$0.05-0.10/min. Quality is lower — more "uncanny valley" risk.
 
-**Parameters:**
-| Parameter | Value | Description |
-|---|---|---|
-| `still` | true | Keeps head still (good for singing videos) |
-| `preprocess` | crop | Crops face for best results |
-| `enhancer` | gfpgan | Enhances face quality |
+### Lip Sync Quality Priority:
+1. **TopView Avatar 4** — best quality, most natural
+2. **HeyGen** — very good, established platform
+3. **SadTalker** — acceptable for prototyping, not for final publish
 
-**For longer songs (>60s):** Split audio into 30-60s segments, generate lip sync for each, merge with FFmpeg.
-
-**Alternative: OmniHuman API** (if available) — better quality but may require separate API access.
-
-## Step 7: Post-Production
+## Step 8: Post-Production
 
 ```bash
-# Resize to Douyin 9:16 vertical
-ffmpeg -i lipsync_output.mp4 -vf "scale=1080:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(ow-iw)/2:(oh-ih)/2" vertical.mp4
+# Combine lip sync video with stage background (picture-in-picture or full screen)
+# If lip sync is upper body, composite over stage background:
+ffmpeg -i stage_bg.mp4 -i lipsync_video.mp4 \
+  -filter_complex "[1:v]scale=1080:1920[fg];[0:v][fg]overlay=0:0" \
+  -c:a aac composed.mp4
 
-# Add song title + idol name overlay
-ffmpeg -i vertical.mp4 -vf "drawtext=text='星璃 AI翻唱':fontsize=40:fontcolor=white:x=(w-text_w)/2:y=h-100:fontfile=/path/to/font.ttf" titled.mp4
+# Add song lyrics as subtitles
+ffmpeg -i composed.mp4 -vf "subtitles=lyrics.srt:force_style='FontSize=28,PrimaryColour=&HFFFFFF&,OutlineColour=&H40000000&,Outline=2,Alignment=2,MarginV=60'" subtitled.mp4
 
-# Add background effects (optional — subtle particle effects, light leaks)
-# Compress for Douyin upload (under 100MB)
-ffmpeg -i titled.mp4 -b:v 4M -c:a aac -b:a 192k final.mp4
+# Add idol name/watermark
+ffmpeg -i subtitled.mp4 -vf "drawtext=text='@宋居寒 AI翻唱':fontsize=24:fontcolor=white@0.7:x=20:y=h-60" final.mp4
+
+# Compress for Douyin (under 100MB)
+ffmpeg -i final.mp4 -b:v 4M -c:a aac -b:a 192k -movflags +faststart upload_ready.mp4
 ```
 
-## Step 8: Publish
+## Step 9: Publish to Douyin
 
-Use `hitpop-publish` skill to export for Douyin/TikTok:
-- Vertical 9:16 (1080x1920)
-- Under 100MB
-- Add hashtags: #AI翻唱 #虚拟偶像 #AI歌手 #星璃 #hitpop
-- Add cover image (use the idol's character image)
+Export specs:
+- **Format**: MP4, H.264
+- **Resolution**: 1080x1920 (9:16 vertical)
+- **Size**: Under 100MB
+- **Duration**: 15s-3min (sweet spot: 30-60s for covers)
 
-## Content Strategy for Viral Growth
+Douyin posting checklist:
+- ✅ Add "作者声明：内容由 AI 生成" (required by platform rules)
+- ✅ Hashtags: #AI翻唱 #虚拟偶像 #AI歌手 #{idol_name} #{song_name}
+- ✅ Song tag: link the original song via Douyin's music tag
+- ✅ Cover image: use the idol's portrait photo
 
-### Content Calendar
-| Day | Content Type | Description |
+## Content Strategy
+
+### Song Selection for Maximum Virality
+| Song Type | Why It Works | Example |
 |---|---|---|
-| Mon | AI Cover | Popular song cover |
-| Wed | Behind-the-scenes | Show the AI generation process |
-| Fri | AI Cover | Trending song cover |
-| Sun | Idol "story" | Short drama or daily life clip using idol character |
+| 古风热歌 | Huge audience on Douyin | 笑纳, 赤伶, 探窗 |
+| 经典情歌 | Emotional resonance | 光辉岁月, 晴天, 告白气球 |
+| 当前热门 | Algorithm boost from trending | Whatever's #1 this week |
+| 英文热歌翻唱 | Cross-cultural novelty | Shape of You, Love Story |
 
-### Song Selection Strategy
-- Cover trending songs within 24h of them going viral
-- Mix Chinese and English songs
-- Target songs with strong emotional moments (AI voice shines on ballads)
-- Avoid songs with extremely fast rap (RVC quality drops)
+### Posting Schedule
+- **3-5 covers per week** — consistency is key for algorithm
+- **Best times**: 12:00-13:00, 18:00-20:00, 21:00-23:00
+- **Alternate styles**: ballad → rock → 古风 → pop (show range)
 
 ### Engagement
-- Respond to comments in character (using GLM-5-Turbo)
+- Respond to comments in character (use GLM-5-Turbo with idol's personality prompt)
 - Take song requests from fans
-- Create "duets" with other AI idols
+- Occasionally show "behind the scenes" AI generation process
 
-## Idol Roster (manage multiple idols)
+## Cost Per Song
 
-Store all idol profiles in `idol_profiles/` directory:
+| Step | Tool | Cost |
+|---|---|---|
+| Idol portrait (reuse) | Seedream 4.5 | ¥0.25 (one-time) |
+| AI Cover | Replicate RVC | ~¥0.25 ($0.034) |
+| Lip Sync | TopView Avatar 4 | ~¥2-5 (per credit) |
+| Stage scene (reuse) | Seedream 4.5 | ¥0.25 (one-time) |
+| Post-production | FFmpeg | Free |
+| **Total per new song** | | **~¥2.50-5.50** |
+
+## Idol Roster
+
+Manage multiple idols for different audiences:
+
 ```
 idol_profiles/
-├── xingli.json      # Sweet female singer
-├── darknight.json   # Cool male rapper
-└── mimi.json        # Cute chibi mascot
+├── songjuhan.json    # 冷酷摇滚男 — 古风/摇滚翻唱
+├── linxi.json        # 甜美女生 — 情歌/流行翻唱
+├── darkprince.json   # 暗黑王子 — 说唱/电子翻唱
+└── xiaomeng.json     # 清纯邻家 — 民谣/轻音乐
 ```
 
-Each idol has their own voice model, visual style, and personality. Use different idols for different song genres.
-
-## Cost Estimate (per song)
-
-| Step | Cost |
-|---|---|
-| Character image (if new pose needed) | ¥0.25 |
-| AI Cover (Replicate RVC) | ~$0.034 (~¥0.25) |
-| Lip Sync (Replicate SadTalker) | ~$0.05-0.10 (~¥0.35-0.70) |
-| Post-production (FFmpeg) | Free |
-| **Total per song** | **~¥0.85-1.20** |
-
-At this cost, you can produce 10+ songs per day for under ¥12.
+Each idol has unique: appearance, voice model, personality, target audience, song style.
