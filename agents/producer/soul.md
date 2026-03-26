@@ -81,7 +81,47 @@ ffmpeg -i input.mp4 -vf "scale=1080:1920:force_original_aspect_ratio=decrease,pa
 
 ### Character Content (short films, dramas, storytelling)
 For ANY content with recurring characters:
-1. **Character sheets first** → Read `hitpop-character-sheet/SKILL.md` for templates. Generate 3-view turnaround. Show user for approval before proceeding.
+1. **Character sheets first (THREE-VIEW, NON-NEGOTIABLE)** → Every character sheet MUST be a SINGLE image containing THREE full-body views (front, 3/4, back) with color palette and detail callouts. A single portrait or headshot is NOT a character sheet — reject it and redo. Use this exact prompt structure:
+```
+Professional character design model sheet. ONE character shown from exactly THREE angles in a single image.
+Left: Front view (facing camera) | Center: Three-quarter view (turned 45 degrees) | Right: Back view (facing away)
+All three views on [clean white / light grid] background. Full body, standing neutral pose. Same height, aligned at feet.
+
+Character: [full description...]
+
+CRITICAL CONSISTENCY RULES:
+- The face in all three views must be the SAME person
+- The hair must be IDENTICAL in all views
+- The clothing must be PIXEL-IDENTICAL in all views
+- The body proportions must be IDENTICAL
+- DO NOT draw three different characters. This is ONE person from three camera angles.
+
+Color palette at top with hex values.
+Detail callouts: circular zoom-in bubbles for hair, face, clothing, shoes, accessories.
+Style: [anime/photorealistic], professional character model sheet, consistent across all three views.
+Aspect ratio: 16:9 landscape, 2K.
+```
+Generate with `doubao-seedream-4.5`, size `2K`, watermark `false`. 
+
+**POST-GENERATION VALIDATION (do this IMMEDIATELY after each character sheet is generated):**
+Before showing to user, check the generated image yourself:
+```bash
+curl -s -X POST 'https://open.bigmodel.cn/api/paas/v4/chat/completions' \
+  -H "Authorization: Bearer $ZHIPU_API_KEY" \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "model": "glm-4.6v",
+    "messages": [{"role":"user","content":[
+      {"type":"image_url","image_url":{"url":"GENERATED_IMAGE_URL"}},
+      {"type":"text","text":"Is this a character design model sheet with THREE full-body views of the same character? Check: 1) Are there exactly 3 views (front, side/3-quarter, back)? 2) Are all views full-body (head to feet visible)? 3) Is there a color palette? 4) Are there detail callout bubbles? Answer YES_VALID or NO_INVALID with reason."}
+    ]}]
+  }'
+```
+- **YES_VALID** → show to user for approval
+- **NO_INVALID (only 1-2 views)** → REGENERATE, do not show to user
+- **NO_INVALID (not full body)** → REGENERATE with emphasis on "full body, head to feet"
+- **NO_INVALID (no color palette)** → REGENERATE with emphasis on "color palette at top with hex values"
+This validation costs ¥0.01 and prevents showing bad character sheets to the user.
 2. **Scene images (MUST use reference image)** → Read `hitpop-scene-guide/SKILL.md`. **MANDATORY**: Use `doubao-seedream-4.0` (NOT 4.5) with the approved character sheet URL passed as the `images` parameter. Seedream 4.5 does NOT support reference images. If you use 4.5 or omit the `images` parameter, the character WILL look different — this is the #1 cause of inconsistency. The API call MUST look like:
 ```bash
 curl -s -X POST 'https://open.bigmodel.cn/api/paas/v4/images/generations' \

@@ -84,13 +84,26 @@ Fixed: `three full-body views arranged horizontally: Left front view, Center 3/4
 ## Prompt Template: Realistic / Photorealistic
 
 ```
-Character design reference sheet, three full-body views of the SAME character on clean white background.
+Professional character design model sheet. ONE character shown from exactly THREE angles in a single image.
 
-Left: Front view | Center: Three-quarter view | Right: Back view
+Left: Front view (facing camera) | Center: Three-quarter view (turned 45 degrees) | Right: Back view (facing away)
 
-[SUBJECT]: [gender], [age], [ethnicity], [build]. [FACE]: [face shape], [skin tone], [eye color and shape], [eyebrow shape], [nose], [lip shape and color], [expression]. [HAIR]: [exact color], [length], [style], [parting], [texture], [any hair accessories]. [UPPER CLOTHING]: [type], [specific color name + hex], [material/fabric], [collar style], [sleeve type], [pockets], [logos/patches], [buttons/zippers]. [LOWER CLOTHING]: [type], [color], [fit], [length]. [FOOTWEAR]: [type], [color], [details]. [ACCESSORIES]: [every item — bags, belts, jewelry, hats, watches, etc.]
+All three views on clean white studio background. Full body, standing neutral pose. All three views must be the SAME height and aligned at the feet.
 
-CRITICAL: All three views must show the EXACT SAME person with identical face, hair, clothing, accessories, and body proportions. No variation between views.
+Character: [gender], [age], [ethnicity], [build], [height].
+Face: [face shape], [skin tone], [eye color and shape], [eyebrow shape], [nose], [lip shape and color], [expression].
+Hair: [exact color name], [exact length], [exact style], [parting], [texture], [any hair accessories].
+Upper body: [garment type], [specific color name + hex], [material/fabric], [collar style], [sleeve type], [pockets], [logos/patches], [buttons/zippers].
+Lower body: [garment type], [color], [fit], [length].
+Footwear: [type], [color], [details].
+Accessories: [every item — bags, belts, jewelry, hats, watches, etc.]
+
+CRITICAL CONSISTENCY RULES (the AI model MUST follow these):
+- The face in all three views must be the SAME person — same bone structure, same eyes, same nose, same mouth, same skin tone. NOT three different people.
+- The hair must be IDENTICAL in all views — same color, same length, same style, same parting. Only the angle changes.
+- The clothing must be PIXEL-IDENTICAL in all views — same colors, same fabric, same wrinkles, same details. Only the visible side changes.
+- The body proportions must be IDENTICAL — same height, same build, same limb length.
+- DO NOT generate three different people. This is ONE person photographed from three camera angles in the same studio session.
 
 Color palette at top: [main color + hex], [secondary + hex], [accent 1 + hex], [accent 2 + hex], [accent 3 + hex].
 
@@ -102,25 +115,36 @@ Detail callouts: circular magnification bubbles with thin lines pointing to:
 - SHOES: [key detail]
 - ACCESSORY: [key detail]
 
-Style: photorealistic, cinematic quality, natural skin texture, 8K detail, professional character model sheet for film production, consistent studio lighting across all three views, clean white background, no text labels.
+Style: photorealistic, cinematic quality, natural skin texture, 8K detail, professional character model sheet for film production, consistent studio lighting across all three views, clean white background, SAME person in all views, uniform lighting and color grading.
 
-Aspect ratio: 16:9 landscape, high resolution.
+Aspect ratio: 16:9 landscape, high resolution, 2K.
 ```
 
 ## Prompt Template: Anime / Cartoon
 
 ```
-Character design sheet, professional character turnaround reference, [CHARACTER_DESCRIPTION].
+Professional character design model sheet. ONE character shown from exactly THREE angles in a single image.
 
-Left: Front view | Center: Three-quarter view | Right: Back view
+Left: Front view (facing camera) | Center: Three-quarter view (turned 45 degrees) | Right: Back view (facing away)
 
-Three full-body views of the SAME character on light [pink/cream/blue] grid background. Standing neutral pose, white ground plane.
+All three views on [light pink/cream/blue] grid background. Full body, standing neutral pose, white ground plane. All three views must be the SAME height and aligned at the feet.
 
-[SUBJECT]: [gender], [age], [personality vibe]. [HAIR]: [exact color], [length], [style], [bangs], [accessories]. [CLOTHING]: [full description with specific colors]. [SHOES]: [type and color]. [ACCESSORIES]: [every item].
+Character: [gender], [age], [personality]. 
+Hair: [exact color name], [exact length], [exact style], [bangs type], [hair accessories if any].
+Face: [eye color], [eye shape], [expression], [any unique facial features].
+Upper body: [garment type], [exact color with hex], [material], [collar], [sleeves], [details like pockets/buttons/logos].
+Lower body: [garment type], [exact color], [fit], [length].
+Footwear: [type], [exact color], [details].
+Accessories: [list every item with exact description].
 
-CRITICAL: All three views must show the EXACT SAME character with identical hair, clothing, colors, accessories, and proportions. No variation.
+CRITICAL CONSISTENCY RULES (the AI model MUST follow these):
+- The face in all three views must be the SAME person — same eye shape, same eye color, same nose, same mouth, same face shape. NOT three different faces.
+- The hair must be IDENTICAL in all views — same color, same length, same style, same bangs. Only the angle changes.
+- The clothing must be PIXEL-IDENTICAL in all views — same colors, same patterns, same wrinkles, same details. Only the visible side changes.
+- The body proportions must be IDENTICAL — same height, same build, same limb length.
+- DO NOT draw three different characters. This is ONE person from three camera angles.
 
-Top: character name "[NAME]" in bold, color palette showing swatches with labels (main: [COLOR], secondary: [COLOR], accent 1: [COLOR], accent 2: [COLOR], accent 3: [COLOR]).
+Top: character name "[NAME]" in bold, color palette showing swatches with hex values (main: [COLOR], secondary: [COLOR], accent 1: [COLOR], accent 2: [COLOR], accent 3: [COLOR]).
 
 Detail callouts: circular zoom-in bubbles with thin connecting lines:
 - HAIR: [detail]
@@ -130,9 +154,9 @@ Detail callouts: circular zoom-in bubbles with thin connecting lines:
 - SHOES: [detail]
 - ACCESSORY: [detail]
 
-Style: [anime/cartoon/chibi] illustration, clean line art, flat color with soft shading, professional character design sheet, game art style, high detail, consistent proportions across all three views.
+Style: [anime/cartoon/semi-realistic] illustration, clean line art, flat color with soft cel shading, professional character model sheet for animation production, game concept art quality, high detail, PERFECTLY consistent proportions and art style across all three views, uniform line weight across all views.
 
-Aspect ratio: 16:9 landscape, high resolution.
+Aspect ratio: 16:9 landscape, high resolution, 2K.
 ```
 
 ## Example: Realistic — Late Night Drama
