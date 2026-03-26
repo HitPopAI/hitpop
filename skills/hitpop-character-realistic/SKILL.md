@@ -1,7 +1,7 @@
 ---
 name: hitpop-character-realistic
-description: "Photorealistic character reference sheet generator — single-image 3-view turnaround with color palette, detail callouts, 7-dimension prompt engineering, and common-sense checks. For photorealistic, cinematic, Korean drama, and semi-realistic styles. Also generates single portrait photos for virtual idol lip sync use."
-version: 0.1.0
+description: "Photorealistic 3-view character reference sheet for short films, dramas, and ads. Single-image turnaround with color palette, detail callouts, 7-dimension prompt engineering, and common-sense checks. For photorealistic, cinematic, and Korean drama styles."
+version: 0.2.0
 metadata:
   openclaw:
     emoji: "📸"
@@ -10,45 +10,15 @@ metadata:
         - ZHIPU_API_KEY
 ---
 
-# Hitpop Character Sheet — Photorealistic Style
+# Hitpop Character Sheet — Photorealistic 3-View (Short Films / Dramas / Ads)
 
-Generate professional photorealistic character design sheets as a SINGLE IMAGE containing three views. Also supports generating single portrait photos for virtual idol singing videos (lip sync input).
+Generate professional photorealistic character design sheets as a SINGLE IMAGE containing three full-body views. Used when you need the character to appear in multiple scenes across a short film, drama, or advertisement.
 
-**CRITICAL RULE: For 3-view sheets, always generate three views in ONE image. Never generate three separate images.**
-
-## Two Output Modes
-
-### Mode A: 3-View Reference Sheet (for short films, dramas, ads)
-Three full-body views side by side in one 16:9 landscape image. Used when you need the character to appear in multiple scenes and must maintain consistency.
-
-### Mode B: Virtual Idol System (for AI singer / lip sync videos)
-A three-step process for creating virtual idol content:
-
-**Step B1: Base Identity Photo** — Generate ONE clean portrait on white/neutral background. This is the idol's "face ID" — used as reference for ALL subsequent scene images. Generate ONCE, reuse forever.
-
-**Step B2: Scene Photos** — Using Seedream 4.0 with the base identity photo as `images` reference, generate the idol in different performance scenes. Same face, different settings.
-
-**Step B3: Lip Sync Video** — Feed a scene photo + AI cover audio into TopView Avatar 4 / HeyGen to generate the singing video.
-
-```
-B1: Base Identity Photo (一次生成，永久复用)
-        ↓ (作为参考图传入 Seedream 4.0 的 images 参数)
-B2: Scene Photos (同一个人，不同场景)
-    ├── 演唱会舞台
-    ├── 录音棚
-    ├── 寝室弹吉他
-    ├── 街头驻唱
-    ├── 大屏幕直播
-    └── MV 拍摄现场
-        ↓ (场景照 + AI翻唱音频)
-B3: Lip Sync Video → 发布抖音
-```
-
-**Ask user which mode they need if unclear: "需要三视图角色设定图（短剧/广告）还是虚拟偶像歌手（翻唱视频）？"**
+**CRITICAL RULE: Always generate three views in ONE image. Never generate three separate images.**
 
 ## 7-Dimension Prompt Checklist
 
-Every character prompt MUST cover all 7 dimensions. Check each before generating:
+Every character sheet prompt MUST cover all 7 dimensions. Check each before generating:
 
 ### 1. Style (风格)
 | Content Type | Style Keywords |
@@ -56,51 +26,45 @@ Every character prompt MUST cover all 7 dimensions. Check each before generating
 | Modern realistic | `photorealistic, cinematic quality, natural skin texture, 8K detail, shot on Canon EOS R5` |
 | Chinese historical drama | `photorealistic Chinese historical drama, cinematic quality, traditional costume, period lighting` |
 | Korean drama aesthetic | `Korean drama aesthetic, soft romantic lighting, clean skin, natural beauty` |
-| Virtual idol / singer | `photorealistic portrait photo, studio lighting, music performance, concert atmosphere` |
 | Fashion / commercial | `commercial photography, editorial lighting, high fashion, clean background` |
 
 ### 2. Perspective (视角)
-- Mode A (3-view): `three full-body views arranged horizontally: Left front view, Center 3/4 view, Right back view`
-- Mode B (portrait): `upper body portrait facing camera` or `full body standing` depending on use case
+Fixed: `three full-body views arranged horizontally: Left front view, Center 3/4 view, Right back view`
 
 ### 3. Subject (主体) — BE EXTREMELY SPECIFIC
 - Gender + age + ethnicity + build + height
 - Face: face shape, skin tone (specific — "fair warm" not just "fair"), eye color and shape, eyebrow shape, nose shape, lip shape and color, expression
-- Hair: exact color name (not just "brown" — use "dark chestnut brown" or "platinum blonde"), exact length (to shoulders/to waist/above ears), exact style (straight/wavy/curly/braided), parting (center/side/none), texture (silky/matte/voluminous), any hair accessories
-- Upper clothing: garment type, specific color name + hex code, material/fabric (cotton/leather/silk/denim), collar style, sleeve type, pockets, logos/patches, buttons/zippers, layering
-- Lower clothing: garment type, color, fit (slim/straight/wide/flared), length
-- Footwear: type, color, details (laces, heels, soles, buckles)
-- Accessories: every single item — bags, belts, jewelry (earrings/necklace/rings/bracelets), hats, watches, scarves, gloves, glasses
+- Hair: exact color name ("dark chestnut brown" not "brown"), exact length, exact style, parting, texture, hair accessories
+- Upper clothing: garment type, specific color name + hex code, material/fabric, collar style, sleeve type, pockets, logos/patches, buttons/zippers, layering
+- Lower clothing: garment type, color, fit (slim/straight/wide), length
+- Footwear: type, color, details (laces, heels, soles)
+- Accessories: every single item — bags, belts, jewelry, hats, watches, scarves, glasses
 
 ### 4. Background (背景)
-- Mode A (3-view): `clean white studio background` — never a scene background
-- Mode B (portrait): can include contextual background (stage, room, street) to set mood — but keep it slightly blurred (bokeh) so the character remains the focus
+Always use: `clean white studio background` — never a scene background for character sheets
 
 ### 5. Details (细节)
 - Tattoos, scars, moles, freckles, piercings
 - Makeup details (eyeliner, eyeshadow color, lip color, blush)
-- Nail polish color
 - Fabric texture (leather grain, denim weave, silk sheen)
 - Jewelry details (gem color, chain thickness, ring design)
 
 ### 6. Lighting (光影)
-- Mode A (3-view): `consistent even studio lighting, soft fill light, no harsh shadows, same lighting across all three views`
-- Mode B (portrait): match the intended context — `moody purple stage lighting` for performer, `warm golden hour` for romantic, `clean studio lighting` for commercial
+Always use: `consistent even studio lighting, soft fill light, no harsh shadows, same lighting across all three views`
 
 ### 7. Quality (质量词)
-- Always include: `4K, high quality, photorealistic, masterpiece, best quality, natural skin texture, 8K detail, professional character model sheet for film production`
-- For portraits: add `shot on Canon EOS R5, 85mm f/1.4, shallow depth of field` for that professional photo look
+Always include: `4K, high quality, photorealistic, masterpiece, best quality, natural skin texture, 8K detail, professional character model sheet for film production`
 
 ## Common-Sense Checks (MANDATORY before generating)
 
 - **Ethnicity consistency**: East Asian characters → black/dark brown eyes, black/dark brown hair (unless script specifies dyed/colored hair)
 - **Era consistency**: Historical characters → period-accurate clothing, hairstyles, accessories. No modern items.
 - **Style consistency**: All characters in the same project must use the same level of realism
-- **Clothing logic**: Office worker → business casual or formal; singer on stage → performance outfit; student → school uniform or casual wear
-- **Age logic**: A 50-year-old man should have age-appropriate features (wrinkles, grey hair if specified). A 7-year-old should look like a child.
-- **Skin texture**: Photorealistic means visible pores, natural skin imperfections, not airbrushed perfection. Include `natural skin texture` in prompt.
+- **Clothing logic**: Office worker → business casual; singer → performance outfit; student → school uniform or casual
+- **Age logic**: A 50-year-old should have age-appropriate features. A 7-year-old should look like a child.
+- **Skin texture**: Photorealistic means visible pores, natural skin imperfections. Always include `natural skin texture` in prompt.
 
-## Prompt Template: Mode A — 3-View Reference Sheet
+## Prompt Template
 
 ```
 Professional character design model sheet. ONE character shown from exactly THREE angles in a single image.
@@ -139,87 +103,8 @@ Style: photorealistic, cinematic quality, natural skin texture, 8K detail, profe
 Aspect ratio: 16:9 landscape, high resolution, 2K.
 ```
 
-## Prompt Template: Mode B — Virtual Idol (3-Step System)
+## Example: Late Night Drama — Xiao Lin
 
-### Step B1: Base Identity Photo (生成一次，永久复用)
-
-Generate a CLEAN portrait on white/neutral background. No scene, no props, no special lighting. Just the person. This is the "face ID" that ensures every scene looks like the same idol.
-
-```
-Photorealistic clean portrait photo of [CHARACTER_DESCRIPTION].
-
-[gender], [age], [ethnicity]. [Face: face shape, skin tone, eye color, eyebrows, nose, lips, neutral calm expression]. [Hair: exact color, length, style, parting]. Wearing [simple clothing — solid color t-shirt or basic top, nothing distracting].
-
-Clean white studio background. Even studio lighting, no shadows, no color cast. Neutral standing pose, facing camera directly, eyes looking at camera.
-
-Style: photorealistic ID-style portrait, clean studio lighting, natural skin texture with visible pores, 8K detail, no filters, no heavy editing. This photo will be used as a reference for generating this person in various scenes — it must clearly show the face and features.
-
-Aspect ratio: 1:1 square (1024x1024) for maximum face detail.
-```
-
-**CRITICAL: Download and save this image permanently. This is the idol's identity anchor. Every scene photo in Step B2 MUST use this image as the `images` reference parameter in Seedream 4.0.**
-
-### Step B2: Scene Photos (同一个人，不同场景)
-
-Use Seedream 4.0 (NOT 4.5) with the base identity photo as the `images` parameter. This ensures the face stays consistent across all scenes.
-
-```bash
-curl -s -X POST 'https://open.bigmodel.cn/api/paas/v4/images/generations' \
-  -H "Authorization: Bearer $ZHIPU_API_KEY" \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "model": "doubao-seedream-4.0",
-    "prompt": "SCENE_PROMPT_HERE",
-    "images": "BASE_IDENTITY_PHOTO_URL",
-    "size": "1080x1920",
-    "watermark": false
-  }'
-```
-
-**Singer Scene Library — pick the right scene for each song:**
-
-| Scene Type | When to Use | Prompt Keywords |
-|---|---|---|
-| 演唱会舞台 | 摇滚/流行/燃曲 | `concert stage, spotlight, crowd silhouettes, fog machine, Marshall amps` |
-| 大屏幕演出 | 万人现场感 | `giant LED screen behind performer, arena concert, wide angle from audience` |
-| Live House 驻唱 | 独立/民谣/摇滚 | `small intimate live house stage, brick wall, warm dim lighting, close audience` |
-| 录音棚 | 专业感/新歌首发 | `professional recording studio, microphone with pop filter, headphones, soundproof panels` |
-| 寝室弹吉他 | 亲切/日常/民谣 | `college dormitory room, sitting on bed with acoustic guitar, warm lamp light, bookshelf, fairy lights` |
-| 街头驻唱 | 文艺/城市感 | `street busking at night, guitar case open, city lights behind, pedestrians blurred` |
-| MV 拍摄现场 | 高质量/正式 | `music video film set, cinematic lighting, camera crew in background blurred` |
-| 咖啡厅 | 轻松/爵士/慢歌 | `cozy cafe corner, small stage, warm pendant lights, exposed brick, intimate audience` |
-| 雨中街头 | 情歌/伤感 | `singing in the rain, wet street reflections, neon lights, emotional expression` |
-| 日落天台 | 抒情/治愈 | `rooftop at golden hour sunset, city skyline behind, warm orange light, wind in hair` |
-| 复古风格 | 80s/90s/怀旧 | `retro 90s stage, neon signs, vintage microphone, leather jacket, film grain` |
-| 钢琴独奏 | 古典/抒情 | `grand piano on stage, single spotlight, dark background, elegant formal wear` |
-
-**Scene Prompt Template:**
-
-```
-Photorealistic photo of [IDOL_CHARACTER_BLOCK] performing in [SCENE_TYPE].
-
-[Specific scene description: location details, props, background elements].
-
-[Pose]: [what the idol is doing — singing into microphone, playing guitar, sitting at piano, standing with eyes closed].
-
-[Camera]: [medium close-up from chest up / upper body / full body], [angle: eye level / slight low angle / side profile], 9:16 vertical composition for Douyin/TikTok.
-
-[Lighting]: [scene-appropriate lighting — concert spotlights, warm lamp, studio ring light, golden hour sun].
-
-The person in this photo must be the EXACT SAME person as in the reference image — same face, same hair, same features. Only the clothing, pose, and scene change.
-
-Style: photorealistic, shot on Canon EOS R5, 85mm f/1.4, shallow depth of field, natural skin texture, 8K detail, cinematic color grading.
-
-Aspect ratio: 9:16 vertical (1080x1920).
-```
-
-### Step B3: Lip Sync (in hitpop-virtual-idol skill)
-
-Feed the scene photo from B2 + AI cover audio → TopView Avatar 4 / HeyGen → singing video. See `hitpop-virtual-idol/SKILL.md` for details.
-
-## Example: Mode A — Late Night Drama Characters
-
-**Girl at bus stop (Xiao Lin, 22 years old, office worker):**
 ```
 Professional character design model sheet. ONE character shown from exactly THREE angles in a single image.
 
@@ -257,99 +142,41 @@ Style: photorealistic, cinematic quality, natural skin texture, 8K detail, profe
 Aspect ratio: 16:9 landscape, 2K resolution.
 ```
 
-## Example: Mode B — Virtual Idol Portrait
-
-**Song Juhan (male rocker, virtual idol):**
-```
-Photorealistic portrait photo of a 22-year-old Chinese male singer performing on stage.
-
-Male, age 22, Chinese. Sharp jawline, high cheekbones, fair clean skin with natural texture, intense dark brown narrow eyes with slight eyeliner, strong straight eyebrows, straight nose, thin lips slightly parted while singing, fierce concentrated expression. Platinum blonde long messy hair past shoulders, side-swept bangs covering right eye partially, slightly damp from sweat.
-
-Wearing black leather biker jacket (#1A1A1A) unzipped over black mesh see-through top, silver chunky chain choker necklace, multiple silver rings on both hands (3 on left, 2 on right), black leather wristband on left wrist.
-
-Standing at chrome microphone stand, right hand gripping microphone, left hand on mic stand. Stage background with moody purple and blue spotlights, fog machine haze, Marshall guitar amps blurred in background, bokeh concert lights.
-
-Camera: medium close-up from chest up, slight low angle (looking up at performer), eye contact with camera.
-
-Lighting: dramatic purple (#6B3FA0) key light from upper left, blue (#1E3A5F) fill light from right, white backlight rim on hair, strong contrast, concert atmosphere.
-
-Style: photorealistic, shot on Canon EOS R5, 85mm f/1.4, shallow depth of field, natural skin texture with visible pores and sweat, 8K detail, cinematic color grading, concert photography feel.
-
-Aspect ratio: 9:16 vertical (1080x1920) for Douyin/TikTok.
-```
-
-**Lin Xi (female ballad singer, virtual idol):**
-```
-Photorealistic portrait photo of a 20-year-old Chinese female singer in a cozy bedroom setting.
-
-Female, age 20, Chinese. Round soft face, fair porcelain skin with light natural blush, large bright dark brown eyes with double eyelids, soft arched eyebrows, small button nose, full soft pink lips with slight smile while singing, sweet and dreamy expression. Dark chestnut brown long straight hair to mid-back, center-parted, silky texture, no accessories.
-
-Wearing oversized cream-white knit sweater (#FFF8E7) with loose collar showing left shoulder slightly, sleeves covering half of hands. Light blue denim shorts barely visible. Sitting cross-legged on bed, holding acoustic guitar (#8B6914 natural wood color) with left hand on fretboard, right hand strumming.
-
-Bedroom background: warm-toned wooden bookshelf with fairy lights (bokeh), soft bedding, warm table lamp glow, cozy atmosphere.
-
-Camera: medium shot from waist up, eye level, centered composition, slight head tilt to right.
-
-Lighting: warm golden (#FFD700) table lamp from right side, soft ambient fill from fairy lights, warm color temperature, cozy intimate atmosphere.
-
-Style: photorealistic, shot on Canon EOS R5, 50mm f/1.8, medium depth of field, natural skin texture, 8K detail, warm cinematic color grading, indie music video aesthetic.
-
-Aspect ratio: 9:16 vertical (1080x1920) for Douyin/TikTok.
-```
-
 ## After Approval: Extract CHARACTER Block
 
-Once user approves the character sheet or portrait, extract this block and paste IDENTICALLY into every subsequent prompt:
+Once user approves, extract this and paste IDENTICALLY into every scene prompt:
 
 ```
-[CHARACTER: {name}, {gender}, {ethnicity}, age ~{X}, HAIR: {exact style, color, length from approved image}, FACE: {skin tone, eye color, face shape, expression style}, CLOTHING: {exact items with specific colors and hex codes}, SHOES: {type and color}, ACCESSORIES: {every item}, DISTINGUISHING: {unique features — scars, tattoos, piercings, etc.}]
+[CHARACTER: {name}, {gender}, {ethnicity}, age ~{X}, HAIR: {exact style, color, length}, FACE: {skin tone, eye color, face shape}, CLOTHING: {exact items with colors and hex codes}, SHOES: {type and color}, ACCESSORIES: {every item}, DISTINGUISHING: {unique features}]
 ```
 
-This block is copied IDENTICALLY into every scene. No paraphrasing. No shortening. No "simplifying."
+This block is copied IDENTICALLY. No paraphrasing. No shortening.
 
 ## Generation Settings
 
-- **Model**: `doubao-seedream-4.5`
-- **Size**: `2K` for 3-view sheets (16:9), `1080x1920` for vertical portraits (9:16)
-- **Watermark**: `false`
-- **API endpoint**: `https://open.bigmodel.cn/api/paas/v4/images/generations`
-
 ```bash
-# 3-View Sheet (16:9 landscape)
 curl -s -X POST 'https://open.bigmodel.cn/api/paas/v4/images/generations' \
   -H "Authorization: Bearer $ZHIPU_API_KEY" \
   -H 'Content-Type: application/json' \
   -d '{
     "model": "doubao-seedream-4.5",
-    "prompt": "YOUR_3VIEW_PROMPT_HERE",
+    "prompt": "YOUR_PROMPT_HERE",
     "size": "2K",
-    "watermark": false
-  }'
-
-# Portrait (9:16 vertical for Douyin)
-curl -s -X POST 'https://open.bigmodel.cn/api/paas/v4/images/generations' \
-  -H "Authorization: Bearer $ZHIPU_API_KEY" \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "model": "doubao-seedream-4.5",
-    "prompt": "YOUR_PORTRAIT_PROMPT_HERE",
-    "size": "1080x1920",
     "watermark": false
   }'
 ```
 
 ## Critical Rules
 
-1. **Ask mode first** — if user didn't specify, ask: "需要三视图角色设定图（用于短剧/广告）还是单人肖像照（用于虚拟偶像翻唱视频）？"
-2. **Mode A: ONE image, three views** — never generate three separate images
-3. **Mode A: 16:9 landscape** — portrait orientation cuts off the three-view layout
-4. **Mode B: 9:16 vertical** — for Douyin/TikTok, always generate in vertical format
-5. **CRITICAL consistency line** — for Mode A, always include all 5 consistency rules in the prompt
-6. **7-dimension check** — verify all 7 dimensions are covered before generating
-7. **Common-sense check** — ethnicity, era, style, clothing logic, age logic, skin texture
-8. **Color palette with hex values** — for Mode A, place at top of image
-9. **Detail callouts** — for Mode A, at least 5-6 circular zoom bubbles
-10. **English prompts** — always write the generation prompt in English for better AI results
-11. **User approval required** — show the result and wait for user confirmation before any scene work or lip sync
-12. **Save the portrait for reuse** — for virtual idols, the SAME portrait photo must be used for every lip sync video to maintain idol identity. Download and save locally immediately.
-13. **Natural skin texture** — photorealistic means visible pores, natural imperfections, not airbrushed. Always include `natural skin texture` in prompt.
+1. **ONE image, three views** — never generate three separate images
+2. **16:9 landscape** — portrait orientation cuts off the three-view layout
+3. **CRITICAL consistency line** — always include all 5 consistency rules in the prompt
+4. **7-dimension check** — verify all 7 dimensions are covered before generating
+5. **Common-sense check** — ethnicity, era, style, clothing logic, age logic, skin texture
+6. **Color palette with hex values** — at top of image
+7. **Detail callouts** — at least 5-6 circular zoom bubbles pointing to key features
+8. **Clean white background** — never a scene background
+9. **English prompts** — always write in English for better AI results
+10. **User approval required** — show sheet and wait for confirmation before any scene work
+11. **One sheet per character** — 3 characters = 3 sheets
+12. **Natural skin texture** — always include `natural skin texture` in prompt
