@@ -2,7 +2,7 @@
 
 **Video AI Multi-Agent System for OpenClaw, Claude Code, and Cursor.**
 
-9 agents + 19 skills. Say "make me a video" → get a finished video.
+9 agents + 20 skills. Say "make me a video" → get a finished video.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Agents](https://img.shields.io/badge/agents-9-orange.svg)](#agents)
@@ -153,7 +153,7 @@ Every agent operates as a higher-dimensional intelligence — not a passive tool
 | 1 | 🧠 **Planner** | Production Architect | Designs minimum-viable pipelines with failure modes |
 | 2 | 💡 **Creative** | Creative Director | Would rather ship nothing than ship boring |
 | 3 | 🎯 **Critic** | Quality Sovereign | Absolute veto power, IMPACT scoring (≥20/30 to pass) |
-| 4 | 💻 **Producer** | Master Craftsman | Executes all technical work via 19 skills |
+| 4 | 💻 **Producer** | Master Craftsman | Executes all technical work via 20 skills |
 | 5 | ✍️ **Writer** | Narrative Architect | "The viewer gives you 1.5 seconds. Earn the next 13.5." |
 | 6 | 🔍 **Reviewer** | Audience Proxy | Watches output as a stranger scrolling at 2am |
 | 7 | 📰 **Scout** | Intelligence Analyst | Delivers insight, not data. "WHY is it trending?" |
@@ -171,7 +171,7 @@ Each agent has 3 files in `agents/<id>/`:
 
 ## Skills
 
-19 skills that Producer uses as its toolbox. All in `skills/`:
+20 skills that Producer uses as its toolbox. All in `skills/`:
 
 | Category | Skill | Backend | Cost |
 |---|---|---|---|
