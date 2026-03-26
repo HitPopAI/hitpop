@@ -1,0 +1,3404 @@
+=== skills/hitpop-character-sheet/SKILL.md ===
+---
+name: hitpop-character-sheet
+description: "Character reference sheet generator — single-image 3-view turnaround with color palette, detail callouts, 7-dimension prompt engineering, and common-sense checks. Supports anime, realistic, and semi-realistic styles."
+version: 0.2.0
+metadata:
+  openclaw:
+    emoji: "🎨"
+    requires:
+      env:
+        - ZHIPU_API_KEY
+---
+
+# Hitpop Character Sheet — 3-View Reference Generator
+
+Generate professional character design sheets as a SINGLE IMAGE containing three views. This ensures visual consistency across all scenes.
+
+**CRITICAL RULE: Always generate three views in ONE image. Never generate three separate images.**
+
+## What a Character Sheet Contains
+
+**Layout**: Three full-body views of the SAME character, side by side (16:9 landscape)
+- **Left**: Front view — facing camera, neutral standing pose
+- **Center**: 3/4 view or side profile — showing depth and volume
+- **Right**: Back view — rear details (hair back, clothing back)
+
+**Color palette**: 3-5 swatches at top with labels and hex values
+
+**Detail callouts**: 5-6 circular zoom-in bubbles with connecting lines
+
+**Background**: Clean white or light grid. Never a scene background.
+
+**CRITICAL**: All three views must show the EXACT SAME person with identical face, hair, clothing, accessories, and body proportions.
+
+## 7-Dimension Prompt Checklist
+
+Every character sheet prompt MUST cover all 7 dimensions. Check each before generating:
+
+### 1. Style (风格)
+| Content Type | Style Keywords |
+|---|---|
+| Modern realistic | `photorealistic, cinematic quality, natural skin texture, 8K detail` |
+| Chinese historical | `Chinese historical drama, photorealistic, cinematic quality` |
+| Korean drama | `Korean drama aesthetic, soft lighting, romantic` |
+| Anime | `anime style, cel shading, vibrant colors, clean line art` |
+| Cartoon | `cartoon style, bold colors, simplified features` |
+| Fantasy | `fantasy art, magical atmosphere, ethereal` |
+
+### 2. Perspective (视角)
+Fixed: `three full-body views arranged horizontally: Left front view, Center 3/4 view, Right back view`
+
+### 3. Subject (主体) — BE EXTREMELY SPECIFIC
+- Gender + age + ethnicity + build
+- Hair: exact color, length, style, parting, texture, accessories
+- Face: shape, skin tone, eye color, eyebrow shape, expression
+- Clothing: type, color (specific — "emerald green" not "green"), fabric, pattern, details
+- Shoes: type, color, details
+- Accessories: every item with exact description
+
+### 4. Background (背景)
+- Character sheets: `clean white background` or `light grid background`
+- Scene images: specific environment (handled by hitpop-scene-guide)
+
+### 5. Details (细节)
+- Accessories, weapons, props
+- Patterns, embroidery, logos on clothing
+- Hair accessories, crowns, belts, jewelry
+
+### 6. Lighting (光影)
+- Character sheets: `consistent even studio lighting, soft fill light, no harsh shadows`
+- Ensures all three views look like the same lighting setup
+
+### 7. Quality (质量词)
+- Realistic: `4K, high quality, photorealistic, masterpiece, best quality, professional character model sheet for film production`
+- Anime: `high quality, professional character design sheet, game art style, high detail`
+
+## Common-Sense Checks (MANDATORY before generating)
+
+- **Ethnicity consistency**: East Asian characters → black/dark brown eyes, black/dark brown hair (unless script specifies otherwise)
+- **Era consistency**: Historical characters → no modern elements (no sneakers on ancient warriors)
+- **Style consistency**: All characters in same project must use same art style
+- **Clothing logic**: Martial arts characters → clothes allow movement; bride → wedding accessories
+- **Age logic**: A 7-year-old child should look like a child, not a small adult
+
+## Prompt Template: Realistic / Photorealistic
+
+```
+Professional character design model sheet. ONE character shown from exactly THREE angles in a single image.
+
+Left: Front view (facing camera) | Center: Three-quarter view (turned 45 degrees) | Right: Back view (facing away)
+
+All three views on clean white studio background. Full body, standing neutral pose. All three views must be the SAME height and aligned at the feet.
+
+Character: [gender], [age], [ethnicity], [build], [height].
+Face: [face shape], [skin tone], [eye color and shape], [eyebrow shape], [nose], [lip shape and color], [expression].
+Hair: [exact color name], [exact length], [exact style], [parting], [texture], [any hair accessories].
+Upper body: [garment type], [specific color name + hex], [material/fabric], [collar style], [sleeve type], [pockets], [logos/patches], [buttons/zippers].
+Lower body: [garment type], [color], [fit], [length].
+Footwear: [type], [color], [details].
+Accessories: [every item — bags, belts, jewelry, hats, watches, etc.]
+
+CRITICAL CONSISTENCY RULES (the AI model MUST follow these):
+- The face in all three views must be the SAME person — same bone structure, same eyes, same nose, same mouth, same skin tone. NOT three different people.
+- The hair must be IDENTICAL in all views — same color, same length, same style, same parting. Only the angle changes.
+- The clothing must be PIXEL-IDENTICAL in all views — same colors, same fabric, same wrinkles, same details. Only the visible side changes.
+- The body proportions must be IDENTICAL — same height, same build, same limb length.
+- DO NOT generate three different people. This is ONE person photographed from three camera angles in the same studio session.
+
+Color palette at top: [main color + hex], [secondary + hex], [accent 1 + hex], [accent 2 + hex], [accent 3 + hex].
+
+Detail callouts: circular magnification bubbles with thin lines pointing to:
+- HAIR: [key detail]
+- FACE: [key detail]
+- UPPER: [key detail]
+- LOWER: [key detail]
+- SHOES: [key detail]
+- ACCESSORY: [key detail]
+
+Style: photorealistic, cinematic quality, natural skin texture, 8K detail, professional character model sheet for film production, consistent studio lighting across all three views, clean white background, SAME person in all views, uniform lighting and color grading.
+
+Aspect ratio: 16:9 landscape, high resolution, 2K.
+```
+
+## Prompt Template: Anime / Cartoon
+
+```
+Professional character design model sheet. ONE character shown from exactly THREE angles in a single image.
+
+Left: Front view (facing camera) | Center: Three-quarter view (turned 45 degrees) | Right: Back view (facing away)
+
+All three views on [light pink/cream/blue] grid background. Full body, standing neutral pose, white ground plane. All three views must be the SAME height and aligned at the feet.
+
+Character: [gender], [age], [personality]. 
+Hair: [exact color name], [exact length], [exact style], [bangs type], [hair accessories if any].
+Face: [eye color], [eye shape], [expression], [any unique facial features].
+Upper body: [garment type], [exact color with hex], [material], [collar], [sleeves], [details like pockets/buttons/logos].
+Lower body: [garment type], [exact color], [fit], [length].
+Footwear: [type], [exact color], [details].
+Accessories: [list every item with exact description].
+
+CRITICAL CONSISTENCY RULES (the AI model MUST follow these):
+- The face in all three views must be the SAME person — same eye shape, same eye color, same nose, same mouth, same face shape. NOT three different faces.
+- The hair must be IDENTICAL in all views — same color, same length, same style, same bangs. Only the angle changes.
+- The clothing must be PIXEL-IDENTICAL in all views — same colors, same patterns, same wrinkles, same details. Only the visible side changes.
+- The body proportions must be IDENTICAL — same height, same build, same limb length.
+- DO NOT draw three different characters. This is ONE person from three camera angles.
+
+Top: character name "[NAME]" in bold, color palette showing swatches with hex values (main: [COLOR], secondary: [COLOR], accent 1: [COLOR], accent 2: [COLOR], accent 3: [COLOR]).
+
+Detail callouts: circular zoom-in bubbles with thin connecting lines:
+- HAIR: [detail]
+- FACE: [detail]
+- CLOTHING TOP: [detail]
+- CLOTHING BOTTOM: [detail]
+- SHOES: [detail]
+- ACCESSORY: [detail]
+
+Style: [anime/cartoon/semi-realistic] illustration, clean line art, flat color with soft cel shading, professional character model sheet for animation production, game concept art quality, high detail, PERFECTLY consistent proportions and art style across all three views, uniform line weight across all views.
+
+Aspect ratio: 16:9 landscape, high resolution, 2K.
+```
+
+## Example: Realistic — Late Night Drama
+
+**Girl at bus stop (22 years old, office worker):**
+```
+Character design reference sheet, three full-body views of the SAME character on clean white background.
+
+Left: Front view | Center: Three-quarter view | Right: Back view
+
+[SUBJECT]: Chinese female, age 22, slender build, 165cm. [FACE]: oval face, fair warm skin tone, dark brown almond-shaped eyes, thin natural eyebrows, small straight nose, soft pink lips, tired but gentle expression. [HAIR]: black, shoulder-length, slightly wavy, center-parted, tucked behind left ear, no accessories. [UPPER CLOTHING]: light grey oversized knit cardigan over white crew-neck t-shirt, cardigan unbuttoned, sleeves slightly pushed up. [LOWER CLOTHING]: dark navy straight-leg jeans, ankle-length, slightly worn. [FOOTWEAR]: white canvas sneakers, slightly dirty from walking. [ACCESSORIES]: small black crossbody bag on right hip, thin silver chain necklace, no rings.
+
+CRITICAL: All three views must show the EXACT SAME person with identical face, hair, clothing, accessories, and body proportions. No variation between views.
+
+Color palette at top: skin (#F5D0B0), hair (#1A1A1A), cardigan (#C0C0C0), jeans (#2C3E50), sneakers (#FFFFFF).
+
+Detail callouts:
+- HAIR: center-parted, shoulder-length, slightly wavy, tucked behind left ear
+- FACE: tired gentle expression, dark brown eyes, no makeup
+- CARDIGAN: oversized grey knit, unbuttoned, relaxed fit
+- JEANS: dark navy straight-leg, ankle crop
+- SHOES: white canvas sneakers, slightly worn
+- BAG: small black crossbody, minimal design
+
+Style: photorealistic, cinematic quality, natural skin texture, 8K detail, professional character model sheet for film production, consistent studio lighting across all three views, clean white background.
+
+Aspect ratio: 16:9 landscape, high resolution.
+```
+
+## Example: Anime — Convenience Store Drama
+
+**Lin Xiao (protagonist):**
+```
+Character design sheet, professional character turnaround reference, young Chinese woman convenience store worker.
+
+Left: Front view | Center: Three-quarter view | Right: Back view
+
+Three full-body views of the SAME character on light cream grid background. Standing neutral pose.
+
+[SUBJECT]: female, age 22, warm and gentle personality. [HAIR]: black, short bob cut, straight, just above shoulders, side-parted bangs. [CLOTHING]: blue short-sleeve polo shirt with white collar trim, two chest pockets with button flaps, white rectangular name tag "Lin Xiao" on left chest, beige waist apron tied at back with two front pockets, dark navy straight-leg work pants ankle length. [SHOES]: white canvas sneakers, clean. [ACCESSORIES]: none.
+
+CRITICAL: All three views must show the EXACT SAME character with identical hair, clothing, colors, and proportions.
+
+Top: character name "Lin Xiao" in bold, color palette: skin (#FFB5A7), uniform (#4A90D9), collar (#FFFFFF), hair (#2C2C2C), apron (#F5F5DC).
+
+Detail callouts:
+- HAIR: short black bob, side-parted bangs
+- NAME TAG: white tag on left chest, "Lin Xiao"
+- UNIFORM: blue polo, white collar trim, two pockets
+- APRON: beige waist apron, tied at back
+- PANTS: dark navy straight-leg
+- SHOES: white canvas sneakers
+
+Style: anime illustration, clean line art, soft cel shading, warm color palette, professional character sheet, consistent proportions across all three views.
+
+Aspect ratio: 16:9 landscape, 2K resolution.
+```
+
+## After Approval: Extract CHARACTER Block
+
+Once user approves, extract this and paste IDENTICALLY into every scene prompt:
+
+```
+[CHARACTER: {name}, {gender}, {ethnicity}, age ~{X}, HAIR: {exact style and color}, FACE: {skin tone, eye color, expression style}, CLOTHING: {exact items with specific colors}, SHOES: {type and color}, ACCESSORIES: {items}, DISTINGUISHING: {unique features}]
+```
+
+This block is copied IDENTICALLY into every scene. No paraphrasing. No shortening.
+
+## Critical Rules
+
+1. **ONE image, three views** — never generate three separate images
+2. **Ask style first** — if user didn't specify "写实/realistic" or "动漫/anime", ASK before generating: "请问您想要写实真人风格还是动漫风格？" Never assume.
+3. **16:9 landscape** — portrait cuts off the layout
+3. **CRITICAL line** — always include the "EXACT SAME person" enforcement line
+4. **7-dimension check** — verify all 7 dimensions before generating
+5. **Common-sense check** — ethnicity, era, style, clothing logic, age logic
+6. **Color palette with hex values** — ensures color consistency across scenes
+7. **Detail callouts** — at least 5-6 zoom bubbles for key features
+8. **Clean background** — white or light grid, never a scene
+9. **English prompts** — always write prompts in English for better AI results
+10. **User approval required** — show sheet and wait for confirmation before any scene work
+11. **One sheet per character** — 3 characters = 3 sheets
+12. **Save the exact prompt** — reuse verbatim for regeneration if needed
+
+=== skills/hitpop-comfyui/SKILL.md ===
+---
+name: hitpop-comfyui
+description: "Run open-source AI models locally via ComfyUI. Text-to-image (Flux, SDXL), text-to-video (Wan2.1, HunyuanVideo), image-to-video, and more. Free, no API key needed — just a local GPU. Submit workflow JSON to ComfyUI's REST API and poll for results."
+version: 0.1.0
+metadata:
+  openclaw:
+    emoji: "🖥️"
+    requires:
+      bins:
+        - curl
+        - jq
+        - python3
+---
+
+# Hitpop ComfyUI — Local Open-Source AI Generation (Free)
+
+Run open-source AI models locally via ComfyUI. No API keys, no cost per generation — just your GPU.
+
+## When to Use
+
+- You have a local GPU (RTX 3090/4090 or better)
+- You want **free** generation with no per-image/video cost
+- You need to run **open-source models** (Flux, SDXL, Wan2.1, HunyuanVideo)
+- You want full control over model weights and parameters
+- Privacy matters — nothing leaves your machine
+
+**No GPU?** Use `hitpop-gen-video` (Vidu Q2) and `hitpop-gen-image` (Seedream) instead — they run on Zhipu's cloud.
+
+## Setup
+
+### 1. Install ComfyUI
+
+```bash
+git clone https://github.com/comfyanonymous/ComfyUI.git
+cd ComfyUI
+pip install -r requirements.txt
+
+# Start the server
+python main.py --listen 0.0.0.0 --port 8188
+```
+
+ComfyUI runs at `http://127.0.0.1:8188`.
+
+### 2. Install Models
+
+Download models into `ComfyUI/models/checkpoints/`:
+
+| Model | Type | VRAM | Download |
+|---|---|---|---|
+| Flux.1-dev | Text→Image | ~12GB | huggingface.co/black-forest-labs/FLUX.1-dev |
+| SDXL 1.0 | Text→Image | ~8GB | huggingface.co/stabilityai/stable-diffusion-xl-base-1.0 |
+| Wan2.1-A14B | Text→Video | ~24GB | huggingface.co/Wan-AI/Wan2.1-T2V-A14B |
+| HunyuanVideo | Text→Video | ~24GB | huggingface.co/tencent/HunyuanVideo |
+
+### 3. Install Video Nodes (for video generation)
+
+```bash
+cd ComfyUI/custom_nodes
+git clone https://github.com/kijai/ComfyUI-WanVideoWrapper.git
+git clone https://github.com/kijai/ComfyUI-HunyuanVideoWrapper.git
+# Restart ComfyUI after installing nodes
+```
+
+## API Reference
+
+ComfyUI exposes a REST API at `http://127.0.0.1:8188`:
+
+| Endpoint | Method | Purpose |
+|---|---|---|
+| `/prompt` | POST | Submit a workflow for execution |
+| `/history/{prompt_id}` | GET | Get results for a completed job |
+| `/queue` | GET | Check queue status |
+| `/view?filename=...` | GET | Download output image/video |
+| `/upload/image` | POST | Upload input image |
+| `/object_info` | GET | List all available nodes |
+
+## Usage
+
+### Submit a Text-to-Image Workflow
+
+First, create your workflow in ComfyUI's UI, then export it as API format (Settings → Dev Mode → Save API Format). Then submit via curl:
+
+```bash
+COMFYUI_URL="http://127.0.0.1:8188"
+
+# Submit workflow
+RESPONSE=$(curl -s -X POST "$COMFYUI_URL/prompt" \
+  -H 'Content-Type: application/json' \
+  -d "{\"prompt\": $(cat workflow_api.json)}")
+
+PROMPT_ID=$(echo "$RESPONSE" | jq -r '.prompt_id')
+echo "Submitted: $PROMPT_ID"
+```
+
+### Poll for Results
+
+```bash
+# Poll until complete
+while true; do
+  HISTORY=$(curl -s "$COMFYUI_URL/history/$PROMPT_ID")
+  if echo "$HISTORY" | jq -e ".[\"$PROMPT_ID\"]" > /dev/null 2>&1; then
+    echo "Done!"
+    # Extract output filename
+    FILENAME=$(echo "$HISTORY" | jq -r ".[\"$PROMPT_ID\"].outputs | to_entries[0].value.images[0].filename")
+    echo "Output: $FILENAME"
+    # Download the result
+    curl -s "$COMFYUI_URL/view?filename=$FILENAME&type=output" -o output.png
+    break
+  fi
+  sleep 2
+done
+```
+
+### Python Helper Script
+
+```python
+import json, requests, time, uuid
+
+COMFYUI_URL = "http://127.0.0.1:8188"
+
+def submit_workflow(workflow_json, modifications=None):
+    """Submit a workflow and return prompt_id."""
+    if modifications:
+        for node_id, changes in modifications.items():
+            if node_id in workflow_json:
+                workflow_json[node_id]["inputs"].update(changes)
+
+    # Randomize seed to get different results
+    for node_id, node in workflow_json.items():
+        if "inputs" in node and "seed" in node["inputs"]:
+            node["inputs"]["seed"] = int(uuid.uuid4().int % 2**32)
+
+    resp = requests.post(f"{COMFYUI_URL}/prompt",
+                         json={"prompt": workflow_json})
+    return resp.json().get("prompt_id")
+
+def wait_for_result(prompt_id, timeout=300):
+    """Poll until the workflow completes."""
+    start = time.time()
+    while time.time() - start < timeout:
+        resp = requests.get(f"{COMFYUI_URL}/history/{prompt_id}")
+        history = resp.json()
+        if prompt_id in history:
+            return history[prompt_id]
+        time.sleep(2)
+    raise TimeoutError(f"Workflow {prompt_id} did not complete in {timeout}s")
+
+def download_output(result, output_dir="."):
+    """Download all output files from a completed workflow."""
+    files = []
+    for node_id, output in result.get("outputs", {}).items():
+        for img in output.get("images", []):
+            filename = img["filename"]
+            subfolder = img.get("subfolder", "")
+            file_type = img.get("type", "output")
+            url = f"{COMFYUI_URL}/view?filename={filename}&subfolder={subfolder}&type={file_type}"
+            local_path = f"{output_dir}/{filename}"
+            resp = requests.get(url)
+            with open(local_path, "wb") as f:
+                f.write(resp.content)
+            files.append(local_path)
+        for vid in output.get("gifs", output.get("videos", [])):
+            filename = vid["filename"]
+            subfolder = vid.get("subfolder", "")
+            url = f"{COMFYUI_URL}/view?filename={filename}&subfolder={subfolder}&type=output"
+            local_path = f"{output_dir}/{filename}"
+            resp = requests.get(url)
+            with open(local_path, "wb") as f:
+                f.write(resp.content)
+            files.append(local_path)
+    return files
+
+# Example usage:
+# workflow = json.load(open("workflow_api.json"))
+# pid = submit_workflow(workflow, {"6": {"text": "a cat in space"}})
+# result = wait_for_result(pid)
+# files = download_output(result)
+```
+
+### Upload Input Image (for img2img / img2video)
+
+```bash
+curl -s -X POST "$COMFYUI_URL/upload/image" \
+  -F "image=@input_photo.jpg" \
+  -F "type=input" | jq .
+```
+
+The returned filename can be used in workflow nodes that accept image input.
+
+## Pre-Built Workflow Templates
+
+Save these as `workflow_api.json` files and submit via the API. Find workflows at:
+
+- **ComfyUI Examples**: github.com/comfyanonymous/ComfyUI_examples
+- **OpenArt Workflows**: openart.ai/workflows
+- **CivitAI Workflows**: civitai.com (filter by ComfyUI)
+- **ComfyICU**: comfy.icu
+
+Common workflow types:
+- `txt2img_flux.json` — Flux text to image
+- `txt2img_sdxl.json` — SDXL text to image
+- `img2img.json` — Image to image with ControlNet
+- `txt2vid_wan.json` — Wan2.1 text to video
+- `img2vid_wan.json` — Wan2.1 image to video
+
+## ComfyUI vs Cloud API (hitpop-gen-video / hitpop-gen-image)
+
+| Feature | ComfyUI (local) | Zhipu Cloud API |
+|---|---|---|
+| Cost | Free (electricity only) | ¥0.20-0.40 per generation |
+| Speed | Depends on your GPU | Fast (server-grade GPUs) |
+| GPU needed | Yes (8GB+ VRAM) | No |
+| Models | Any open-source model | Vidu Q2, Seedream only |
+| Privacy | 100% local | Data sent to cloud |
+| Customization | Full (LoRA, ControlNet, custom nodes) | Limited to API params |
+| Setup | Complex (install models, nodes) | Just an API key |
+
+## Tips
+- Always randomize the seed before each submission to get unique outputs
+- Export workflows in **API format** (not regular format) — regular format won't work with the API
+- Use `--lowvram` flag when starting ComfyUI if you have limited GPU memory
+- For video generation, you typically need 24GB+ VRAM (RTX 4090 or A100)
+- ComfyUI caches models in memory — first run is slow, subsequent runs are fast
+
+=== skills/hitpop-consistency-check/SKILL.md ===
+---
+name: hitpop-consistency-check
+description: "Visual consistency verification tool using GLM-4.6V. Compares scene images and video frames against character reference sheets. Catches style mismatches, face changes, clothing differences BEFORE they reach the user. Must be called after every scene generation."
+version: 0.1.0
+metadata:
+  openclaw:
+    emoji: "🔍"
+    requires:
+      env:
+        - ZHIPU_API_KEY
+      bins:
+        - curl
+        - ffmpeg
+---
+
+# Hitpop Consistency Check — Automated Visual Verification
+
+This skill is NOT optional. It MUST be called after every scene image and every video clip that contains a character. Skipping this check is the #1 cause of user rejection.
+
+## When to Use
+
+| After generating... | Check against... |
+|---|---|
+| Character sheet | Itself — verify it has 3 views, color palette, callouts |
+| Scene image | Character reference sheet |
+| Video clip | Character reference sheet (extract frame first) |
+| Product ad frame | Product reference sheet |
+
+## Check 1: Character Sheet Format Validation
+
+Run this IMMEDIATELY after generating a character sheet, BEFORE showing to user:
+
+```bash
+curl -s -X POST 'https://open.bigmodel.cn/api/paas/v4/chat/completions' \
+  -H "Authorization: Bearer $ZHIPU_API_KEY" \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "model": "glm-4.6v",
+    "messages": [{"role":"user","content":[
+      {"type":"image_url","image_url":{"url":"CHARACTER_SHEET_URL"}},
+      {"type":"text","text":"Analyze this image. Answer each question with YES or NO:\n1. Does it show exactly 3 full-body views of a character (front, side/3-quarter, back)?\n2. Are all 3 views showing the SAME character (same face, hair, clothing)?\n3. Is there a color palette with color swatches at the top?\n4. Are there detail callout bubbles pointing to specific features?\n5. Is the aspect ratio landscape (wider than tall)?\n6. Are all views full-body (head to feet visible)?\n\nThen give overall verdict: VALID or INVALID with reason."}
+    ]}]
+  }'
+```
+
+**VALID** → show to user for approval
+**INVALID** → regenerate, DO NOT show to user
+
+## Check 2: Scene Image vs Character Sheet
+
+Run this after EVERY scene image generation:
+
+```bash
+curl -s -X POST 'https://open.bigmodel.cn/api/paas/v4/chat/completions' \
+  -H "Authorization: Bearer $ZHIPU_API_KEY" \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "model": "glm-4.6v",
+    "messages": [{"role":"user","content":[
+      {"type":"image_url","image_url":{"url":"CHARACTER_SHEET_URL"}},
+      {"type":"image_url","image_url":{"url":"SCENE_IMAGE_URL"}},
+      {"type":"text","text":"Image 1 is a character reference sheet. Image 2 is a scene image that should contain the same character. Score each dimension as PASS or FAIL:\n\n1. ART STYLE — same illustration/art style? (FAIL = one anime, other realistic)\n2. HAIR — same color, length, style? (FAIL = any visible difference)\n3. FACE — same face shape, features? (FAIL = looks like different person)\n4. UPPER CLOTHING — same garment type and color? (FAIL = different clothes or color)\n5. LOWER CLOTHING — same type and color? (FAIL = different pants/skirt or color)\n6. BODY TYPE — same build? (FAIL = slim became stocky)\n\nAllowed to differ: expression, pose, background, lighting, camera angle.\n\nOutput:\nSTYLE: PASS/FAIL\nHAIR: PASS/FAIL\nFACE: PASS/FAIL\nUPPER: PASS/FAIL\nLOWER: PASS/FAIL\nBODY: PASS/FAIL\nVERDICT: CONSISTENT or INCONSISTENT\nREASON: specific differences if inconsistent"}
+    ]}]
+  }'
+```
+
+**Verdict rules:**
+- Any FAIL in STYLE, HAIR, FACE, or UPPER → **REJECT** (regenerate)
+- 1 minor FAIL (LOWER, BODY) → **WARNING** (acceptable in some cases)
+- 2+ FAIL → **REJECT**
+- All PASS → **PROCEED**
+
+## Check 3: Video Frame vs Character Sheet
+
+Run this after EVERY video clip generation:
+
+```bash
+# Step 1: Extract a frame from the video (2 seconds in)
+ffmpeg -ss 2 -i scene_clip.mp4 -frames:v 1 -q:v 2 frame_check.jpg
+
+# Step 2: Upload frame and compare (same API call as Check 2, but with video frame)
+curl -s -X POST 'https://open.bigmodel.cn/api/paas/v4/chat/completions' \
+  -H "Authorization: Bearer $ZHIPU_API_KEY" \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "model": "glm-4.6v",
+    "messages": [{"role":"user","content":[
+      {"type":"image_url","image_url":{"url":"CHARACTER_SHEET_URL"}},
+      {"type":"image_url","image_url":{"url":"FRAME_CHECK_URL"}},
+      {"type":"text","text":"Image 1 is a character reference sheet. Image 2 is a frame from a video that should show the same character. Is the character in the video frame visually consistent with the reference sheet? Check hair, face, clothing, body type. Answer CONSISTENT or INCONSISTENT with specific differences."}
+    ]}]
+  }'
+```
+
+## Check 4: Product Accuracy
+
+```bash
+curl -s -X POST 'https://open.bigmodel.cn/api/paas/v4/chat/completions' \
+  -H "Authorization: Bearer $ZHIPU_API_KEY" \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "model": "glm-4.6v",
+    "messages": [{"role":"user","content":[
+      {"type":"image_url","image_url":{"url":"PRODUCT_REFERENCE_URL"}},
+      {"type":"image_url","image_url":{"url":"AD_FRAME_URL"}},
+      {"type":"text","text":"Image 1 is a product reference sheet. Image 2 is an ad frame. Is the product accurately reproduced? Check: 1) Shape identical? 2) Logo correct? 3) Label text correct? 4) Colors matching? 5) Proportions correct? Answer ACCURATE or INACCURATE with details."}
+    ]}]
+  }'
+```
+
+## Correct Production Flow (THE ONLY ACCEPTABLE ORDER)
+
+```
+Step 1: Generate character sheet (Seedream 4.5)
+   ↓
+Step 2: [CHECK 1] Validate 3-view format → INVALID? Regenerate
+   ↓
+Step 3: Show to user → User approves
+   ↓
+Step 4: Generate scene image (Seedream 4.0 with character sheet as `images` param)
+   ↓
+Step 5: [CHECK 2] Compare scene vs character sheet → INCONSISTENT? Regenerate
+   ↓
+Step 6: Generate video (img2video from scene image, NOT text2video)
+   ↓
+Step 7: [CHECK 3] Extract frame, compare vs character sheet → INCONSISTENT? Regenerate
+   ↓
+Step 8: Post-production (TTS, subtitles, BGM, merge)
+```
+
+**VIOLATIONS (any of these = wrong, redo immediately):**
+- Generating scene image WITHOUT passing character sheet as `images` parameter
+- Using `doubao-seedream-4.5` for scene images (4.5 does NOT support reference images)
+- Using `text2video` for character scenes (always use `img2video` from scene image)
+- Skipping any CHECK step
+- Showing user an INVALID or INCONSISTENT result
+
+## Cost
+
+Each GLM-4.6V check costs ~¥0.01. A typical 3-scene video needs ~6 checks = ¥0.06 total. This is negligible compared to the ¥2-4 wasted on regenerating scenes that the user rejects for inconsistency.
+
+## Rules
+
+1. **Every scene image gets checked** — no exceptions, no batching
+2. **Every video clip gets checked** — extract frame at 2 seconds
+3. **REJECT means regenerate** — do not show rejected content to user
+4. **Max 3 retries** — if still failing after 3 attempts, show all attempts to user and ask
+5. **Log every check** — record PASS/FAIL/reason in production log
+
+=== skills/hitpop-creatomate/SKILL.md ===
+---
+name: hitpop-creatomate
+description: "Cloud video and image automation via Creatomate API. Template-based rendering with dynamic data, RenderScript for code-only videos, and preview SDK for browser editing. Best for marketing teams and SaaS products needing branded video at scale."
+version: 0.1.0
+metadata:
+  openclaw:
+    emoji: "🎨"
+    requires:
+      env:
+        - CREATOMATE_API_KEY
+      bins:
+        - curl
+        - jq
+    primaryEnv: CREATOMATE_API_KEY
+---
+
+# Hitpop Creatomate — Template Video Automation API
+
+Cloud-based video and image generation using Creatomate. Design templates in a visual editor, then render variations via API with dynamic data.
+
+## Setup
+
+1. Create free account at https://creatomate.com
+2. Get API key from Project Settings
+3. Create a template in the online editor
+
+```bash
+export CREATOMATE_API_KEY="your-api-key"
+```
+
+## Render Video from Template
+
+```bash
+curl -s -X POST 'https://api.creatomate.com/v2/renders' \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer $CREATOMATE_API_KEY" \
+  -d '{
+    "template_id": "YOUR_TEMPLATE_ID",
+    "modifications": {
+      "Title": "Hitpop AI Video Suite",
+      "Title.fill_color": "#4980f1",
+      "Subtitle": "Generate, edit, publish — all from code",
+      "Background-Video": "https://example.com/demo-footage.mp4",
+      "Logo": "https://example.com/logo.png"
+    }
+  }' | jq .
+```
+
+Response:
+```json
+[{
+  "id": "render-id",
+  "status": "planned",
+  "url": "https://cdn.creatomate.com/renders/..../output.mp4"
+}]
+```
+
+## Check Render Status
+
+```bash
+RENDER_ID="your-render-id"
+curl -s "https://api.creatomate.com/v2/renders/$RENDER_ID" \
+  -H "Authorization: Bearer $CREATOMATE_API_KEY" | jq '{status: .status, url: .url}'
+```
+
+Status flow: `planned` → `rendering` → `succeeded` (or `failed`)
+
+## Render Video from Code (RenderScript, No Template)
+
+For full control without using the visual editor:
+
+```bash
+curl -s -X POST 'https://api.creatomate.com/v2/renders' \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer $CREATOMATE_API_KEY" \
+  -d '{
+    "source": {
+      "output_format": "mp4",
+      "width": 1080,
+      "height": 1920,
+      "duration": 10,
+      "elements": [
+        {
+          "type": "video",
+          "source": "https://example.com/background.mp4",
+          "time": 0,
+          "duration": 10
+        },
+        {
+          "type": "text",
+          "text": "PRODUCT LAUNCH",
+          "y": "35%",
+          "width": "80%",
+          "x_alignment": "50%",
+          "font_family": "Montserrat",
+          "font_weight": "800",
+          "font_size": "10 vmin",
+          "fill_color": "#ffffff",
+          "time": 1,
+          "duration": 4,
+          "animations": [
+            {
+              "type": "text-appear",
+              "split": "word",
+              "duration": 1
+            }
+          ]
+        }
+      ]
+    }
+  }' | jq .
+```
+
+## Modify Template Properties (Dot Notation)
+
+```json
+{
+  "template_id": "YOUR_TEMPLATE_ID",
+  "modifications": {
+    "Title": "New Title Text",
+    "Title.font_family": "Montserrat",
+    "Title.font_size": "8 vmin",
+    "Title.fill_color": "#ff5500",
+    "Background-Color.fill_color": "#1a1a2e",
+    "Outro-Scene": {}
+  }
+}
+```
+
+Setting an element to `{}` removes it entirely. Dot notation lets you change any property: colors, fonts, timing, positions, visibility.
+
+## Batch Rendering
+
+Render multiple variations in one call:
+
+```bash
+curl -s -X POST 'https://api.creatomate.com/v2/renders' \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer $CREATOMATE_API_KEY" \
+  -d '[
+    {
+      "template_id": "YOUR_TEMPLATE_ID",
+      "modifications": { "Title": "Version A — Blue", "Title.fill_color": "#0066ff" }
+    },
+    {
+      "template_id": "YOUR_TEMPLATE_ID",
+      "modifications": { "Title": "Version B — Red", "Title.fill_color": "#ff0000" }
+    }
+  ]' | jq .
+```
+
+## List Templates
+
+```bash
+curl -s 'https://api.creatomate.com/v2/templates' \
+  -H "Authorization: Bearer $CREATOMATE_API_KEY" | jq '.[].name'
+```
+
+## SDKs
+
+| Language | Package |
+|---|---|
+| Node.js | `npm install creatomate` |
+| PHP | `composer require creatomate/creatomate` |
+| Ruby | `gem install creatomate` |
+| Python | REST API (no official SDK, use `requests`) |
+
+## Creatomate vs Other Hitpop Skills
+
+| Feature | Creatomate | JSON2Video | Shotstack | Rendervid |
+|---|---|---|---|---|
+| Visual template editor | ✅ Best in class | ❌ | ❌ | ❌ |
+| Code-only (no editor) | ✅ RenderScript | ✅ JSON | ✅ JSON | ✅ JSON |
+| Preview SDK (browser) | ✅ | ❌ | ✅ | ❌ |
+| Pricing | $54/mo+ | Free tier | Free sandbox | Free |
+| Best for | Marketing teams, SaaS | Content automation | Enterprise | AI agents |
+
+## Tips
+- Design once in the visual editor, then render thousands of variations via API
+- Use `webhook_url` parameter instead of polling for production
+- `render_scale: 0.5` for fast previews, `1.0` for final output
+- Use `max_width`/`max_height` to auto-scale without changing template
+- RenderScript = "HTML for video" — use it when templates are too rigid
+- Combine: generate AI images with `hitpop-gen-image` → insert into Creatomate template → batch render
+
+=== skills/hitpop-director/SKILL.md ===
+---
+name: hitpop-director
+description: "AI Video Director — the brain of the Hitpop skills suite. Users just say what they want ('make me a product video'), and the director handles everything: asks the right questions, plans the production pipeline, picks the best skills and models, generates a workflow, and executes it step by step. No video production knowledge required."
+version: 0.2.0
+metadata:
+  openclaw:
+    emoji: "🎬"
+    requires:
+      env:
+        - ZHIPU_API_KEY
+      bins:
+        - curl
+        - jq
+    primaryEnv: ZHIPU_API_KEY
+---
+
+# Hitpop Director — Your AI Video Director
+
+You are an AI video director. Users come to you with a goal ("make me a product video"), NOT with technical instructions. Most users have ZERO knowledge about video production workflows. Your job is to:
+
+1. **Understand** what they actually want
+2. **Plan** the optimal production pipeline
+3. **Execute** each step using the right hitpop skills
+4. **Show** intermediate results and ask for feedback
+5. **Deliver** the final video
+
+## Setup
+
+```bash
+export ZHIPU_API_KEY="your-api-key-from-bigmodel.cn"
+```
+
+---
+
+## PHASE 1: Understand the User's Goal
+
+When a user asks for a video, DO NOT immediately start generating. First, figure out what they need by asking a few key questions. Use GLM-5-Turbo to analyze their request and determine what's missing.
+
+### The 6 Questions (ask only what's unclear)
+
+1. **Purpose** — What is this video for? (social media, product launch, education, personal, ad campaign)
+2. **Content** — What should the video show? (product, person, scene, concept, text/data)
+3. **Materials** — Do they have existing assets? (photos, logos, brand colors, footage, scripts)
+4. **Style** — What look and feel? (cinematic, minimal, energetic, elegant, cartoon, realistic)
+5. **Specs** — Platform and format? (TikTok 9:16, YouTube 16:9, Instagram 1:1, duration)
+6. **Extras** — Do they need voiceover? Subtitles? Music? Which language?
+
+### Smart Defaults (don't ask if you can assume)
+
+- No platform specified → assume TikTok vertical (9:16, 1080x1920)
+- No duration specified → 5-8 seconds for social, 15-30 seconds for ads, 60s for explainers
+- No style specified → clean and modern
+- No language specified → match the language the user is speaking
+- No materials → you will generate everything from scratch with AI
+
+### Example Interaction
+
+```
+User: "Make me a product video"
+
+Director: "Sure! Let me help. Just a few quick questions:
+1. What product is it? Do you have a product image?
+2. Which platform is the video for? (Douyin/Xiaohongshu/YouTube/other)
+3. Do you need voiceover? Chinese or English?"
+
+User: "Headphone product, I have an image, for Douyin, with Chinese voiceover"
+
+Director: "Got it! I will make a 15-second Douyin vertical video. Here is the plan:
+1. Generate high-quality video clips from your product image(Vidu Q2)
+2. AI generates voiceover script(GLM-5-Turbo)
+3. Chinese voiceover(Edge TTS)
+4. Auto-add subtitles(Whisper)
+5. Add background music
+6. Export9:16Douyin format
+
+Ready to start?"
+```
+
+**IMPORTANT**: Never dump a list of 15 skills at the user. They don't care about skill names. They care about getting their video done.
+
+---
+
+## PHASE 2: Plan the Production Pipeline
+
+Based on the user's answers, use GLM-5-Turbo to generate an execution plan.
+
+### Call GLM-5-Turbo to Plan
+
+```bash
+curl -s -X POST 'https://open.bigmodel.cn/api/paas/v4/chat/completions' \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer $ZHIPU_API_KEY" \
+  -d '{
+    "model": "glm-5-turbo",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a video production planner. Given a user brief, output a JSON pipeline. Each step has: id, skill, action, params, output, and a human-readable description.\n\nAvailable skills and when to use them:\n- hitpop-gen-image: Generate images from text (Seedream 4.5 for best quality, 4.0 for reference-based)\n- hitpop-gen-video: Generate video from text or images (viduq2-text2video, viduq2-pro-img2video, viduq2-turbo-img2video, viduq2-img2video for reference consistency, viduq2-pro-img2video-frame for start/end frames)\n- hitpop-comfyui: Local free generation if user has GPU (Flux for images, Wan2.1 for video)\n- hitpop-lipsync: Audio-driven lip sync. Wav2Lip for re-syncing existing video, SadTalker/LivePortrait for talking head from single image, HeyGen API for cloud avatars. ALWAYS use this when video has dialogue or a character needs to speak.\n- hitpop-rendervid: Template-based video from JSON (free, best for data-driven/batch content)\n- hitpop-shotstack: Cloud template video rendering (enterprise scale)\n- hitpop-json2video: JSON-to-video with built-in TTS and text animations\n- hitpop-creatomate: Visual template automation (marketing teams)\n- hitpop-voiceover: AI narration (GLM-TTS primary via Zhipu API, Edge TTS free fallback)\n- hitpop-subtitle: Auto-generate subtitles from audio (Whisper)\n- hitpop-music: Add background music (FFmpeg mixing)\n- hitpop-edit: Video post-processing with FFmpeg (trim, merge, resize, watermark, combine audio+video+subtitles)\n- hitpop-twick: Interactive React video editor (for manual fine-tuning)\n- hitpop-publish: Export for TikTok/YouTube/Instagram (resize, compress, thumbnails)\n\nRules:\n1. Pick the MINIMUM number of steps needed. Dont over-engineer.\n2. If user has images, skip image generation.\n3. If user doesnt need voiceover, skip it.\n4. Always end with hitpop-publish if user mentioned a platform.\n5. Use $step_id.output syntax for passing data between steps.\n6. For Chinese voiceover use GLM-TTS voice=female (female) or voice=kazi (male). For English fallback to Edge TTS en-US-AriaNeural.\n7. Default to cloud API (Zhipu). Only use hitpop-comfyui if user explicitly wants local/free generation.\n8. Output ONLY the JSON, no explanation.\n9. If video has characters speaking dialogue, ALWAYS include hitpop-lipsync after voiceover generation. Lip sync is a solved problem — never tell users it cannot be done.\n10. For AI short films with multiple characters: generate each character portrait (gen-image), generate scene clips (gen-video with img2video for consistency), generate per-character dialogue (voiceover), apply lip sync per scene (lipsync), then merge all."
+      },
+      {
+        "role": "user",
+        "content": "USER_BRIEF_HERE"
+      }
+    ],
+    "temperature": 0.1
+  }' | jq -r '.choices[0].message.content'
+```
+
+### Pipeline Templates for Common Requests
+
+#### "Make a product video" (Product Video — user has product image)
+```json
+{
+  "name": "Product Video",
+  "steps": [
+    {"id": "video", "skill": "hitpop-gen-video", "description": "Generate video animation from product image", "params": {"model": "viduq2-pro-img2video", "image_url": ["USER_IMAGE"], "prompt": "Camera slowly orbits, dramatic lighting", "duration": "5", "size": "1920x1080"}},
+    {"id": "voice", "skill": "hitpop-voiceover", "description": "AIvoiceover", "params": {"engine": "glm-tts", "voice": "female", "text": "GENERATED_SCRIPT"}},
+    {"id": "subs", "skill": "hitpop-subtitle", "description": "Auto-generate subtitles", "params": {"input": "$voice.output"}},
+    {"id": "merge", "skill": "hitpop-edit", "description": "Merge video + voiceover + subtitles + BGM", "params": {"video": "$video.output", "audio": "$voice.output", "subtitle": "$subs.output", "bgm_volume": 0.2}},
+    {"id": "export", "skill": "hitpop-publish", "description": "Export Douyin vertical format", "params": {"input": "$merge.output", "platform": "tiktok"}}
+  ]
+}
+```
+
+#### "Make a brand promo video" (Brand Video — no materials)
+```json
+{
+  "name": "Brand Promo",
+  "steps": [
+    {"id": "images", "skill": "hitpop-gen-image", "description": "AIGenerate brand visual assets", "params": {"model": "doubao-seedream-4.5", "prompt": "BRAND_VISUAL_DESCRIPTION", "size": "2K", "sequential_image_generation": "auto", "sequential_image_generation_options": {"max_images": 4}}},
+    {"id": "clips", "skill": "hitpop-gen-video", "description": "Generate video clips from each image", "params": {"model": "viduq2-pro-img2video", "image_url": ["$images.output"], "duration": "5"}},
+    {"id": "voice", "skill": "hitpop-voiceover", "description": "Brand narration voiceover", "params": {"engine": "glm-tts", "voice": "kazi", "text": "GENERATED_BRAND_SCRIPT"}},
+    {"id": "subs", "skill": "hitpop-subtitle", "description": "subtitles", "params": {"input": "$voice.output"}},
+    {"id": "final", "skill": "hitpop-edit", "description": "Merge all clips + voiceover + subtitles + music", "params": {"clips": "$clips.output", "audio": "$voice.output", "subtitle": "$subs.output"}},
+    {"id": "export", "skill": "hitpop-publish", "description": "Multi-platform export", "params": {"input": "$final.output", "platforms": ["tiktok", "youtube"]}}
+  ]
+}
+```
+
+#### "I just want to try AI video generation" (Just trying it out — simplest path)
+```json
+{
+  "name": "Quick Try",
+  "steps": [
+    {"id": "image", "skill": "hitpop-gen-image", "description": "Generate a scene image first", "params": {"model": "doubao-seedream-4.5", "prompt": "USER_DESCRIPTION", "size": "2K"}},
+    {"id": "video", "skill": "hitpop-gen-video", "description": "Generate video from image", "params": {"model": "viduq2-pro-img2video", "image_url": ["$image.output"], "duration": "5", "size": "1920x1080"}}
+  ]
+}
+```
+
+**NOTE: text2video (viduq2-text2video) is NOT allowed for content requiring character consistency** (short films, dramas, multi-scene storytelling). It produces random faces and styles every time. text2video is fine for abstract visuals, landscapes, B-roll, or single-scene content with no recurring characters.
+
+#### "Make me a short film / drama" (Character Content — MANDATORY character-first pipeline)
+```json
+{
+  "name": "Short Film",
+  "steps": [
+    {"id": "characters", "skill": "hitpop-gen-image", "description": "Generate character reference sheets (one per character, front-facing, full detail)", "params": {"model": "doubao-seedream-4.5", "prompt": "CHARACTER_DESCRIPTION_FULL_DETAIL", "size": "2K"}},
+    {"id": "scenes", "skill": "hitpop-gen-image", "description": "Generate scene images using character reference (Seedream 4.0 with reference image input)", "params": {"model": "doubao-seedream-4.0", "images": ["$characters.output"], "prompt": "SCENE_DESCRIPTION + CHARACTER_PROMPT_VERBATIM"}},
+    {"id": "clips", "skill": "hitpop-gen-video", "description": "img2video ONLY — generate video from each scene image with character reference", "params": {"model": "viduq2-img2video", "image_url": ["$characters.output", "$scenes.output"], "duration": "5"}},
+    {"id": "check", "skill": "hitpop-director", "description": "GLM-4.6V consistency check — Critic compares each clip frame to character reference", "params": {"model": "glm-4.6v", "reference": "$characters.output", "frames": "$clips.output"}},
+    {"id": "voice", "skill": "hitpop-voiceover", "description": "Per-character dialogue voiceover", "params": {"engine": "glm-tts"}},
+    {"id": "subs", "skill": "hitpop-subtitle", "description": "Auto-generate subtitles from dialogue", "params": {"input": "$voice.output"}},
+    {"id": "merge", "skill": "hitpop-edit", "description": "Merge all clips + dialogue + subtitles + BGM", "params": {"clips": "$clips.output", "audio": "$voice.output", "subtitle": "$subs.output"}},
+    {"id": "export", "skill": "hitpop-publish", "description": "Export for target platform", "params": {"input": "$merge.output", "platform": "tiktok"}}
+  ]
+}
+```
+
+**CRITICAL RULES for character content:**
+1. Characters MUST be generated first, before any scene
+2. Every scene image MUST use character reference as input
+3. Every video clip MUST use img2video (NEVER text2video)
+4. Every clip MUST pass GLM-4.6V consistency check before merge
+5. If img2video fails: retry with different params → try pro-img2video → try frame model → STOP and ask user. Do NOT fall back to text2video for character scenes.
+
+#### "Help me batch-create social media content" (Batch Social Content)
+```json
+{
+  "name": "Batch Social Content",
+  "steps": [
+    {"id": "template", "skill": "hitpop-rendervid", "description": "Batch generate using templates", "params": {"template": "social-post", "data_source": "USER_DATA"}},
+    {"id": "music", "skill": "hitpop-music", "description": "Add uniform background music", "params": {"video": "$template.output", "bgm_volume": 0.25}},
+    {"id": "export", "skill": "hitpop-publish", "description": "Export multi-platform formats", "params": {"input": "$music.output", "platforms": ["tiktok", "instagram"]}}
+  ]
+}
+```
+
+---
+
+## PHASE 3: Execute Step by Step
+
+Execute the pipeline one step at a time. After each step:
+
+1. **Show the user what was produced** (image URL, video URL, audio file)
+2. **Ask if they're happy** or want adjustments
+3. **Only proceed to next step after confirmation** (unless user said "just do it all")
+
+### Execution Pattern
+
+```
+Director: "Step 1:Generate video clips..."
+[executes hitpop-gen-video]
+Director: "✅ Video generation complete!Here is the preview:[video_url]
+          How does it look? If you are happy I will continue with voiceover.
+          If not satisfied, I can:
+          - Regenerate with a different prompt
+          - Adjust motion amplitude (large/medium/small)
+          - Switch to a higher quality model"
+
+User: "Make the motion amplitude bigger"
+
+Director: "OK, Adjusted to large, Regenerating..."
+[re-executes with movement_amplitude: "large"]
+Director: "✅ Regeneration complete![new_video_url]
+          How is this version?"
+
+User: "Looks good, continue"
+
+Director: "Step 2: Generate voiceover..."
+[executes hitpop-voiceover]
+...
+```
+
+### Fast Mode
+
+If user says "Just do it all" or "don't ask, just do it", execute all steps without pausing for confirmation. Show all results at the end.
+
+---
+
+## PHASE 4: Deliver
+
+When all steps are done:
+
+1. **Show the final video** with download link
+2. **Remind about expiration** (Zhipu URLs expire in 24 hours)
+3. **Offer next steps**: "Need any adjustments? Or shall I export for other platforms?"
+
+---
+
+## Decision Intelligence
+
+### How to Pick the Right Video Model
+
+```
+User has image(s)?
+├── YES → How many images?
+│   ├── 1 image → Need quality or speed?
+│   │   ├── Quality → viduq2-pro-img2video
+│   │   └── Speed → viduq2-turbo-img2video
+│   ├── 2 images (start + end frame) → viduq2-pro-img2video-frame
+│   └── 1-7 images (consistent character) → viduq2-img2video
+└── NO → viduq2-text2video
+```
+
+### How to Pick the Right Image Model
+
+```
+User has reference images?
+├── YES → doubao-seedream-4.0 (supports image input)
+└── NO → Need 4K?
+    ├── YES → doubao-seedream-4.5
+    └── NO → doubao-seedream-4.0 (cheaper)
+```
+
+### How to Pick Template vs AI Generation
+
+```
+Content is structured/repeatable? (same layout, different data)
+├── YES → Template path
+│   ├── Need text animations + built-in TTS? → hitpop-json2video
+│   ├── Need visual template editor? → hitpop-creatomate
+│   ├── Need free + AI agent native? → hitpop-rendervid
+│   └── Need enterprise scale? → hitpop-shotstack
+└── NO → AI generation path
+    ├── Has GPU, wants free? → hitpop-comfyui
+    └── No GPU / wants convenience? → hitpop-gen-video + hitpop-gen-image
+```
+
+### How to Pick Voiceover Engine
+
+```
+Budget?
+├── Free → Edge TTS (300+ voices, 75+ languages, great quality)
+├── $$ → OpenAI TTS (6 voices, very natural)
+└── $$$ → ElevenLabs (voice cloning, most natural)
+```
+
+---
+
+## Writing Video Scripts with GLM-5-Turbo
+
+When user needs a script/narration, generate it:
+
+```bash
+curl -s -X POST 'https://open.bigmodel.cn/api/paas/v4/chat/completions' \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer $ZHIPU_API_KEY" \
+  -d '{
+    "model": "glm-5-turbo",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a video scriptwriter. Write a narration script for a short video. Output JSON: {\"narration\": \"the voiceover text\", \"scene_descriptions\": [\"description for each scene/shot\"], \"duration_estimate\": seconds}. Keep narration concise — about 2-3 words per second of video. Match the tone to the video purpose."
+      },
+      {
+        "role": "user",
+        "content": "Write a script for a 15-second product video about premium wireless headphones. Target audience: young professionals. Tone: elegant and confident. Language: Chinese."
+      }
+    ],
+    "temperature": 0.7
+  }' | jq -r '.choices[0].message.content'
+```
+
+---
+
+## Important Notes
+
+- **All Zhipu API calls** use base URL: `https://open.bigmodel.cn/api/paas/v4/`
+- **Video/Image generation is async**: submit task → poll `/async-result/{id}` until SUCCESS
+- **URLs expire in 24 hours** — always remind user to download
+- **Default watermark off**: set `watermark: false` unless user wants it
+- **Be conversational**: you're a creative partner, not a command executor
+- **Show, don't tell**: always provide preview links, not just "done"
+- **Speak the user's language**: if they write Chinese, respond in Chinese
+- **Download files immediately after generation**: Zhipu URLs expire in 24 hours. ALWAYS `curl -o` the file to local disk the moment you get a SUCCESS response. Never rely on storing just the URL.
+- **Report errors with full detail**: When any API call fails, show the exact error message and HTTP status code. Then explain what you're doing about it (retry, fallback, or ask user). Never say "failed" without saying WHY.
+- **Limit concurrent API calls to 3**: Don't submit 6 video tasks at once. Batch in groups of 2-3 to avoid rate limiting.
+
+=== skills/hitpop-edit/SKILL.md ===
+---
+name: hitpop-edit
+description: "Video post-processing using FFmpeg. Trim, merge, resize, add watermarks, burn subtitles, convert formats, extract audio, create thumbnails, and combine video+audio tracks."
+version: 0.1.0
+metadata:
+  openclaw:
+    emoji: "✂️"
+    requires:
+      bins:
+        - ffmpeg
+        - ffprobe
+    install:
+      - kind: brew
+        formula: ffmpeg
+        bins: [ffmpeg, ffprobe]
+---
+
+# Hitpop Edit — Video Post-Processing (FFmpeg)
+
+All video editing and post-processing operations using FFmpeg.
+
+## Common Operations
+
+### Trim a video
+```bash
+ffmpeg -i input.mp4 -ss 00:00:02 -to 00:00:07 -c copy trimmed.mp4
+```
+
+### Merge multiple videos
+```bash
+# Create file list
+echo "file 'intro.mp4'" > list.txt
+echo "file 'main.mp4'" >> list.txt
+echo "file 'outro.mp4'" >> list.txt
+
+ffmpeg -f concat -safe 0 -i list.txt -c copy merged.mp4
+```
+
+### Resize / change resolution
+```bash
+ffmpeg -i input.mp4 -vf "scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2" -c:a copy resized.mp4
+```
+
+### Add logo/watermark overlay
+```bash
+ffmpeg -i input.mp4 -i logo.png -filter_complex "overlay=W-w-20:H-h-20" -c:a copy watermarked.mp4
+```
+
+### Burn subtitles into video
+```bash
+ffmpeg -i input.mp4 -vf "subtitles=subs.srt:force_style='FontSize=24,PrimaryColour=&HFFFFFF&,OutlineColour=&H40000000&,Outline=2,Alignment=2,MarginV=30'" -c:a copy subtitled.mp4
+```
+
+### Extract audio from video
+```bash
+ffmpeg -i input.mp4 -vn -acodec libmp3lame -q:a 2 audio.mp3
+```
+
+### Add audio track to video
+```bash
+ffmpeg -i video.mp4 -i voiceover.mp3 -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 -shortest output.mp4
+```
+
+### Mix multiple audio tracks (voice + music)
+```bash
+ffmpeg -i video.mp4 -i voice.mp3 -i bgm.mp3 \
+  -filter_complex "[1:a]volume=1.0[voice];[2:a]volume=0.3[music];[voice][music]amix=inputs=2:duration=first[aout]" \
+  -map 0:v -map "[aout]" -c:v copy -c:a aac output.mp4
+```
+
+### Convert format
+```bash
+ffmpeg -i input.webm -c:v libx264 -c:a aac output.mp4
+```
+
+### Create thumbnail from video
+```bash
+ffmpeg -i input.mp4 -ss 00:00:03 -frames:v 1 thumbnail.jpg
+```
+
+### Create GIF from video
+```bash
+ffmpeg -i input.mp4 -ss 0 -t 3 -vf "fps=15,scale=480:-1:flags=lanczos" -loop 0 output.gif
+```
+
+### Get video info
+```bash
+ffprobe -v quiet -print_format json -show_format -show_streams input.mp4 | jq '{duration: .format.duration, width: .streams[0].width, height: .streams[0].height, codec: .streams[0].codec_name}'
+```
+
+### Speed up / slow down
+```bash
+# 2x speed
+ffmpeg -i input.mp4 -filter_complex "[0:v]setpts=0.5*PTS[v];[0:a]atempo=2.0[a]" -map "[v]" -map "[a]" fast.mp4
+
+# 0.5x speed (slow motion)
+ffmpeg -i input.mp4 -filter_complex "[0:v]setpts=2.0*PTS[v];[0:a]atempo=0.5[a]" -map "[v]" -map "[a]" slow.mp4
+```
+
+### Add fade in/out
+```bash
+ffmpeg -i input.mp4 -vf "fade=t=in:st=0:d=1,fade=t=out:st=4:d=1" -c:a copy faded.mp4
+```
+
+## Tips
+- Always use `-c copy` when possible (no re-encoding = fast + lossless)
+- For concat, all videos must have same codec, resolution, and frame rate
+- Use `ffprobe` to inspect files before processing
+- `-shortest` flag cuts output to shortest input stream length
+
+=== skills/hitpop-gen-image/SKILL.md ===
+---
+name: hitpop-gen-image
+description: "AI image generation using Doubao Seedream 4.0/4.5 via Zhipu (Z.ai) API. Supports text-to-image, image+text-to-image, multi-image fusion, and sequential image sets. Up to 4K resolution."
+version: 0.1.0
+metadata:
+  openclaw:
+    emoji: "🖼️"
+    requires:
+      env:
+        - ZHIPU_API_KEY
+      bins:
+        - curl
+        - jq
+    primaryEnv: ZHIPU_API_KEY
+---
+
+# Hitpop Gen Image — AI Image Generation (Seedream 4.0/4.5)
+
+Generate images using Doubao Seedream models through the Zhipu open platform API.
+
+## Setup
+
+```bash
+export ZHIPU_API_KEY="your-api-key-from-bigmodel.cn"
+```
+
+## Available Models
+
+| Model | Capabilities | Min Resolution | Price |
+|---|---|---|---|
+| `doubao-seedream-4.5` | Text→Image, best quality, 2K-4K | 2560x1440 | ¥0.25/image |
+| `doubao-seedream-4.0` | Text→Image, Image+Text→Image, multi-image fusion | 1280x720 | ¥0.20/image |
+
+## API Reference
+
+- **Base URL**: `https://open.bigmodel.cn/api/paas/v4/images/generations`
+- **Method**: POST (async — returns task ID, poll for result)
+- **Auth**: `Authorization: Bearer $ZHIPU_API_KEY`
+
+## Usage Examples
+
+### 1. Text to Image (Single Image)
+
+```bash
+curl -s -X POST 'https://open.bigmodel.cn/api/paas/v4/images/generations' \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer $ZHIPU_API_KEY" \
+  -d '{
+    "model": "doubao-seedream-4.5",
+    "prompt": "A cinematic shot of a vintage train bursting out of a black hole, dramatic lighting, film grain, deep blue tones, ultra-realistic",
+    "size": "2K",
+    "watermark": false,
+    "sequential_image_generation": "disabled"
+  }' | jq .
+```
+
+### 2. Text to Image Set (Sequential/Group)
+
+```bash
+curl -s -X POST 'https://open.bigmodel.cn/api/paas/v4/images/generations' \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer $ZHIPU_API_KEY" \
+  -d '{
+    "model": "doubao-seedream-4.0",
+    "prompt": "Generate 4 connected illustrations showing the same courtyard across four seasons, consistent style",
+    "size": "2048x2048",
+    "sequential_image_generation": "auto",
+    "sequential_image_generation_options": {
+      "max_images": 4
+    },
+    "watermark": false
+  }' | jq .
+```
+
+### 3. Image + Text to Image (Reference-Based)
+
+```bash
+curl -s -X POST 'https://open.bigmodel.cn/api/paas/v4/images/generations' \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer $ZHIPU_API_KEY" \
+  -d '{
+    "model": "doubao-seedream-4.0",
+    "prompt": "Generate the dog lying on a grass field, close-up shot",
+    "images": "https://example.com/my-dog-photo.jpg",
+    "size": "2K",
+    "watermark": false
+  }' | jq .
+```
+
+### 4. Multi-Image Fusion
+
+```bash
+curl -s -X POST 'https://open.bigmodel.cn/api/paas/v4/images/generations' \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer $ZHIPU_API_KEY" \
+  -d '{
+    "model": "doubao-seedream-4.0",
+    "prompt": "Replace the clothing in image 1 with the outfit from image 2",
+    "images": [
+      "https://example.com/person.jpg",
+      "https://example.com/outfit.jpg"
+    ],
+    "size": "2K",
+    "watermark": false
+  }' | jq .
+```
+
+### 5. Poll for Result
+
+```bash
+TASK_ID="your-task-id"
+curl -s -X GET "https://open.bigmodel.cn/api/paas/v4/async-result/$TASK_ID" \
+  -H "Authorization: Bearer $ZHIPU_API_KEY" | jq .
+```
+
+Response contains `data[].url` with image download links (valid 24 hours).
+
+## Parameters Reference
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `model` | string | Yes | `doubao-seedream-4.5` or `doubao-seedream-4.0` |
+| `prompt` | string | Yes | Image description. Recommended ≤300 Chinese chars or 600 English words |
+| `size` | string | No | Method 1: "1K", "2K", "4K". Method 2: "2048x2048", "2560x1440", etc. |
+| `images` | string/array | No | Reference image URL(s). Seedream 4.0 supports multi-image. ALWAYS use URLs, NEVER base64 |
+| `seed` | integer | No | Random seed [-1, 2147483647]. Same seed = similar results |
+| `sequential_image_generation` | string | No | "auto" (model decides count) or "disabled" (single image). Default: disabled |
+| `sequential_image_generation_options.max_images` | integer | No | Max images in a set [1, 15]. Only when sequential = "auto" |
+| `response_format` | string | No | "url" (default). Always use "url", never "b64_json" |
+| `watermark` | bool | No | Add "AI generated" watermark. Default: true — **set false for production** |
+| `optimize_prompt_options.mode` | string | No | "standard" (better quality) or "fast" (quicker) |
+
+## Recommended Sizes
+
+| Aspect Ratio | Pixels |
+|---|---|
+| 1:1 | 2048×2048 |
+| 4:3 | 2304×1728 |
+| 3:4 | 1728×2304 |
+| 16:9 | 2560×1440 |
+| 9:16 | 1440×2560 |
+| 3:2 | 2496×1664 |
+| 21:9 | 3024×1296 |
+
+## Tips
+- Seedream 4.5 produces best quality but only supports text input (no reference images)
+- Seedream 4.0 supports reference images and multi-image fusion
+- Use `sequential_image_generation: "auto"` for storyboards, product sets, style guides
+- Image URLs expire after 24 hours
+- For video production pipeline: generate images here, then pass to `hitpop-gen-video`
+
+=== skills/hitpop-gen-video/SKILL.md ===
+---
+name: hitpop-gen-video
+description: "AI video generation using Vidu Q2 models via Zhipu (Z.ai) API. Supports text-to-video, image-to-video, reference-based video, and start/end frame interpolation. Up to 1080p, 8 seconds, with optional BGM."
+version: 0.1.0
+metadata:
+  openclaw:
+    emoji: "🎥"
+    requires:
+      env:
+        - ZHIPU_API_KEY
+      bins:
+        - curl
+        - jq
+    primaryEnv: ZHIPU_API_KEY
+---
+
+# Hitpop Gen Video — AI Video Generation (Vidu Q2)
+
+Generate videos using Vidu Q2 models through the Zhipu (Z.ai) open platform API.
+
+## Setup
+
+```bash
+export ZHIPU_API_KEY="your-api-key-from-bigmodel.cn"
+```
+
+## Available Models
+
+| Model | Mode | Max Duration | Default Resolution | Price |
+|---|---|---|---|---|
+| `viduq2-text2video` | Text → Video | 8s | 1280x720 | ~¥0.40 |
+| `viduq2-pro-img2video` | Image → Video (high quality) | 8s | 1280x720 | ~¥0.40 |
+| `viduq2-turbo-img2video` | Image → Video (fast) | 8s | 1920x1080 | ~¥0.20 |
+| `viduq2-img2video` | Reference images → Video (subject consistency) | 8s | 1280x720 | ~¥0.40 |
+| `viduq2-pro-img2video-frame` | Start+End frame → Video (high quality) | 8s | 1280x720 | ~¥0.40 |
+| `viduq2-turbo-img2video-frame` | Start+End frame → Video (fast) | 8s | 1920x1080 | ~¥0.20 |
+
+## API Reference
+
+- **Base URL**: `https://open.bigmodel.cn/api/paas/v4/videos/generations`
+- **Method**: POST (async — returns task ID, poll for result)
+- **Auth**: `Authorization: Bearer $ZHIPU_API_KEY`
+
+## Usage Examples
+
+### 1. Text to Video
+
+```bash
+curl -s -X POST 'https://open.bigmodel.cn/api/paas/v4/videos/generations' \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer $ZHIPU_API_KEY" \
+  -d '{
+    "model": "viduq2-text2video",
+    "prompt": "A girl holding a fox, slowly opening her eyes and gently looking at the camera, hair blowing in the wind",
+    "duration": "5",
+    "size": "1920x1080",
+    "aspect_ratio": "16:9",
+    "with_audio": false,
+    "watermark": false
+  }' | jq .
+```
+
+### 2. Image to Video (High Quality)
+
+```bash
+curl -s -X POST 'https://open.bigmodel.cn/api/paas/v4/videos/generations' \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer $ZHIPU_API_KEY" \
+  -d '{
+    "model": "viduq2-pro-img2video",
+    "image_url": ["https://example.com/product-photo.jpg"],
+    "prompt": "Camera slowly zooms out revealing the full product, soft lighting",
+    "duration": "5",
+    "size": "1920x1080",
+    "movement_amplitude": "medium",
+    "watermark": false
+  }' | jq .
+```
+
+### 3. Reference-Based Video (Subject Consistency, 1-7 images)
+
+```bash
+curl -s -X POST 'https://open.bigmodel.cn/api/paas/v4/videos/generations' \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer $ZHIPU_API_KEY" \
+  -d '{
+    "model": "viduq2-img2video",
+    "image_url": [
+      "https://example.com/character-ref1.jpg",
+      "https://example.com/character-ref2.jpg"
+    ],
+    "prompt": "The character walks through a sunlit forest, looking around curiously",
+    "duration": "5",
+    "size": "1280x720",
+    "watermark": false
+  }' | jq .
+```
+
+### 4. Start & End Frame Interpolation
+
+```bash
+curl -s -X POST 'https://open.bigmodel.cn/api/paas/v4/videos/generations' \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer $ZHIPU_API_KEY" \
+  -d '{
+    "model": "viduq2-pro-img2video-frame",
+    "image_url": [
+      "https://example.com/frame-start.jpg",
+      "https://example.com/frame-end.jpg"
+    ],
+    "prompt": "Smooth transition with a flash of white light",
+    "duration": "5",
+    "size": "1920x1080",
+    "movement_amplitude": "auto",
+    "watermark": false
+  }' | jq .
+```
+
+### 5. Poll for Result
+
+All video generation is async. Extract the `id` from the creation response, then poll:
+
+```bash
+TASK_ID="your-task-id-from-creation-response"
+
+# Poll until SUCCESS or FAIL
+while true; do
+  RESULT=$(curl -s -X GET "https://open.bigmodel.cn/api/paas/v4/async-result/$TASK_ID" \
+    -H "Authorization: Bearer $ZHIPU_API_KEY")
+  STATUS=$(echo "$RESULT" | jq -r '.task_status')
+  echo "Status: $STATUS"
+  if [ "$STATUS" = "SUCCESS" ]; then
+    echo "$RESULT" | jq -r '.video_result[0].url'
+    break
+  elif [ "$STATUS" = "FAIL" ]; then
+    echo "Generation failed"
+    echo "$RESULT" | jq .
+    break
+  fi
+  sleep 5
+done
+```
+
+## Parameters Reference
+
+### Common Parameters (all models)
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `model` | string | Yes | Model ID (see table above) |
+| `prompt` | string | Optional | Text description, max 2000 chars (512 for img2video) |
+| `duration` | string | Optional | Video length: "1" to "8" seconds, default "5" |
+| `size` | string | Optional | "1280x720" or "1920x1080" |
+| `with_audio` | bool | Optional | Auto BGM from preset library. Default: false |
+| `watermark` | bool | Optional | Add "AI generated" watermark. Default: false |
+
+### Image-Specific Parameters
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `image_url` | array | Yes (for img models) | Array of image URLs. Formats: png, jpeg, jpg, webp. ALWAYS use URLs, NEVER base64 |
+| `aspect_ratio` | string | Optional | "16:9", "9:16", "4:3", "3:4", "1:1" |
+| `movement_amplitude` | string | Optional | "auto", "small", "medium", "large" |
+
+### Image Constraints
+- **img2video (reference)**: 1-7 images, each < 50MB, min 128x128, ratio < 4:1
+- **pro/turbo-img2video**: Single image only, < 50MB, ratio < 4:1
+- **frame models**: Exactly 2 images (start + end), similar resolution (ratio 0.8-1.25)
+- Always use image URLs, never base64 encoding (base64 bloats context window and causes failures)
+
+## Tips
+- Use `viduq2-turbo-*` for fast iterations, `viduq2-pro-*` for final output
+- `movement_amplitude: "small"` for product shots, `"large"` for action scenes
+- Video URLs expire after 24 hours — download immediately
+- For best results, write prompts describing camera movement + subject action
+
+=== skills/hitpop-json2video/SKILL.md ===
+---
+name: hitpop-json2video
+description: "Cloud video editing API by JSON2Video. Create videos from JSON with scenes, elements, text animations, AI voiceovers, and transitions. Free tier available. Best for automated content pipelines and faceless video channels."
+version: 0.1.0
+metadata:
+  openclaw:
+    emoji: "📋"
+    requires:
+      env:
+        - JSON2VIDEO_API_KEY
+      bins:
+        - curl
+        - jq
+    primaryEnv: JSON2VIDEO_API_KEY
+---
+
+# Hitpop JSON2Video — JSON-to-Video Cloud API
+
+Create videos programmatically from JSON definitions. Scenes, text animations, AI voiceovers, images, transitions — all in one API call.
+
+## Setup
+
+Get your free API key at https://json2video.com (no credit card required).
+
+```bash
+export JSON2VIDEO_API_KEY="your-api-key"
+```
+
+## Create a Video
+
+```bash
+curl -s -X POST 'https://api.json2video.com/v2/movies' \
+  -H "x-api-key: $JSON2VIDEO_API_KEY" \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "resolution": "full-hd",
+    "quality": "high",
+    "scenes": [
+      {
+        "comment": "Intro scene",
+        "background-color": "#1a1a2e",
+        "elements": [
+          {
+            "type": "text",
+            "style": "003",
+            "text": "Welcome to Hitpop",
+            "duration": 5,
+            "start": 1,
+            "settings": {
+              "font-size": "80",
+              "color": "#ffffff"
+            }
+          }
+        ]
+      },
+      {
+        "comment": "Product scene",
+        "elements": [
+          {
+            "type": "image",
+            "src": "https://example.com/product.jpg",
+            "duration": 5,
+            "zoom": 120
+          },
+          {
+            "type": "text",
+            "style": "001",
+            "text": "AI-Powered Video Creation",
+            "duration": 4,
+            "start": 1,
+            "y": 800
+          }
+        ],
+        "transition": "fade"
+      }
+    ]
+  }' | jq .
+```
+
+Response returns a `project` ID:
+```json
+{ "project": "abc123", "status": "rendering" }
+```
+
+## Poll for Result
+
+```bash
+PROJECT_ID="abc123"
+curl -s "https://api.json2video.com/v2/movies?project=$PROJECT_ID" \
+  -H "x-api-key: $JSON2VIDEO_API_KEY" | jq '{status: .status, url: .url}'
+```
+
+## Add AI Voiceover
+
+```json
+{
+  "scenes": [
+    {
+      "elements": [
+        {
+          "type": "audio",
+          "src": "tts",
+          "tts": {
+            "text": "Welcome to our product showcase. Today we introduce something amazing.",
+            "voice": "en-US-Neural2-F"
+          },
+          "duration": -1
+        },
+        {
+          "type": "image",
+          "src": "https://example.com/bg.jpg",
+          "duration": -1
+        }
+      ]
+    }
+  ]
+}
+```
+
+Setting `duration: -1` auto-matches to the TTS audio length.
+
+## Add Background Music
+
+```json
+{
+  "scenes": [...],
+  "elements": [
+    {
+      "type": "audio",
+      "src": "https://example.com/bgm.mp3",
+      "volume": 0.2,
+      "duration": -2
+    }
+  ]
+}
+```
+
+`duration: -2` stretches audio to match total movie length.
+
+## Element Types
+
+| Type | Description |
+|---|---|
+| `text` | Animated text with 50+ built-in styles |
+| `image` | Static images with zoom/pan effects |
+| `video` | Video clips |
+| `audio` | Audio tracks, BGM, or TTS voiceovers |
+| `html` | Custom HTML5 content |
+| `component` | Reusable template components |
+| `shape` | Rectangles, circles, lines |
+| `subtitles` | Auto-synced subtitle overlays |
+
+## Transitions
+
+`fade`, `crossfade`, `wipe-left`, `wipe-right`, `wipe-up`, `wipe-down`, `slide-left`, `slide-right`, `zoom-in`, `zoom-out`, `blur`
+
+## JSON2Video vs Other Hitpop Skills
+
+| Feature | JSON2Video | Rendervid | Shotstack |
+|---|---|---|---|
+| API style | REST + JSON scenes | JSON templates | REST + JSON timeline |
+| Built-in TTS | ✅ Yes | ❌ | ✅ Yes |
+| Text animations | ✅ 50+ styles | Basic | Basic |
+| Pricing | Free tier + paid | Free forever | Free sandbox + paid |
+| Best for | Content automation, faceless channels | AI agent workflows | Enterprise batch |
+| Self-hostable | ❌ Cloud only | ✅ | ❌ Cloud only |
+
+## Tips
+- Use `draft: true` for quick previews (lower quality, faster rendering)
+- Scenes render in parallel — more scenes ≠ slower
+- Use `-1` duration to auto-match element to its content length
+- Use `-2` duration for background audio that spans the full movie
+- Combine: generate images with `hitpop-gen-image` → assemble with JSON2Video
+- Great for YouTube Shorts, TikTok automation, news channels, quiz videos
+
+=== skills/hitpop-lipsync/SKILL.md ===
+---
+name: hitpop-lipsync
+description: "AI Lip Sync — make characters speak with perfectly synchronized mouth movements. Supports audio-driven lip sync on existing video (Wav2Lip), single-image talking head generation (SadTalker, LivePortrait), and commercial avatar APIs (HeyGen, Kling Avatar). Essential for AI short films, product spokespersons, and multilingual dubbing."
+version: 0.1.0
+metadata:
+  openclaw:
+    emoji: "👄"
+    requires:
+      bins:
+        - python3
+        - ffmpeg
+---
+
+# Hitpop Lip Sync — Audio-Driven Talking Video
+
+You are executing lip sync tasks. Your job is to make a character's mouth move naturally in sync with speech audio. This is the missing piece between AI-generated video and believable dialogue.
+
+## When to Use This Skill
+
+- User has a video clip and wants a character to "speak" specific dialogue
+- User has a single portrait image and wants to create a talking head video
+- User needs multilingual dubbing (change the audio, re-sync the lips)
+- User is making an AI short film/drama with dialogue
+- User wants a digital spokesperson for product demos
+
+## Method Selection
+
+```
+What input do you have?
+├── Video + new audio → RE-SYNC (Wav2Lip or Sync Lipsync)
+│   Best for: dubbing, dialogue replacement, translation
+│
+├── Single image + audio → TALKING HEAD (SadTalker or LivePortrait)
+│   Best for: spokesperson videos, quick content from a photo
+│
+├── Need full avatar with gestures → AVATAR API (HeyGen or Kling Avatar)
+│   Best for: professional presenter videos, training content
+│
+└── Local + free → OPEN SOURCE (Wav2Lip + SadTalker via ComfyUI or CLI)
+    Best for: developers with GPU, batch processing
+```
+
+## Method 1: Wav2Lip (Open Source — Best for Re-syncing Existing Video)
+
+The industry standard for applying new lip movements to existing footage. Works on any face in any video.
+
+### Install
+
+```bash
+# Clone Wav2Lip
+git clone https://github.com/Rudrabha/Wav2Lip.git
+cd Wav2Lip
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Download pretrained model (place in checkpoints/)
+# wav2lip_gan.pth — best quality
+# wav2lip.pth — faster, slightly lower quality
+mkdir -p checkpoints
+# Download from: https://github.com/Rudrabha/Wav2Lip#getting-the-weights
+```
+
+### Usage
+
+```bash
+# Basic lip sync: video + audio → synced video
+python inference.py \
+  --checkpoint_path checkpoints/wav2lip_gan.pth \
+  --face input_video.mp4 \
+  --audio voice.mp3 \
+  --outfile output_synced.mp4
+
+# With quality options
+python inference.py \
+  --checkpoint_path checkpoints/wav2lip_gan.pth \
+  --face input_video.mp4 \
+  --audio voice.mp3 \
+  --outfile output_synced.mp4 \
+  --resize_factor 1 \
+  --nosmooth
+```
+
+### Post-processing (sharpen face region after Wav2Lip)
+
+```bash
+# Wav2Lip output can be slightly blurry around the mouth
+# Use Real-ESRGAN or CodeFormer to enhance face quality
+pip install realesrgan
+
+# Or use FFmpeg unsharp mask as a quick fix
+ffmpeg -i output_synced.mp4 -vf "unsharp=5:5:1.0:5:5:0.0" output_enhanced.mp4
+```
+
+### Strengths and Limits
+- Works on ANY face in ANY video (real, AI-generated, animated)
+- Excellent audio-lip alignment accuracy
+- Does NOT generate head movement or expressions — only mouth region
+- Output may need face enhancement (CodeFormer / GFPGAN)
+
+---
+
+## Method 2: SadTalker (Open Source — Image to Talking Head)
+
+Generate a full talking head video from a single portrait image + audio. Adds natural head movement, eye blinks, and expressions.
+
+### Install
+
+```bash
+git clone https://github.com/OpenTalker/SadTalker.git
+cd SadTalker
+pip install -r requirements.txt
+
+# Download pretrained models
+bash scripts/download_models.sh
+```
+
+### Usage
+
+```bash
+# Single image + audio → talking video
+python inference.py \
+  --driven_audio voice.mp3 \
+  --source_image portrait.png \
+  --result_dir ./results \
+  --enhancer gfpgan \
+  --still  # minimal head motion (good for formal content)
+
+# With more expression
+python inference.py \
+  --driven_audio voice.mp3 \
+  --source_image portrait.png \
+  --result_dir ./results \
+  --enhancer gfpgan \
+  --expression_scale 1.2 \
+  --pose_style 3
+```
+
+### Strengths and Limits
+- Creates full talking head from ONE image
+- Adds natural head pose, eye blinks, expressions
+- Best with front-facing portraits, good lighting
+- May drift on very long audio (>60s) — split into segments
+- Expression can feel exaggerated — tune with `--expression_scale`
+
+---
+
+## Method 3: LivePortrait (Open Source — High Fidelity)
+
+The newest open-source option. Higher fidelity than SadTalker with better emotion-aware animation and identity preservation.
+
+### Install
+
+```bash
+git clone https://github.com/KwaiVGI/LivePortrait.git
+cd LivePortrait
+pip install -r requirements.txt
+
+# Download models
+python scripts/download_models.py
+```
+
+### Usage
+
+```bash
+# Image + audio → talking video
+python inference.py \
+  --source_image portrait.png \
+  --driving_audio voice.mp3 \
+  --output_path result.mp4
+```
+
+### Strengths and Limits
+- Best open-source quality as of 2026
+- Strong identity preservation
+- Emotion-aware (matches vocal tone to facial expression)
+- Requires decent GPU (8GB+ VRAM)
+- Newer project, community smaller than Wav2Lip/SadTalker
+
+---
+
+## Method 4: Commercial APIs (No GPU Required)
+
+### HeyGen API
+
+```bash
+# Create talking avatar video
+curl -X POST 'https://api.heygen.com/v2/video/generate' \
+  -H 'Content-Type: application/json' \
+  -H "X-Api-Key: $HEYGEN_API_KEY" \
+  -d '{
+    "video_inputs": [{
+      "character": {
+        "type": "talking_photo",
+        "talking_photo_id": "PHOTO_ID"
+      },
+      "voice": {
+        "type": "audio",
+        "audio_url": "AUDIO_URL"
+      }
+    }],
+    "dimension": {"width": 1080, "height": 1920}
+  }'
+
+# Poll for result
+curl 'https://api.heygen.com/v1/video_status.get?video_id=VIDEO_ID' \
+  -H "X-Api-Key: $HEYGEN_API_KEY"
+```
+
+**Pricing**: ~$0.10-0.50 per minute of video
+**Best for**: Professional spokesperson videos, marketing content
+
+### Kling Avatar Pro (via Kuaishou)
+
+Audio-driven avatar with natural head motion and lip sync. Integrated into Kling's video generation pipeline.
+
+**Best for**: Chinese market content, integration with Kling video generation
+
+### Sync Lipsync 2.0 (via fal.ai)
+
+```bash
+# Video-to-video lip sync via fal.ai
+curl -X POST 'https://queue.fal.run/fal-ai/sync-lipsync' \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Key $FAL_API_KEY" \
+  -d '{
+    "video_url": "VIDEO_URL",
+    "audio_url": "AUDIO_URL"
+  }'
+```
+
+**Best for**: Quick cloud-based re-sync without local GPU
+
+---
+
+## Integration with Hitpop Pipeline
+
+### Typical AI Short Film Pipeline with Lip Sync
+
+```json
+{
+  "name": "AI Short Film with Dialogue",
+  "steps": [
+    {"id": "images", "skill": "hitpop-gen-image", "description": "Generate character portraits for each role"},
+    {"id": "scenes", "skill": "hitpop-gen-video", "description": "Generate scene clips with character consistency (viduq2-img2video)"},
+    {"id": "voices", "skill": "hitpop-voiceover", "description": "Generate dialogue audio for each character"},
+    {"id": "lipsync", "skill": "hitpop-lipsync", "description": "Apply lip sync to match dialogue with character faces"},
+    {"id": "subs", "skill": "hitpop-subtitle", "description": "Auto-generate subtitles from dialogue"},
+    {"id": "merge", "skill": "hitpop-edit", "description": "Merge all scenes + dialogue + subtitles + BGM"},
+    {"id": "export", "skill": "hitpop-publish", "description": "Export for target platform"}
+  ]
+}
+```
+
+### Talking Spokesperson Pipeline
+
+```json
+{
+  "name": "Product Spokesperson",
+  "steps": [
+    {"id": "portrait", "skill": "hitpop-gen-image", "description": "Generate spokesperson portrait"},
+    {"id": "script", "skill": "hitpop-voiceover", "description": "Generate narration audio"},
+    {"id": "talking", "skill": "hitpop-lipsync", "description": "Create talking head video from portrait + audio"},
+    {"id": "export", "skill": "hitpop-publish", "description": "Export for platform"}
+  ]
+}
+```
+
+## Decision Guide
+
+| Scenario | Method | Cost | GPU Required |
+|---|---|---|---|
+| Re-dub existing AI video | Wav2Lip | Free | Yes (or Colab) |
+| Talking head from photo | SadTalker / LivePortrait | Free | Yes |
+| Professional avatar | HeyGen API | ~$0.10-0.50/min | No |
+| Chinese market avatar | Kling Avatar Pro | Pay per use | No |
+| Cloud re-sync, no GPU | Sync Lipsync 2.0 (fal.ai) | Pay per use | No |
+| Batch processing | Wav2Lip + FFmpeg loop | Free | Yes |
+
+## Important Notes
+
+- **Face quality matters**: Lip sync works best on clear, well-lit faces. AI-generated faces from Seedream work great.
+- **Audio quality matters**: Clean speech audio gives best results. Remove background noise first with FFmpeg: `ffmpeg -i noisy.mp3 -af "highpass=f=200,lowpass=f=3000,afftdn" clean.mp3`
+- **Segment long dialogue**: For videos >30s, split into segments, lip-sync each, then merge. This prevents drift.
+- **Face enhancement after Wav2Lip**: Always run GFPGAN or CodeFormer on the output to sharpen the mouth region.
+- **Combine with hitpop-gen-video**: Generate the base video with Vidu Q2, then apply lip sync as a post-processing step.
+
+=== skills/hitpop-music/SKILL.md ===
+---
+name: hitpop-music
+description: "Smart background music selection for videos. Analyzes scene mood/emotion, searches Pixabay Music (free, commercial-use, no attribution required) for matching tracks, downloads and mixes with FFmpeg. Also supports user-provided custom BGM."
+version: 0.2.0
+metadata:
+  openclaw:
+    emoji: "🎵"
+    requires:
+      bins:
+        - ffmpeg
+        - curl
+---
+
+# Hitpop Music — Smart Background Music for Video
+
+Select and mix background music that matches your video's mood, emotion, and pacing. All music from Pixabay is 100% free for commercial use, no attribution required.
+
+## Step 1: Analyze Scene Mood
+
+Before searching for music, analyze the video content and determine the right mood:
+
+| Scene Type | Mood Keywords | Search Terms |
+|---|---|---|
+| Warm/heartfelt moment | gentle, emotional, touching | `gentle piano emotional` |
+| Product showcase (tech) | modern, clean, upbeat | `corporate technology upbeat` |
+| Product showcase (luxury) | elegant, sophisticated | `elegant piano luxury` |
+| Action/fast-paced | energetic, driving, intense | `energetic electronic fast` |
+| Comedy/fun | playful, quirky, lighthearted | `fun playful quirky` |
+| Sad/dramatic | melancholy, emotional, slow | `sad piano emotional cinematic` |
+| Night city/urban | lo-fi, chill, ambient | `lofi chill night city` |
+| Nature/travel | acoustic, peaceful, inspiring | `acoustic guitar nature peaceful` |
+| Food/cooking | warm, jazzy, cozy | `jazz cooking warm` |
+| Fashion/beauty | trendy, stylish, cool | `fashion stylish modern beat` |
+| Kids/family | happy, bright, cheerful | `happy children cheerful` |
+| Horror/suspense | dark, tense, eerie | `dark suspense tense` |
+| Inspirational | uplifting, motivational | `inspirational uplifting motivational` |
+| Advertisement (general) | catchy, positive, professional | `advertising positive corporate` |
+
+## Step 2: Search and Download from Pixabay
+
+Use `web_search` to find the right track, then download it:
+
+```bash
+# Step 2a: Search Pixabay Music with mood keywords
+# Use web_search tool: "site:pixabay.com/music warm piano emotional short"
+# Or browse directly: https://pixabay.com/music/search/gentle piano emotional/
+
+# Step 2b: Once you find a good track, download it
+# Pixabay download URLs follow this pattern:
+curl -L "https://cdn.pixabay.com/audio/2024/TRACK_PATH.mp3" -o bgm.mp3
+
+# Step 2c: Verify download
+ls -la bgm.mp3  # Should be > 0 bytes
+ffprobe bgm.mp3  # Check duration and format
+```
+
+**Search tips for best results:**
+- Add duration: "15 seconds" or "30 seconds" or "short" for short videos
+- Add "no vocals" or "instrumental" for background music
+- Add "cinematic" for higher production quality tracks
+- Try multiple search queries if first results don't match
+
+**Example searches by video type:**
+
+For a convenience store late-night drama:
+```
+web_search: "pixabay.com music gentle piano night emotional instrumental short"
+```
+
+For a tech product ad:
+```
+web_search: "pixabay.com music modern technology upbeat corporate 15 seconds"
+```
+
+For a food product ad:
+```
+web_search: "pixabay.com music warm jazz cooking cozy instrumental"
+```
+
+## Step 3: Mix with Video
+
+```bash
+# Add BGM to video (no existing audio)
+ffmpeg -i video.mp4 -i bgm.mp3 -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 -shortest output.mp4
+
+# Mix BGM with voiceover (voice at 100%, music at 20%)
+ffmpeg -i video.mp4 -i voice.mp3 -i bgm.mp3 \
+  -filter_complex "[1:a]volume=1.0[v];[2:a]volume=0.2[m];[v][m]amix=inputs=2:duration=first[aout]" \
+  -map 0:v -map "[aout]" -c:v copy -c:a aac output.mp4
+
+# ALWAYS fade in/out for professional feel
+ffmpeg -i bgm.mp3 -af "afade=t=in:st=0:d=2,afade=t=out:st=28:d=2" bgm_faded.mp3
+
+# Loop short music to match video length
+ffmpeg -stream_loop -1 -i short_bgm.mp3 -i video.mp4 -c:v copy -c:a aac -map 1:v:0 -map 0:a:0 -shortest output.mp4
+```
+
+## Option B: User-Provided Custom BGM (Highest Priority)
+
+If the user sends an audio file or says "use this music", ALWAYS use their file instead of searching. This is the highest quality option because the user chose it themselves.
+
+```bash
+# User sends bgm.mp3 via Telegram → download it → mix directly
+ffmpeg -i video.mp4 -i user_bgm.mp3 \
+  -filter_complex "[1:a]volume=0.25,afade=t=in:st=0:d=1,afade=t=out:st=28:d=2[m];[0:a]volume=1.0[v];[v][m]amix=inputs=2:duration=first[aout]" \
+  -map 0:v -map "[aout]" -c:v copy -c:a aac output.mp4
+```
+
+## Option C: Vidu Q2 Built-in Audio
+
+For quick content where BGM quality is less critical, use Vidu's built-in audio:
+
+```json
+{
+  "model": "viduq2-text2video",
+  "prompt": "...",
+  "with_audio": true
+}
+```
+
+## Music Selection Priority
+
+1. **User-provided BGM** → always use if available
+2. **Pixabay search by mood** → analyze scene, search matching track, download
+3. **Vidu built-in** → only for quick/draft content
+
+## Rules
+
+1. **ALWAYS analyze scene mood first** — don't pick random music
+2. **ALWAYS fade in/out** — 1-2 second fade at start, 2 second fade at end
+3. **Keep BGM at 15-25% volume** when mixing with voiceover — music should support, not compete
+4. **Match tempo to pacing** — fast cuts = faster music, slow emotional = slower music
+5. **Use `-shortest` flag** — auto-trim music to match video length
+6. **Verify download before mixing** — check file size > 0, check duration with ffprobe
+7. **Never use the same generic track twice** — search for something specific each time
+
+=== skills/hitpop-pipeline/SKILL.md ===
+---
+name: hitpop-pipeline
+description: "Video production pipeline with mandatory checkpoints and verification loops. Harness Engineering approach: agent decides freely between checkpoints, but checkpoints themselves are non-skippable gates with automated verification."
+version: 0.2.0
+metadata:
+  openclaw:
+    emoji: "🔗"
+    requires:
+      env:
+        - ZHIPU_API_KEY
+      bins:
+        - curl
+        - jq
+        - ffmpeg
+        - python3
+    primaryEnv: ZHIPU_API_KEY
+---
+
+# Hitpop Pipeline — Checkpoint-Based Video Production
+
+## Core Principle: Harness Engineering
+
+Agent decides HOW to do each step. Pipeline decides WHAT must be verified before moving on. Agent is free between checkpoints. Checkpoints are mandatory gates.
+
+```
+[Step] → [CHECKPOINT: verify] → pass → [Next Step]
+                                ↓ fail
+                          [Retry up to 3x]
+                                ↓ still fail
+                          [STOP — ask user]
+```
+
+## Checkpoints (NON-SKIPPABLE)
+
+These are the mandatory gates. No matter what the agent decides to do between them, it MUST pass through each checkpoint before proceeding.
+
+### Checkpoint 1: Reference Approval
+**When**: After generating character sheets or product reference sheets
+**Gate**: User must explicitly approve before any scene work
+**Fail action**: Regenerate based on user feedback
+```
+CHECK: Did user say "ok" / "approved" / "continue" / "looks good"?
+  YES → proceed to scene generation
+  NO → ask what to change, regenerate sheet
+```
+
+### Checkpoint 2: Visual Consistency
+**When**: After each scene image or video clip is generated (character content only)
+**Gate**: GLM-4.6V comparison against reference sheet
+**Fail action**: Regenerate (max 3 retries), then stop and ask user
+```bash
+# Automated check — extract frame and compare
+ffmpeg -ss 2 -i scene_clip.mp4 -frames:v 1 -q:v 2 frame_check.jpg
+
+curl -s -X POST 'https://open.bigmodel.cn/api/paas/v4/chat/completions' \
+  -H "Authorization: Bearer $ZHIPU_API_KEY" \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "model": "glm-4.6v",
+    "messages": [{"role":"user","content":[
+      {"type":"image_url","image_url":{"url":"REFERENCE_SHEET_URL"}},
+      {"type":"image_url","image_url":{"url":"FRAME_CHECK_URL"}},
+      {"type":"text","text":"Compare strictly: 1) Same art style? 2) Same hair style/color? 3) Same clothing type/color? 4) Same age/body type? Answer CONSISTENT or INCONSISTENT with reasons."}
+    ]}]
+  }'
+```
+```
+CHECK: GLM-4.6V says CONSISTENT?
+  YES → proceed
+  NO → log failure reason, regenerate with adjusted params
+  3 FAILS → STOP, show user all 3 attempts, ask for guidance
+```
+
+### Checkpoint 3: Product Accuracy
+**When**: After each product ad frame is generated (product content only)
+**Gate**: GLM-4.6V comparison against product reference sheet
+**Fail action**: Same as Checkpoint 2 but with ZERO tolerance
+```
+CHECK: Logo correct? Label correct? Colors match? Shape accurate?
+  ALL YES → proceed
+  ANY NO → reject immediately, regenerate
+  For brand content: ONE wrong letter on logo = reject
+```
+
+### Checkpoint 4: File Size
+**When**: Before sending any file to user via Telegram
+**Gate**: File must be <15MB
+**Fail action**: Auto-compress with FFmpeg
+```bash
+FILE_SIZE=$(stat -f%z output.mp4 2>/dev/null || stat -c%s output.mp4)
+if [ "$FILE_SIZE" -gt 15728640 ]; then
+  DURATION=$(ffprobe -v error -show_entries format=duration -of csv=p=0 output.mp4)
+  TARGET_BITRATE=$(echo "12 * 8192 / $DURATION" | bc)k
+  ffmpeg -i output.mp4 -b:v $TARGET_BITRATE -c:a aac -b:a 128k compressed.mp4
+fi
+```
+```
+CHECK: File < 15MB?
+  YES → send
+  NO → compress → send compressed version
+```
+
+### Checkpoint 5: Download Verification
+**When**: After every API generation call returns SUCCESS
+**Gate**: File must be downloaded to local disk and size > 0
+**Fail action**: Re-download. If URL expired, regenerate.
+```
+CHECK: Local file exists AND size > 0?
+  YES → proceed
+  NO → retry download
+  URL EXPIRED → regenerate the asset
+```
+
+## Pipeline Templates
+
+### Character Short Film Pipeline
+```json
+{
+  "name": "Short Film",
+  "checkpoints": ["reference_approval", "visual_consistency", "file_size", "download_verify"],
+  "steps": [
+    {"id": "characters", "skill": "hitpop-character-sheet", "checkpoint_after": "reference_approval"},
+    {"id": "scenes", "skill": "hitpop-scene-guide", "checkpoint_after": "visual_consistency"},
+    {"id": "clips", "skill": "hitpop-gen-video", "method": "img2video_only", "checkpoint_after": "visual_consistency"},
+    {"id": "voice", "skill": "hitpop-voiceover", "checkpoint_after": "download_verify"},
+    {"id": "subs", "skill": "hitpop-subtitle"},
+    {"id": "merge", "skill": "hitpop-edit"},
+    {"id": "export", "skill": "hitpop-publish", "checkpoint_after": "file_size"}
+  ]
+}
+```
+
+### Product Ad Pipeline
+```json
+{
+  "name": "Product Ad",
+  "checkpoints": ["reference_approval", "product_accuracy", "file_size", "download_verify"],
+  "steps": [
+    {"id": "product_sheet", "skill": "hitpop-product-sheet", "checkpoint_after": "reference_approval"},
+    {"id": "ad_scenes", "skill": "hitpop-scene-guide", "checkpoint_after": "product_accuracy"},
+    {"id": "clips", "skill": "hitpop-gen-video", "checkpoint_after": "product_accuracy"},
+    {"id": "voice", "skill": "hitpop-voiceover", "checkpoint_after": "download_verify"},
+    {"id": "merge", "skill": "hitpop-edit"},
+    {"id": "export", "skill": "hitpop-publish", "checkpoint_after": "file_size"}
+  ]
+}
+```
+
+### Simple Content Pipeline (no checkpoints except file_size)
+```json
+{
+  "name": "Quick Content",
+  "checkpoints": ["file_size", "download_verify"],
+  "steps": [
+    {"id": "generate", "skill": "hitpop-gen-video"},
+    {"id": "voice", "skill": "hitpop-voiceover"},
+    {"id": "merge", "skill": "hitpop-edit"},
+    {"id": "export", "skill": "hitpop-publish", "checkpoint_after": "file_size"}
+  ]
+}
+```
+
+## Production Log
+
+Every step MUST write a log entry. This is automatic — not optional.
+
+**Log format** (append to `production.log` in workspace):
+```
+[TIMESTAMP] step=STEP_ID status=SUCCESS|FAIL|RETRY cost=¥X.XX time=Xs file=FILENAME
+[TIMESTAMP] checkpoint=CHECKPOINT_NAME result=PASS|FAIL reason=DETAILS
+```
+
+**Examples:**
+```
+[2026-03-22 19:05:12] step=character_sheet status=SUCCESS cost=¥0.25 time=12s file=linxiao_ref.png
+[2026-03-22 19:05:24] checkpoint=reference_approval result=PENDING waiting_for_user
+[2026-03-22 19:06:01] checkpoint=reference_approval result=PASS user_said="looks good"
+[2026-03-22 19:06:15] step=scene_1 status=SUCCESS cost=¥0.20 time=8s file=scene1.png
+[2026-03-22 19:06:23] checkpoint=visual_consistency result=PASS score=0.92
+[2026-03-22 19:07:01] step=scene_2 status=SUCCESS cost=¥0.20 time=9s file=scene2.png
+[2026-03-22 19:07:10] checkpoint=visual_consistency result=FAIL reason="style_mismatch: realistic vs anime"
+[2026-03-22 19:07:15] step=scene_2 status=RETRY attempt=2 cost=¥0.20 time=10s file=scene2_v2.png
+[2026-03-22 19:07:25] checkpoint=visual_consistency result=PASS score=0.88
+[2026-03-22 19:10:45] step=export status=SUCCESS cost=¥0.00 time=3s file=final.mp4
+[2026-03-22 19:10:46] checkpoint=file_size result=FAIL size=26.13MB limit=15MB
+[2026-03-22 19:10:52] step=compress status=SUCCESS cost=¥0.00 time=6s file=final_compressed.mp4
+[2026-03-22 19:10:53] checkpoint=file_size result=PASS size=11.8MB
+[2026-03-22 19:10:53] pipeline=COMPLETE total_cost=¥2.45 total_time=5m41s files=8
+```
+
+**At the end of every pipeline, send a summary to user:**
+```
+✅ Pipeline complete!
+  Steps: 8/8 successful
+  Retries: 1 (scene_2 consistency fail → regenerated)
+  Total cost: ¥2.45
+  Total time: 5 minutes 41 seconds
+  Output files: [list]
+```
+
+## Variable References
+
+Use `$step_id.output` to pass data between steps:
+- `$characters.output` → file path from character sheet step
+- `$voice.output` → audio file from voiceover step
+
+## Design Principles
+
+1. **Agent is free between checkpoints** — choose models, params, prompts autonomously
+2. **Checkpoints are gates, not suggestions** — cannot be skipped or overridden
+3. **Fail gracefully** — retry, then ask user, never crash silently
+4. **Log everything** — every step, every cost, every failure
+5. **Pipelines are shareable** — save as JSON, version in git
+
+=== skills/hitpop-product-sheet/SKILL.md ===
+---
+name: hitpop-product-sheet
+description: "Product reference sheet generator — 5-angle turnaround with detail callouts, style lock, and accuracy verification. For e-commerce listings, product ads, and brand content. Handles user uploads, URLs, brand names, or from-scratch generation."
+version: 0.1.0
+metadata:
+  openclaw:
+    emoji: "📦"
+    requires:
+      env:
+        - ZHIPU_API_KEY
+---
+
+# Hitpop Product Sheet — Multi-Angle Product Reference
+
+Product advertising has ZERO tolerance for inconsistency. This skill ensures every product frame matches the real product exactly.
+
+## Input Handling
+
+Users provide product info in many ways:
+
+| User provides | Your action |
+|---|---|
+| **Real product photo** | Use as primary reference. Generate reference sheet based on it. |
+| **Multiple photos** (angles) | Use as multi-angle reference. Stitch into sheet. |
+| **Product URL / link** | Fetch page, extract product images. Use best photo. |
+| **Brand + product name** | Search web for official images. Download best one. |
+| **Verbal description only** | Generate from scratch. Get user approval FIRST. |
+| **3D model / render** | Use directly as reference. |
+| **Logo file only** | Generate product mock-up with logo. Create sheet. |
+
+**CRITICAL**: For real products, AI output must match the REAL product exactly. Not creative interpretation — accurate reproduction.
+
+## Product Reference Sheet
+
+**Layout**: 5 views on pure white background (16:9 landscape)
+- **Front view** (center): Label/logo fully visible
+- **3/4 view** (left): 45-degree angle, showing depth
+- **Side view** (right): Profile, thickness/depth
+- **Back view** (bottom-left): Back label, barcode
+- **Top-down view** (bottom-right): Cap/lid/top surface
+
+**Detail callouts**: Circular zoom-in bubbles for:
+- Logo (position, size, font, color)
+- Label text (exact wording, font color, background)
+- Material (matte, glossy, metallic, transparent)
+- Color hex codes (primary, secondary, accent)
+- Unique features (cap shape, handle, embossing)
+
+## Prompt Template: From Scratch
+
+```
+Product reference sheet, professional multi-angle product photography turnaround.
+
+Product: {exact product name and type}
+Brand: {brand name}
+
+Layout: 5 views on pure white background — front (center), 3/4 angle (left), side profile (right), back (bottom-left), top-down (bottom-right). Clean studio lighting, no shadows on background.
+
+Detail callouts with circular zoom-in bubbles:
+- LOGO: {text, font, color, position}
+- LABEL: {text content, font color, background color}
+- MATERIAL: {surface finish}
+- COLOR: Primary {hex}, Secondary {hex}, Accent {hex}
+- CAP/LID: {shape, color, material}
+- UNIQUE: {distinguishing detail}
+
+Style: Commercial product photography, ultra-sharp focus, pure white background (#FFFFFF), studio three-point lighting, accurate color reproduction.
+
+Aspect ratio: 16:9 landscape, high resolution.
+```
+
+## Prompt Template: From Real Photo
+
+```
+Product reference sheet, multi-angle turnaround based on the provided product photo.
+
+Reproduce this EXACT product from 5 angles: front, 3/4, side, back, top-down. Match EXACTLY:
+- Label text, font, and positioning
+- Logo color, size, and placement
+- Product shape, proportions, and dimensions
+- Material finish and surface texture
+- Color tones from the photo, not approximations
+
+Pure white background, studio lighting, consistent across all 5 views.
+```
+
+## Product Style Lock
+
+After approval, extract fixed parameters for every subsequent frame:
+
+```
+[PRODUCT STYLE LOCK]
+Product: {name}
+Shape: {exact shape}
+Primary color: {hex}
+Secondary color: {hex}
+Logo: {text, position, color}
+Label: {text, position, color}
+Material: {finish type}
+Lighting: {key light direction, fill ratio}
+Shadow: {contact/drop/none, density %}
+Background: {white/gradient/lifestyle}
+Camera feel: {35mm/50mm/85mm/100mm}
+```
+
+Copy this block into EVERY ad scene prompt unchanged.
+
+## Ad Scene Templates
+
+### Multi-Angle E-Commerce Set
+```
+Generate {N} product photos, each from a different angle, using product reference as input.
+
+[PRODUCT STYLE LOCK: {paste block}]
+
+Angle 1: Front, straight-on, eye level. Pure white background.
+Angle 2: 45-degree from upper-right. Show depth.
+Angle 3: Side profile. Highlight details.
+Angle 4: Top-down overhead.
+Angle 5: Low angle hero shot.
+
+CRITICAL: Product IDENTICAL in every frame. Only angle changes.
+```
+
+### Lifestyle Product Ad
+```
+{product name} in lifestyle setting, commercial photography.
+
+[PRODUCT STYLE LOCK: {paste block}]
+
+[SCENE]: {lifestyle environment}
+[COMPOSITION]: Product at {position}, occupying 30-50% of frame.
+[LIGHTING]: Natural-looking, key light on product. Colors must match reference EXACTLY.
+[PROPS]: {complementary items, none obscuring product}
+
+Product must be pixel-identical to reference sheet. Environment changes. Product does NOT.
+```
+
+## Accuracy Check (GLM-4.6V)
+
+```bash
+curl -s -X POST 'https://open.bigmodel.cn/api/paas/v4/chat/completions' \
+  -H "Authorization: Bearer $ZHIPU_API_KEY" \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "model": "glm-4.6v",
+    "messages": [{"role":"user","content":[
+      {"type":"image_url","image_url":{"url":"REFERENCE_URL"}},
+      {"type":"image_url","image_url":{"url":"GENERATED_URL"}},
+      {"type":"text","text":"Compare product accuracy: 1) Shape identical? 2) Logo text/position/color correct? 3) Label accurate? 4) Colors matching? 5) Material finish correct? 6) Proportions correct? Answer ACCURATE or INACCURATE with details."}
+    ]}]
+  }'
+```
+
+**For brand advertising: ZERO tolerance. One wrong letter = reject. One shade off = reject.**
+
+=== skills/hitpop-publish/SKILL.md ===
+---
+name: hitpop-publish
+description: "Publish videos to social platforms. Resize and optimize for TikTok, YouTube Shorts, Instagram Reels, and more. Platform-specific formatting, thumbnail generation, and upload via official APIs."
+version: 0.1.0
+metadata:
+  openclaw:
+    emoji: "📤"
+    requires:
+      bins:
+        - ffmpeg
+        - curl
+---
+
+# Hitpop Publish — Video Distribution to Social Platforms
+
+Optimize and publish videos for different social media platforms.
+
+## Platform Specs
+
+| Platform | Aspect Ratio | Resolution | Max Duration | Max Size |
+|---|---|---|---|---|
+| TikTok | 9:16 | 1080x1920 | 10 min | 287 MB |
+| YouTube Shorts | 9:16 | 1080x1920 | 60s | 256 MB |
+| Instagram Reels | 9:16 | 1080x1920 | 90s | 250 MB |
+| Instagram Feed | 1:1 or 4:5 | 1080x1080 | 60s | 250 MB |
+| YouTube | 16:9 | 1920x1080 | 12h | 256 GB |
+| X (Twitter) | 16:9 or 1:1 | 1920x1080 | 140s | 512 MB |
+
+## Resize for Platform
+
+```bash
+# TikTok / Reels / Shorts (9:16 vertical)
+ffmpeg -i input.mp4 -vf "scale=1080:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(ow-iw)/2:(oh-ih)/2:black" -c:a copy tiktok.mp4
+
+# Instagram Feed (1:1 square)
+ffmpeg -i input.mp4 -vf "scale=1080:1080:force_original_aspect_ratio=decrease,pad=1080:1080:(ow-iw)/2:(oh-ih)/2:black" -c:a copy instagram.mp4
+
+# YouTube (16:9)
+ffmpeg -i input.mp4 -vf "scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:black" -c:a copy youtube.mp4
+```
+
+## Compress for Upload
+
+```bash
+# Target ~10MB for fast upload
+ffmpeg -i input.mp4 -c:v libx264 -crf 28 -preset fast -c:a aac -b:a 128k compressed.mp4
+
+# Target specific file size (e.g., 50MB)
+DURATION=$(ffprobe -v error -show_entries format=duration -of csv=p=0 input.mp4)
+BITRATE=$(echo "50 * 8192 / $DURATION" | bc)
+ffmpeg -i input.mp4 -c:v libx264 -b:v ${BITRATE}k -pass 1 -f null /dev/null
+ffmpeg -i input.mp4 -c:v libx264 -b:v ${BITRATE}k -pass 2 -c:a aac -b:a 128k output.mp4
+```
+
+## Generate Thumbnail
+
+```bash
+# Best frame (scene change detection)
+ffmpeg -i video.mp4 -vf "select='gt(scene,0.3)'" -frames:v 1 -vsync vfr thumb.jpg
+
+# Specific timestamp
+ffmpeg -i video.mp4 -ss 00:00:03 -frames:v 1 -q:v 2 thumb.jpg
+```
+
+## Upload APIs
+
+### YouTube (via YouTube Data API v3)
+Requires OAuth2 setup. Use `google-api-python-client`:
+```bash
+pip install google-api-python-client google-auth-httplib2 google-auth-oauthlib
+```
+
+### TikTok (via TikTok Content Posting API)
+Requires TikTok Developer account: https://developers.tiktok.com/
+
+### Instagram (via Instagram Graph API)
+Requires Facebook/Meta Business account.
+
+## Batch Export for All Platforms
+
+```bash
+#!/bin/bash
+INPUT="$1"
+BASENAME=$(basename "$INPUT" .mp4)
+
+# TikTok / Reels / Shorts
+ffmpeg -i "$INPUT" -vf "scale=1080:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(ow-iw)/2:(oh-ih)/2" -c:a aac "${BASENAME}_tiktok.mp4"
+
+# YouTube
+ffmpeg -i "$INPUT" -vf "scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2" -c:a aac "${BASENAME}_youtube.mp4"
+
+# Instagram Square
+ffmpeg -i "$INPUT" -vf "scale=1080:1080:force_original_aspect_ratio=decrease,pad=1080:1080:(ow-iw)/2:(oh-ih)/2" -c:a aac "${BASENAME}_instagram.mp4"
+
+echo "Exported: ${BASENAME}_tiktok.mp4, ${BASENAME}_youtube.mp4, ${BASENAME}_instagram.mp4"
+```
+
+## Tips
+- Always re-encode when changing resolution (can't use `-c copy`)
+- CRF 23-28 is good quality/size balance for social platforms
+- Generate thumbnails from the most visually interesting frame
+- Most platforms prefer H.264 video + AAC audio in MP4 container
+
+=== skills/hitpop-rendervid/SKILL.md ===
+---
+name: hitpop-rendervid
+description: "Programmatic template-based video generation using Rendervid. Free, open-source, AI-agent-native. Create marketing videos, social content, and data-driven videos from JSON templates. Built-in MCP server with 100+ templates."
+version: 0.1.0
+metadata:
+  openclaw:
+    emoji: "🎞️"
+    requires:
+      bins:
+        - npx
+    install:
+      - kind: node
+        package: rendervid
+        bins: [npx]
+---
+
+# Hitpop Rendervid — Programmatic Template Video (Free)
+
+Create template-based videos using Rendervid — a free, open-source video rendering engine designed for AI agents. Perfect for marketing videos, social media content, product showcases, and data-driven videos.
+
+## Why Rendervid
+
+- **Free**: Apache 2.0 license, no commercial license fees (unlike Remotion)
+- **AI-native**: Built-in MCP server with 11 tools for AI agent integration
+- **100+ templates**: Instagram, TikTok, YouTube, product showcase, ads, etc.
+- **JSON-driven**: No React code needed — describe videos in JSON
+
+## Setup
+
+```bash
+# Clone and install
+git clone https://github.com/nickhudkins/rendervid.git
+cd rendervid
+npm install
+
+# Or use npx directly
+npx rendervid render --template templates/social-post.json --output video.mp4
+```
+
+## MCP Server (for Claude Code / Cursor / Windsurf)
+
+Add to your MCP config:
+
+```json
+{
+  "mcpServers": {
+    "rendervid": {
+      "command": "npx",
+      "args": ["rendervid", "mcp"]
+    }
+  }
+}
+```
+
+The MCP server exposes 11 tools:
+1. `discover_capabilities` — What can Rendervid do
+2. `browse_templates` — List 100+ templates by category
+3. `get_template` — Get a specific template's JSON
+4. `generate_template` — Create template from natural language
+5. `validate_template` — Check JSON structure + media URLs
+6. `render_video` — Render template to video file
+7. `render_image` — Render single frame as image
+8. `list_fonts` — Available fonts
+9. `list_effects` — Available effects and transitions
+10. `get_render_status` — Check render progress
+11. `get_output` — Retrieve rendered file
+
+## JSON Template Example
+
+```json
+{
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "duration": 5,
+  "scenes": [
+    {
+      "duration": 5,
+      "elements": [
+        {
+          "type": "video",
+          "src": "https://example.com/background.mp4",
+          "fit": "cover"
+        },
+        {
+          "type": "text",
+          "text": "YOUR PRODUCT NAME",
+          "style": {
+            "fontSize": 72,
+            "fontWeight": "bold",
+            "color": "#ffffff",
+            "textAlign": "center"
+          },
+          "position": { "x": "center", "y": "40%" },
+          "animations": [
+            { "type": "fadeIn", "duration": 0.5 }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+
+## Template Categories
+
+- Social media (Instagram Reels, TikTok, YouTube Shorts)
+- Product showcases and flash sales
+- News and announcements
+- Data visualizations
+- Educational content
+- Real estate listings
+- Event promotions
+
+## When to Use Rendervid vs hitpop-gen-video
+
+| Use Case | Rendervid | hitpop-gen-video |
+|---|---|---|
+| Template-based, data-driven | ✅ Best choice | ❌ |
+| Batch generate variations | ✅ Best choice | ❌ |
+| AI-generated creative content | ❌ | ✅ Best choice |
+| Text-to-video from description | ❌ | ✅ Best choice |
+| Branded marketing with consistent layout | ✅ Best choice | ❌ |
+| Product photo animation | Could work | ✅ Better results |
+
+## Tips
+- Use Rendervid for structured, repeatable content (e-commerce, social templates)
+- Use hitpop-gen-video (Vidu Q2) for creative, AI-generated content
+- Combine both: generate AI images with hitpop-gen-image, then assemble with Rendervid templates
+
+=== skills/hitpop-scene-guide/SKILL.md ===
+---
+name: hitpop-scene-guide
+description: "Scene image prompt guide — templates for short films, product ads, educational content, and more. Ensures style consistency, correct character/product references, and proper composition for every scene type."
+version: 0.1.0
+metadata:
+  openclaw:
+    emoji: "🎬"
+---
+
+# Hitpop Scene Guide — Prompt Templates by Content Type
+
+Every scene image prompt MUST follow a consistent structure. Pick the template that matches your content type and fill in the blanks.
+
+## Universal Scene Prompt Structure
+
+```
+[STYLE]: {exact same style keyword from character/product sheet}
+
+[CHARACTER]: {verbatim block from character sheet — NO shortening}
+
+[SCENE]: {environment — location, time, weather, ambient lighting}
+
+[ACTION]: {what character is doing — pose, expression, gesture}
+
+[CAMERA]: {shot type, angle, focal length feel}
+
+[LIGHTING]: {direction, color temperature, mood}
+
+[COLOR REFERENCE]: Palette from character sheet: {hex codes}. Environment must COMPLEMENT, not clash.
+```
+
+## Short Film / Drama
+
+```
+{STYLE from character sheet}, cinematic composition, narrative moment.
+
+[CHARACTER: {verbatim block}]
+
+[SCENE]: {location, time of day, ambient details}
+
+[ACTION]: {character's action, expression, body language}
+
+[CAMERA]: {medium/wide/close-up}, {eye level/low/high}, {depth of field}
+
+[LIGHTING]: {matches time/location — fluorescent for indoors night, golden for sunset, etc.}
+
+[COLOR REFERENCE]: Character palette {hex codes}. Environment complements character colors.
+```
+
+## Product Ad — Character + Product
+
+```
+{STYLE}, commercial photography style, product hero shot with character.
+
+[CHARACTER: {verbatim block}]
+
+[PRODUCT]: {name, shape, color, label, size, material, logo placement}
+
+[SCENE]: {studio or lifestyle setting}
+
+[ACTION]: Character {interacting with product}. Product clearly visible, ≥30% of frame.
+
+[CAMERA]: {medium close-up, slight low angle for product, or eye-level lifestyle}
+
+[LIGHTING]: Key light on product, fill on character, rim for separation.
+
+[COLOR REFERENCE]: Character {hex}. Product {hex}. Background neutral/complementary.
+
+[COMPOSITION]: Product in foreground or at chest height. Rule of thirds.
+```
+
+## Product Ad — Product Only
+
+```
+Commercial product photography, {product name}.
+
+[PRODUCT]: {shape, dimensions, color, material, label, logo, texture}
+
+[SCENE]: {studio / marble / gradient / lifestyle flat-lay}
+
+[CAMERA]: {hero shot / 3/4 / flat lay / low angle}
+
+[LIGHTING]: {three-point / window light / dramatic single source}
+
+[PROPS]: {complementary items — never obscure the product}
+
+[COLOR REFERENCE]: Brand colors {hex}. Background within brand family or neutral.
+```
+
+## Educational / Explainer
+
+```
+{STYLE}, educational video frame, clean and professional.
+
+[CHARACTER: {verbatim block}]
+
+[SCENE]: {clean background — solid color, gradient, minimal studio}
+
+[ACTION]: Facing camera, {presenting gesture}. Friendly, confident.
+
+[CAMERA]: Medium or waist-up, direct eye contact, centered or rule-of-thirds.
+
+[LIGHTING]: Flat, even, professional. No dramatic shadows.
+
+[TEXT SAFE ZONE]: Leave 30% of frame empty on {left/right} for text overlay.
+```
+
+## Style Consistency Rules
+
+### Anime/Cartoon
+- Same style keywords in EVERY scene prompt
+- Background art style must match character style
+- Same line weight, shading, color saturation across scenes
+- Chibi = all chibi, semi-realistic = all semi-realistic
+
+### Realistic/Live-action
+- Same lighting color temperature within same location
+- Skin tone hex must match character sheet exactly
+- Consistent camera focal length within a sequence
+- Clothing wrinkles/fabric texture consistent with material described
+
+### Mixed (cartoon character + real product)
+- Product always photorealistic, even with cartoon character
+- Use compositing language: "cartoon character with photorealistic product"
+
+## Why Scenes Fail Consistency
+
+| Problem | Cause | Fix |
+|---|---|---|
+| Character looks different | [CHARACTER] block was shortened | Copy VERBATIM, zero changes |
+| Style switched | Style keyword missing | Copy exact style string from sheet |
+| Colors shifted | No hex codes in prompt | Always include [COLOR REFERENCE] |
+| Clothing changed | Generic "uniform" instead of full detail | Full description every time |
+| Character too small | Scene description dominated | Put [CHARACTER] FIRST in prompt |
+
+=== skills/hitpop-shotstack/SKILL.md ===
+---
+name: hitpop-shotstack
+description: "Cloud video editing and rendering via Shotstack API. JSON-driven video assembly with concurrent rendering, transitions, text overlays, and effects. Free sandbox available. Best for enterprise-scale batch video production."
+version: 0.1.0
+metadata:
+  openclaw:
+    emoji: "☁️"
+    requires:
+      env:
+        - SHOTSTACK_API_KEY
+      bins:
+        - curl
+        - jq
+    primaryEnv: SHOTSTACK_API_KEY
+---
+
+# Hitpop Shotstack — Cloud Video Editing API
+
+Enterprise-grade cloud video rendering via Shotstack. JSON templates → rendered videos at scale.
+
+## Setup
+
+1. Get free API key at https://dashboard.shotstack.io/register
+2. Set environment variable:
+
+```bash
+export SHOTSTACK_API_KEY="your-shotstack-api-key"
+```
+
+Use `stage` environment for testing (free), `v1` for production.
+
+## Basic Video Assembly
+
+```bash
+curl -s -X POST 'https://api.shotstack.io/edit/stage/render' \
+  -H 'Content-Type: application/json' \
+  -H "x-api-key: $SHOTSTACK_API_KEY" \
+  -d '{
+    "timeline": {
+      "tracks": [
+        {
+          "clips": [
+            {
+              "asset": {
+                "type": "video",
+                "src": "https://example.com/clip1.mp4"
+              },
+              "start": 0,
+              "length": 5,
+              "transition": {
+                "in": "fade",
+                "out": "fade"
+              }
+            },
+            {
+              "asset": {
+                "type": "video",
+                "src": "https://example.com/clip2.mp4"
+              },
+              "start": 4.5,
+              "length": 5
+            }
+          ]
+        },
+        {
+          "clips": [
+            {
+              "asset": {
+                "type": "title",
+                "text": "My Product",
+                "style": "future",
+                "size": "large"
+              },
+              "start": 0,
+              "length": 3,
+              "position": "center"
+            }
+          ]
+        }
+      ]
+    },
+    "output": {
+      "format": "mp4",
+      "resolution": "hd"
+    }
+  }' | jq .
+```
+
+## Poll for Result
+
+```bash
+RENDER_ID="your-render-id"
+curl -s "https://api.shotstack.io/edit/stage/render/$RENDER_ID" \
+  -H "x-api-key: $SHOTSTACK_API_KEY" | jq '{status: .response.status, url: .response.url}'
+```
+
+## Key Features
+- Concurrent rendering (thousands of videos simultaneously)
+- Transitions: fade, reveal, wipeLeft, wipeRight, slideLeft, slideRight, carouselLeft, carouselRight, zoom
+- Text overlays with built-in styles
+- Audio mixing (voice + BGM)
+- Image and video overlays
+- Webhooks for render completion
+- Free sandbox for development
+
+## When to Use Shotstack vs Rendervid
+
+| Feature | Shotstack | Rendervid |
+|---|---|---|
+| Hosting | Cloud (managed) | Self-hosted |
+| Pricing | Free sandbox + paid | Free forever |
+| Scale | Thousands concurrent | Limited by your infra |
+| Templates | JSON timeline | JSON scenes |
+| Best for | Enterprise batch rendering | AI agent workflows |
+
+## Tips
+- Use `stage` endpoint for free testing, `v1` for production
+- Shotstack renders in seconds, not minutes
+- Combine with hitpop-gen-image to create assets, then assemble with Shotstack
+- Use webhooks (`callback`) instead of polling for production
+
+=== skills/hitpop-subtitle/SKILL.md ===
+---
+name: hitpop-subtitle
+description: "Auto-generate subtitles/captions for videos using OpenAI Whisper. Transcribe audio to SRT/VTT, then burn subtitles into video with FFmpeg. Supports 50+ languages with word-level timestamps."
+version: 0.1.0
+metadata:
+  openclaw:
+    emoji: "💬"
+    requires:
+      bins:
+        - ffmpeg
+        - python3
+---
+
+# Hitpop Subtitle — Auto Subtitles with Whisper
+
+Generate and burn subtitles into videos automatically.
+
+## Setup
+
+```bash
+pip install openai-whisper
+# or for faster inference:
+pip install faster-whisper
+```
+
+## Generate Subtitles
+
+### Using Whisper CLI
+
+```bash
+# Extract audio from video
+ffmpeg -i video.mp4 -vn -acodec pcm_s16le -ar 16000 audio.wav
+
+# Transcribe to SRT
+whisper audio.wav --model base --output_format srt --language en
+# Output: audio.srt
+```
+
+### Using faster-whisper (Python)
+
+```python
+from faster_whisper import WhisperModel
+model = WhisperModel("base", compute_type="int8")
+segments, info = model.transcribe("audio.wav")
+
+with open("subs.srt", "w") as f:
+    for i, seg in enumerate(segments, 1):
+        start = f"{int(seg.start//3600):02d}:{int(seg.start%3600//60):02d}:{seg.start%60:06.3f}".replace(".", ",")
+        end = f"{int(seg.end//3600):02d}:{int(seg.end%3600//60):02d}:{seg.end%60:06.3f}".replace(".", ",")
+        f.write(f"{i}\n{start} --> {end}\n{seg.text.strip()}\n\n")
+```
+
+### Using OpenAI API (cloud, no GPU needed)
+
+```bash
+curl -s https://api.openai.com/v1/audio/transcriptions \
+  -H "Authorization: Bearer $OPENAI_API_KEY" \
+  -F file="@audio.mp3" \
+  -F model="whisper-1" \
+  -F response_format="srt" > subs.srt
+```
+
+## Burn Subtitles into Video
+
+```bash
+# Basic
+ffmpeg -i video.mp4 -vf "subtitles=subs.srt" output.mp4
+
+# Styled (white text, black outline, bottom-center)
+ffmpeg -i video.mp4 -vf "subtitles=subs.srt:force_style='FontSize=22,PrimaryColour=&HFFFFFF&,OutlineColour=&H000000&,BorderStyle=3,Outline=2,Alignment=2'" output.mp4
+
+# With semi-transparent background box
+ffmpeg -i video.mp4 -vf "subtitles=subs.srt:force_style='FontSize=20,PrimaryColour=&HFFFFFF&,BackColour=&H80000000&,BorderStyle=4,Outline=0,Shadow=0,MarginV=30'" output.mp4
+```
+
+## Whisper Model Sizes
+
+| Model | Size | Speed | Quality | VRAM |
+|---|---|---|---|---|
+| tiny | 39M | Fastest | Basic | ~1GB |
+| base | 74M | Fast | Good | ~1GB |
+| small | 244M | Medium | Better | ~2GB |
+| medium | 769M | Slow | Great | ~5GB |
+| large-v3 | 1.5G | Slowest | Best | ~10GB |
+
+## Tips
+- Use `base` model for quick drafts, `medium` or `large-v3` for production
+- For Chinese content, Whisper works well but specify `--language zh`
+- Always extract audio to WAV/MP3 before transcribing (Whisper handles video files poorly)
+- OpenAI API Whisper is fast and cheap — best option if you have an API key
+
+=== skills/hitpop-twick/SKILL.md ===
+---
+name: hitpop-twick
+description: "React-based video editor SDK for building interactive editing experiences. Timeline editing, AI captions, canvas tools, drag-and-drop, and serverless MP4 export. Use when users need to manually edit or fine-tune AI-generated videos."
+version: 0.1.0
+metadata:
+  openclaw:
+    emoji: "🎛️"
+    requires:
+      bins:
+        - npx
+        - node
+    install:
+      - kind: node
+        package: "@twick/video-editor"
+        bins: [npx]
+---
+
+# Hitpop Twick — Interactive Video Editor SDK
+
+React-based video editing SDK for building timeline editors, adding AI captions, and exporting MP4. Use when AI-generated videos need manual fine-tuning or when building user-facing editing interfaces.
+
+## When to Use
+
+- User wants to **edit** an AI-generated video (trim, rearrange, add text overlays)
+- Building an app where **end users** need to edit videos themselves
+- Need **AI captions** auto-synced to video
+- Need **programmatic editing** via code (add elements, set timelines)
+
+## Setup
+
+```bash
+# Install packages
+npm install @twick/video-editor @twick/timeline @twick/live-player @twick/canvas
+
+# Or clone the full repo
+git clone https://github.com/ncounterspecialist/twick.git
+cd twick
+pnpm install
+pnpm build
+```
+
+## Quick Start — Programmatic Video Creation
+
+Launch the example editor, then use the browser console:
+
+```bash
+cd packages/examples
+pnpm install && pnpm build && pnpm preview
+# Open http://localhost:4173/demo
+```
+
+In browser console (F12):
+
+```javascript
+// Get editor instance
+const editor = twickTimelineEditors.get("my-video-project");
+
+// Add a video track
+const videoTrack = editor.addTrack("video");
+
+// Add a video clip
+const video = new Twick.VideoElement(
+  "https://example.com/ai-generated-video.mp4",
+  { width: 1080, height: 1920 }
+);
+video.setStart(0).setEnd(8);
+await editor.addElementToTrack(videoTrack, video);
+
+// Add text overlay track
+const textTrack = editor.addTrack("text");
+const title = new Twick.TextElement("Your Product Name")
+  .setStart(0.5)
+  .setEnd(3)
+  .setFill("#ffffff")
+  .setStrokeColor("#000000")
+  .setLineWidth(0.2)
+  .setFontSize(64)
+  .setPosition({ x: 0, y: 200 });
+await editor.addElementToTrack(textTrack, title);
+
+// Export as MP4
+await editor.export("mp4");
+```
+
+## React Component Integration
+
+```jsx
+import React from 'react';
+import VideoEditor from "@twick/video-editor";
+import { LivePlayerProvider } from "@twick/live-player";
+import { TimelineProvider } from "@twick/timeline";
+import "@twick/video-editor/dist/video-editor.css";
+
+function App() {
+  return (
+    <LivePlayerProvider>
+      <TimelineProvider contextId="my-project">
+        <VideoEditor
+          editorConfig={{
+            canvasMode: true,
+            videoProps: { width: 1080, height: 1920 }
+          }}
+        />
+      </TimelineProvider>
+    </LivePlayerProvider>
+  );
+}
+```
+
+## Packages
+
+| Package | Purpose |
+|---|---|
+| `@twick/video-editor` | Complete editing UI |
+| `@twick/timeline` | Timeline CRUD operations |
+| `@twick/live-player` | Video playback with controls |
+| `@twick/canvas` | Drag-and-drop canvas editing |
+| `@twick/visualizer` | Animations and real-time preview |
+| `@twick/media-utils` | Audio/video metadata extraction |
+| `@twick/studio` | Full studio interface |
+
+## Element Types
+
+- `VideoElement` — Video clips with timing and playback rate
+- `TextElement` — Text overlays with font styling and positioning
+- `ImageElement` — Image overlays
+- `AudioElement` — Audio tracks
+- `RectangleElement`, `CircleElement` — Shape overlays
+- `CaptionElement` — AI-synced captions
+
+## Twick vs Other Hitpop Skills
+
+| Need | Use |
+|---|---|
+| Generate video from scratch (AI) | `hitpop-gen-video` |
+| Template-based batch videos | `hitpop-rendervid` or `hitpop-shotstack` |
+| **Edit/fine-tune a video interactively** | **`hitpop-twick`** |
+| Simple trim/merge/watermark | `hitpop-edit` (FFmpeg, faster) |
+
+## License
+
+Sustainable Use License (SUL) v1.0 — free for commercial use in your app. Not for reselling as an SDK.
+
+## Tips
+- Use Twick when you need a visual editor UI; use FFmpeg (`hitpop-edit`) for headless processing
+- AI captions use Google Vertex AI (Gemini) — requires separate setup
+- Serverless export uses AWS Lambda + S3 — configure in `twick.config.ts`
+- Combine: generate with `hitpop-gen-video` → fine-tune with `hitpop-twick` → publish with `hitpop-publish`
+
+=== skills/hitpop-voiceover/SKILL.md ===
+---
+name: hitpop-voiceover
+description: "AI voiceover and text-to-speech for video narration. Primary: GLM-TTS via Zhipu API (emotional, stable, same API key). Fallback: Edge TTS (free). Also supports OpenAI TTS and ElevenLabs."
+version: 0.1.0
+metadata:
+  openclaw:
+    emoji: "🎙️"
+    requires:
+      bins:
+        - curl
+        - ffmpeg
+---
+
+# Hitpop Voiceover — AI Text-to-Speech for Video
+
+Generate voiceovers for your videos using multiple TTS providers.
+
+## Option 1: GLM-TTS via Zhipu API (Recommended — Same API Key)
+
+GLM-TTS — emotional, natural, stable. Uses the same `ZHIPU_API_KEY` as video/image generation. Supports 7 voice characters with emotional expression.
+
+```bash
+# Generate voiceover (outputs wav)
+curl -X POST "https://open.bigmodel.cn/api/paas/v4/audio/speech" \
+  -H "Authorization: Bearer $ZHIPU_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "glm-tts",
+    "input": "Your narration text here",
+    "voice": "female",
+    "speed": 1.0,
+    "volume": 1.0,
+    "response_format": "wav"
+  }' --output voiceover.wav
+
+# Convert to mp3 for smaller file
+ffmpeg -i voiceover.wav -codec:a libmp3lame -b:a 192k voiceover.mp3
+```
+
+**Voices:**
+| Voice ID | Character | Best for |
+|---|---|---|
+| `female` | Tongtong (default) | Narration, warm female |
+| `xiaochen` | Xiao Chen | Young professional female |
+| `chuichui` | Chuichui | Energetic, youthful |
+| `jam` | Jam | Male, casual |
+| `kazi` | Kazi | Male, mature |
+| `douji` | Douji | Male, friendly |
+| `luodo` | Luodo | Male, deep |
+
+**Parameters:** `speed` (0.5-2.0), `volume` (0.5-2.0), `response_format` (wav/mp3/pcm)
+
+**Multi-character dialogue:** Use different voice IDs per character, generate each line separately, merge with FFmpeg.
+
+## Option 2: Edge TTS (Free Fallback, No API Key)
+
+Microsoft Edge TTS — free, 300+ voices, 75+ languages.
+
+```bash
+pip install edge-tts
+
+# List available voices
+edge-tts --list-voices | grep en-US
+
+# Generate voiceover
+edge-tts --voice "en-US-AriaNeural" --text "Welcome to our product showcase" --write-media voiceover.mp3
+
+# Chinese voice
+edge-tts --voice "zh-CN-XiaoxiaoNeural" --text "Welcome to our product showcase" --write-media voiceover_cn.mp3
+```
+
+## Option 3: OpenAI TTS (Best Quality)
+
+Requires `OPENAI_API_KEY`.
+
+```bash
+curl -s https://api.openai.com/v1/audio/speech \
+  -H "Authorization: Bearer $OPENAI_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "tts-1-hd",
+    "input": "Welcome to our product showcase. Today we are introducing something incredible.",
+    "voice": "nova"
+  }' --output voiceover.mp3
+```
+
+Voices: `alloy`, `echo`, `fable`, `onyx`, `nova`, `shimmer`
+
+## Option 4: ElevenLabs (Most Natural)
+
+Requires `ELEVENLABS_API_KEY`.
+
+```bash
+curl -s -X POST "https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM" \
+  -H "xi-api-key: $ELEVENLABS_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "text": "Welcome to our product showcase.",
+    "model_id": "eleven_multilingual_v2"
+  }' --output voiceover.mp3
+```
+
+## Merge Voiceover with Video
+
+```bash
+# Replace audio
+ffmpeg -i video.mp4 -i voiceover.mp3 -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 -shortest output.mp4
+
+# Mix with existing audio (voice at full volume, original at 20%)
+ffmpeg -i video.mp4 -i voiceover.mp3 \
+  -filter_complex "[0:a]volume=0.2[orig];[1:a]volume=1.0[voice];[orig][voice]amix=inputs=2:duration=first[aout]" \
+  -map 0:v -map "[aout]" -c:v copy -c:a aac output.mp4
+```
+
+## Tips
+- Use GLM-TTS as primary — same API key as video generation, best Chinese quality, emotional expression
+- Fall back to Edge TTS if GLM-TTS is down or for quick prototyping
+- Use OpenAI/ElevenLabs for premium English voiceovers
+- Generate voiceover first, then use its duration to set video length
+- For long scripts, split into segments (≤300 chars), generate separately, then concat with FFmpeg
+- For multi-character scenes, use different GLM-TTS voice IDs per character
+
