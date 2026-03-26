@@ -179,7 +179,52 @@ python inference.py \
 
 ---
 
-## Method 4: Commercial APIs (No GPU Required)
+## Method 4: Cloud APIs (No GPU Required)
+
+### Replicate SadTalker (RECOMMENDED — cheapest, no GPU needed)
+
+```bash
+# Image + audio → talking head video
+curl -s -X POST "https://api.replicate.com/v1/predictions" \
+  -H "Authorization: Bearer $REPLICATE_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "version": "cjwbw/sadtalker",
+    "input": {
+      "source_image": "CHARACTER_IMAGE_URL",
+      "driven_audio": "AUDIO_URL",
+      "enhancer": "gfpgan",
+      "still": true,
+      "preprocess": "crop"
+    }
+  }'
+
+# Poll for result
+curl -s "https://api.replicate.com/v1/predictions/$PREDICTION_ID" \
+  -H "Authorization: Bearer $REPLICATE_API_TOKEN"
+# Wait until status = "succeeded", download output URL
+```
+
+**Parameters:**
+- `still: true` — keeps head still (best for singing/speaking videos)
+- `still: false` — adds natural head motion (more realistic but may drift)
+- `preprocess: crop` — crops face for best lip sync quality
+- `enhancer: gfpgan` — enhances face quality in output
+
+**Pricing**: ~$0.05-0.10 per minute
+**Best for**: Virtual idol singing videos, AI character dialogue, any image-to-talking-video
+
+**For long audio (>60s):** Split audio into 30-60s segments with FFmpeg, generate lip sync for each, merge:
+```bash
+# Split audio
+ffmpeg -i cover.mp3 -t 60 -c copy part1.mp3
+ffmpeg -i cover.mp3 -ss 60 -c copy part2.mp3
+# Generate lip sync for each part separately
+# Merge videos
+echo "file 'lipsync_part1.mp4'" > parts.txt
+echo "file 'lipsync_part2.mp4'" >> parts.txt
+ffmpeg -f concat -safe 0 -i parts.txt -c copy lipsync_full.mp4
+```
 
 ### HeyGen API
 
