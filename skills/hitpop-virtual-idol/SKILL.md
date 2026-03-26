@@ -65,31 +65,22 @@ Define the idol's persona (save as `idol_profiles/{name}.json`):
 }
 ```
 
-## Step 2: Generate Photorealistic Face/Body Photo
+## Step 2: Generate Base Identity Photo (一次生成，永久复用)
 
-Use Seedream 4.5 to generate the idol's base photos. These will be used for ALL subsequent lip sync videos — consistency is critical.
-
-**Generate multiple base images for variety:**
+Use Seedream 4.5 to generate ONE clean base portrait. White background, no scene, no props. This is the idol's "face ID" — EVERY scene photo will reference this.
 
 ```bash
-# Portrait — for lip sync singing videos (upper body, facing camera)
 curl -s -X POST 'https://open.bigmodel.cn/api/paas/v4/images/generations' \
   -H "Authorization: Bearer $ZHIPU_API_KEY" -H 'Content-Type: application/json' \
   -d '{
     "model": "doubao-seedream-4.5",
-    "prompt": "Photorealistic portrait photo of a 22-year-old Chinese male singer on stage. Sharp jawline, high cheekbones, intense dark eyes, blonde/silver long messy hair past shoulders. Wearing black leather jacket over mesh top, silver choker necklace, multiple silver rings. Standing at microphone, moody purple and blue stage lighting, bokeh lights in background. Shot on Canon EOS R5, 85mm f/1.4, shallow depth of field. 8K, ultra-detailed skin texture, natural lighting.",
-    "size": "1080x1920",
+    "prompt": "Photorealistic clean portrait photo. [IDOL_FACE_DESCRIPTION]. Clean white studio background, even lighting, no shadows, neutral standing pose, facing camera, eyes looking at camera. Natural skin texture with visible pores, 8K detail, no filters.",
+    "size": "1024x1024",
     "watermark": false
   }'
-
-# Full body — for MV scenes
-# Same prompt but "full body standing on stage, 9:16 vertical"
-
-# Close-up face — for detailed lip sync
-# Same character but "extreme close-up face portrait, mouth clearly visible"
 ```
 
-**CRITICAL: Save these base images. Every lip sync video MUST use the same face photo to maintain idol identity.**
+**CRITICAL: Download and save this image permanently. This is the idol's identity anchor. NEVER delete it. Every scene photo MUST use this as the reference.**
 
 ## Step 3: Setup Voice (RVC Model)
 
@@ -133,23 +124,57 @@ curl -s -X POST "https://api.replicate.com/v1/predictions" \
 ```
 Cost: ~$0.034/song. Download output immediately.
 
-## Step 6: Generate Stage/Performance Scene
+## Step 6: Generate Scene Photo (同一个人放进不同场景)
 
-Generate scene backgrounds for the MV:
+**This is the key step.** Use Seedream 4.0 (NOT 4.5) with the base identity photo from Step 2 as the `images` reference parameter. This keeps the idol's face consistent while placing them in different scenes.
 
 ```bash
-# Stage scene — band performance
 curl -s -X POST 'https://open.bigmodel.cn/api/paas/v4/images/generations' \
   -H "Authorization: Bearer $ZHIPU_API_KEY" -H 'Content-Type: application/json' \
   -d '{
-    "model": "doubao-seedream-4.5",
-    "prompt": "Photorealistic live music venue stage, moody purple and blue lighting, fog machine haze, Marshall guitar amps in background, drum kit behind, spotlight from above, bokeh lights, cinematic atmosphere. No people. Empty stage ready for performer. 9:16 vertical.",
+    "model": "doubao-seedream-4.0",
+    "prompt": "SCENE_PROMPT_HERE",
+    "images": "BASE_IDENTITY_PHOTO_URL",
     "size": "1080x1920",
     "watermark": false
   }'
 ```
 
-Or use Vidu to generate a short stage background video loop.
+**Choose the scene based on the song mood:**
+
+| Song Mood | Scene | Prompt Keywords |
+|---|---|---|
+| 摇滚/燃曲 | 演唱会舞台 | `concert stage, spotlight, fog machine, Marshall amps, crowd silhouettes in background, dramatic purple and blue lighting` |
+| 万人现场 | 大屏幕演出 | `giant LED screen showing performer, arena concert, wide angle, thousands of fans with phone lights` |
+| 独立/民谣 | Live House | `intimate live house, brick wall background, warm dim Edison bulb lighting, small stage, close audience` |
+| 专业/首发 | 录音棚 | `professional recording studio, large condenser microphone with pop filter, headphones around neck, soundproof foam panels` |
+| 日常/亲切 | 寝室弹吉他 | `college dormitory room, sitting on bed holding acoustic guitar, warm desk lamp, bookshelf with fairy lights, cozy messy room` |
+| 文艺/城市 | 街头驻唱 | `street busking at night, open guitar case, city neon lights behind, wet pavement reflections, pedestrians blurred` |
+| 抒情/治愈 | 日落天台 | `rooftop at golden hour, city skyline behind, warm orange sunset light, wind blowing hair, eyes closed singing` |
+| 伤感/情歌 | 雨中 | `singing in the rain on empty street, wet reflections, neon signs, emotional pained expression, rain droplets visible` |
+| 优雅/古典 | 钢琴独奏 | `sitting at grand piano on stage, single spotlight from above, dark background, elegant formal black outfit` |
+| 怀旧/复古 | 复古舞台 | `retro 90s stage setup, neon signs, vintage chrome microphone, leather jacket, film grain texture, warm analog tones` |
+| 轻松/爵士 | 咖啡厅 | `cozy cafe corner, small wooden stage, pendant warm lights, exposed brick, holding microphone, intimate setting` |
+| 高级/MV | MV现场 | `music video film set, cinematic lighting rigs visible, camera crew silhouettes, professional monitor screens, smoke machine` |
+
+**Scene Prompt Template:**
+```
+Photorealistic photo of [IDOL_CHARACTER_BLOCK] performing in [SCENE].
+
+[Specific details: location, props, background elements].
+
+[Pose]: [singing into microphone / playing guitar / sitting at piano / standing with eyes closed / looking at camera].
+
+[Camera]: [medium close-up from chest up / upper body / three-quarter body], [eye level / slight low angle], 9:16 vertical for Douyin.
+
+[Lighting]: [scene-appropriate — concert spotlights / warm lamp / studio ring light / golden hour sun / neon reflections].
+
+The person must be the EXACT SAME person as in the reference image — same face, same hair, same features. Only clothing, pose, and scene change.
+
+Style: photorealistic, Canon EOS R5, 85mm f/1.4, shallow depth of field, natural skin texture, 8K, cinematic color grading.
+```
+
+**Generate 3-5 different scene photos per idol** — rotate them across different songs so the content doesn't feel repetitive.
 
 ## Step 7: Lip Sync (THE MOST CRITICAL STEP)
 

@@ -21,10 +21,30 @@ Generate professional photorealistic character design sheets as a SINGLE IMAGE c
 ### Mode A: 3-View Reference Sheet (for short films, dramas, ads)
 Three full-body views side by side in one 16:9 landscape image. Used when you need the character to appear in multiple scenes and must maintain consistency.
 
-### Mode B: Single Portrait Photo (for virtual idol / lip sync videos)
-One high-quality portrait photo (upper body or full body) in 9:16 vertical format. Used as input for TopView Avatar 4 / HeyGen lip sync. The same portrait is reused for every video to maintain idol identity.
+### Mode B: Virtual Idol System (for AI singer / lip sync videos)
+A three-step process for creating virtual idol content:
 
-**Ask user which mode they need if unclear.**
+**Step B1: Base Identity Photo** — Generate ONE clean portrait on white/neutral background. This is the idol's "face ID" — used as reference for ALL subsequent scene images. Generate ONCE, reuse forever.
+
+**Step B2: Scene Photos** — Using Seedream 4.0 with the base identity photo as `images` reference, generate the idol in different performance scenes. Same face, different settings.
+
+**Step B3: Lip Sync Video** — Feed a scene photo + AI cover audio into TopView Avatar 4 / HeyGen to generate the singing video.
+
+```
+B1: Base Identity Photo (一次生成，永久复用)
+        ↓ (作为参考图传入 Seedream 4.0 的 images 参数)
+B2: Scene Photos (同一个人，不同场景)
+    ├── 演唱会舞台
+    ├── 录音棚
+    ├── 寝室弹吉他
+    ├── 街头驻唱
+    ├── 大屏幕直播
+    └── MV 拍摄现场
+        ↓ (场景照 + AI翻唱音频)
+B3: Lip Sync Video → 发布抖音
+```
+
+**Ask user which mode they need if unclear: "需要三视图角色设定图（短剧/广告）还是虚拟偶像歌手（翻唱视频）？"**
 
 ## 7-Dimension Prompt Checklist
 
@@ -119,23 +139,83 @@ Style: photorealistic, cinematic quality, natural skin texture, 8K detail, profe
 Aspect ratio: 16:9 landscape, high resolution, 2K.
 ```
 
-## Prompt Template: Mode B — Virtual Idol Portrait (for lip sync)
+## Prompt Template: Mode B — Virtual Idol (3-Step System)
+
+### Step B1: Base Identity Photo (生成一次，永久复用)
+
+Generate a CLEAN portrait on white/neutral background. No scene, no props, no special lighting. Just the person. This is the "face ID" that ensures every scene looks like the same idol.
 
 ```
-Photorealistic portrait photo of [CHARACTER_DESCRIPTION].
+Photorealistic clean portrait photo of [CHARACTER_DESCRIPTION].
 
-[gender], [age], [ethnicity]. [Face details: face shape, skin tone, eye color, eyebrows, nose, lips, expression]. [Hair: exact color, length, style, parting]. [Clothing: exact description with colors]. [Accessories: every item].
+[gender], [age], [ethnicity]. [Face: face shape, skin tone, eye color, eyebrows, nose, lips, neutral calm expression]. [Hair: exact color, length, style, parting]. Wearing [simple clothing — solid color t-shirt or basic top, nothing distracting].
 
-[SCENE/CONTEXT]: [e.g. "standing at microphone on stage", "sitting with acoustic guitar in bedroom", "in recording studio with headphones around neck"]
+Clean white studio background. Even studio lighting, no shadows, no color cast. Neutral standing pose, facing camera directly, eyes looking at camera.
 
-[CAMERA]: [e.g. "medium close-up, eye level", "upper body, slight low angle", "full body standing"]
+Style: photorealistic ID-style portrait, clean studio lighting, natural skin texture with visible pores, 8K detail, no filters, no heavy editing. This photo will be used as a reference for generating this person in various scenes — it must clearly show the face and features.
 
-[LIGHTING]: [e.g. "moody purple and blue stage spotlights, bokeh lights in background", "warm bedroom lamp light, soft shadows", "clean studio ring light"]
+Aspect ratio: 1:1 square (1024x1024) for maximum face detail.
+```
+
+**CRITICAL: Download and save this image permanently. This is the idol's identity anchor. Every scene photo in Step B2 MUST use this image as the `images` reference parameter in Seedream 4.0.**
+
+### Step B2: Scene Photos (同一个人，不同场景)
+
+Use Seedream 4.0 (NOT 4.5) with the base identity photo as the `images` parameter. This ensures the face stays consistent across all scenes.
+
+```bash
+curl -s -X POST 'https://open.bigmodel.cn/api/paas/v4/images/generations' \
+  -H "Authorization: Bearer $ZHIPU_API_KEY" \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "model": "doubao-seedream-4.0",
+    "prompt": "SCENE_PROMPT_HERE",
+    "images": "BASE_IDENTITY_PHOTO_URL",
+    "size": "1080x1920",
+    "watermark": false
+  }'
+```
+
+**Singer Scene Library — pick the right scene for each song:**
+
+| Scene Type | When to Use | Prompt Keywords |
+|---|---|---|
+| 演唱会舞台 | 摇滚/流行/燃曲 | `concert stage, spotlight, crowd silhouettes, fog machine, Marshall amps` |
+| 大屏幕演出 | 万人现场感 | `giant LED screen behind performer, arena concert, wide angle from audience` |
+| Live House 驻唱 | 独立/民谣/摇滚 | `small intimate live house stage, brick wall, warm dim lighting, close audience` |
+| 录音棚 | 专业感/新歌首发 | `professional recording studio, microphone with pop filter, headphones, soundproof panels` |
+| 寝室弹吉他 | 亲切/日常/民谣 | `college dormitory room, sitting on bed with acoustic guitar, warm lamp light, bookshelf, fairy lights` |
+| 街头驻唱 | 文艺/城市感 | `street busking at night, guitar case open, city lights behind, pedestrians blurred` |
+| MV 拍摄现场 | 高质量/正式 | `music video film set, cinematic lighting, camera crew in background blurred` |
+| 咖啡厅 | 轻松/爵士/慢歌 | `cozy cafe corner, small stage, warm pendant lights, exposed brick, intimate audience` |
+| 雨中街头 | 情歌/伤感 | `singing in the rain, wet street reflections, neon lights, emotional expression` |
+| 日落天台 | 抒情/治愈 | `rooftop at golden hour sunset, city skyline behind, warm orange light, wind in hair` |
+| 复古风格 | 80s/90s/怀旧 | `retro 90s stage, neon signs, vintage microphone, leather jacket, film grain` |
+| 钢琴独奏 | 古典/抒情 | `grand piano on stage, single spotlight, dark background, elegant formal wear` |
+
+**Scene Prompt Template:**
+
+```
+Photorealistic photo of [IDOL_CHARACTER_BLOCK] performing in [SCENE_TYPE].
+
+[Specific scene description: location details, props, background elements].
+
+[Pose]: [what the idol is doing — singing into microphone, playing guitar, sitting at piano, standing with eyes closed].
+
+[Camera]: [medium close-up from chest up / upper body / full body], [angle: eye level / slight low angle / side profile], 9:16 vertical composition for Douyin/TikTok.
+
+[Lighting]: [scene-appropriate lighting — concert spotlights, warm lamp, studio ring light, golden hour sun].
+
+The person in this photo must be the EXACT SAME person as in the reference image — same face, same hair, same features. Only the clothing, pose, and scene change.
 
 Style: photorealistic, shot on Canon EOS R5, 85mm f/1.4, shallow depth of field, natural skin texture, 8K detail, cinematic color grading.
 
-Aspect ratio: 9:16 vertical (1080x1920) for Douyin/TikTok.
+Aspect ratio: 9:16 vertical (1080x1920).
 ```
+
+### Step B3: Lip Sync (in hitpop-virtual-idol skill)
+
+Feed the scene photo from B2 + AI cover audio → TopView Avatar 4 / HeyGen → singing video. See `hitpop-virtual-idol/SKILL.md` for details.
 
 ## Example: Mode A — Late Night Drama Characters
 
